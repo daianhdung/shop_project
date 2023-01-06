@@ -7,10 +7,12 @@
     --text-color: #333;
     --white: #fff;
 
-    --font-family :'Nunito', sans-serif;
+    --font-family: 'Nunito', sans-serif;
 
-    --default-layout-header-height: 60px;
-    --default-layout-width: 1300px;
+    --default-layout-header-height: 88px;
+    --default-layout-width: 1440px;
+
+    --btn-color: #4f9bbf;
 }
 
 * {
@@ -30,7 +32,9 @@ body {
     text-rendering: optimizeSpeed;
 }
 
-button, input, [tabindex]{
+button,
+input,
+[tabindex] {
     outline: none;
     border: none;
 }
@@ -44,4 +48,8 @@ a[href] {
     &:hover {
         text-decoration: underline;
     }
+}
+
+li{
+    list-style-type: none;
 }

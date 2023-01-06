@@ -1,0 +1,22 @@
+.container{
+    width: var(--default-layout-width);
+    display: flex;
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgba(245, 245, 250, 1);
+}
+
+.inner{
+    display: flex;
+    padding-top: 16px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.content{
+    width: calc(100% - 280px);
+    overflow-x: hidden;
+}
+
