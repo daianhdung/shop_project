@@ -1,12 +1,120 @@
 .wrapper {
     width: 100%;
     height: var(--default-layout-header-height);
-    box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
     display: flex;
     justify-content: center;
+    padding: 8px 0px;
 }
 
 .inner {
-    height: 100%;
+    height: 70%;
     width: var(--default-layout-width);
+
+    box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
+    margin: 0 auto;
+}
+
+.up_header {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.up_left_header {
+    display: flex;
+    // flex: 1 1 0%;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.logo-link {
+    margin-right: 48px;
+}
+.search_form {
+    display: flex;
+    width: 400px;
+    height: 40px;
+    background-color: #f5f5f5;
+    border-radius: 50px;
+    padding: 5px 5px 5px 15px;
+
+    input {
+        outline: none;
+        background-color: #f5f5f5;
+        border: 0px;
+        flex: 1 1 0%;
+
+        &::placeholder {
+            color: #939393;
+        }
+    }
+
+    .btn-search {
+        outline: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 0;
+        background-color: var(--btn-color);
+        color: white;
+        cursor: pointer;
+    }
+}
+
+.up_right_header {
+    display: flex;
+    justify-content: center;
+    flex: 1 2;
+    .nav_link {
+        margin-right: 50px;
+    }
+}
+
+.up_last_header {
+    position: relative;
+    .nav_link {
+        margin-right: 30px;
+        &:first-child:after {
+            content: '';
+            position: absolute;
+            left: 35%;
+            width: 1px;
+            height: 20px;
+            background-color: rgba(22, 24, 35, 0.12);
+        }
+    }
+}
+
+.bottom_header {
+    height: 60%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    line-height: 1.15;
+
+    .bottom_left_header {
+        margin-left: 105px;
+        margin-top: 8px;
+        display: flex;
+        .nav_link {
+            margin-right: 40px;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 150%;
+
+            white-space: nowrap;
+        }
+    }
+
+    .bottom_right_header {
+        margin-top: 8px;
+        display: flex;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        margin-right: 40px;
+        white-space: nowrap;
+    }
+    .bottom_right_header > * {
+        margin-right: 10px;
+    }
 }
