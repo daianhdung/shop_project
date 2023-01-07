@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
-import { Link, NavLink } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 
 import config from '~/config';
