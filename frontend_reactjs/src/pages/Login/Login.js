@@ -14,9 +14,9 @@ function Login() {
             <div className={cx('header')}>
                 <Link to={config.routes.home} className={cx('logo-link')}>
                     <img
-                        width="80"
-                        height="58"
-                        style={{ background: '#ebecf0' }}
+                        width="60"
+                        height="60"
+                        style={{ background: '#fff' , borderRadius: '50%'}}
                         src={images.logo}
                         alt="logo"
                     />
