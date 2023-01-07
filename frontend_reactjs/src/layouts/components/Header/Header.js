@@ -46,8 +46,8 @@ function Header() {
                     </div>
                     <div className={cx('up_last_header')}>
                         <nav className="header-nav">
-                            <NavLink to={config.routes.home} className={cx('nav_link')}>Đăng kí</NavLink>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Đăng nhập</NavLink>
+                            <NavLink to={config.routes.signup} className={cx('nav_link')}>Đăng kí</NavLink>
+                            <NavLink to={config.routes.login} className={cx('nav_link')}>Đăng nhập</NavLink>
 
                         </nav>
                     </div>

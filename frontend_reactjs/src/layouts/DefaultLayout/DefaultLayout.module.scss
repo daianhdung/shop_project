@@ -1,11 +1,10 @@
 .container{
-    width: var(--default-layout-width);
     display: flex;
     padding-left: 24px;
     padding-right: 24px;
     margin-right: auto;
     margin-left: auto;
-    background-color: rgba(245, 245, 250, 1);
+    width: var(--default-layout-width);
 }
 
 .inner{
@@ -13,6 +12,7 @@
     padding-top: 16px;
     -webkit-box-pack: justify;
     justify-content: space-between;
+    
 }
 
 .content{

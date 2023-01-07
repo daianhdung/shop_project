@@ -13,12 +13,14 @@ function DefaultLayout({ children }) {
     return (
         <div >
             <Header />
-            <div style={{ height: '2000px' }} className={cx('container')}>
-                <div className={cx('inner')}>
-                    <Sidebar />
-                    <div className={cx('content')}>
-                        {children}
-                        <Footer />
+            <div style={{ background: 'rgba(245, 245, 250, 1)' }} >
+                <div style={{ height: '2000px' }} className={cx('container')}>
+                    <div className={cx('inner')}>
+                        <Sidebar />
+                        <div className={cx('content')}>
+                            {children}
+                            <Footer />
+                        </div>
                     </div>
                 </div>
             </div>
