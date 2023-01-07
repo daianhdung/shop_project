@@ -69,15 +69,21 @@ CREATE TABLE IF NOT EXISTS coupon (
     rate float not null,
     PRIMARY KEY (id)
 );
-
+CREATE TABLE IF NOT EXISTS status (
+	id int AUTO_INCREMENT,
+    name varchar(50),
+    primary key(id)
+);
 CREATE TABLE IF NOT EXISTS p_order(
 	id INT AUTO_INCREMENT,
-	user_id int,
     fee_ship int,
     coupon float,
     temp_total int,
     total float,
+    user_id int,
+    status_id int,
     primary key(id),
+    foreign key(status_id) references status(id),
     foreign key(user_id) references user(id)
 );
 CREATE TABLE IF NOT EXISTS product_order (
@@ -95,5 +101,11 @@ CREATE TABLE IF NOT EXISTS product_order (
 
 
 
+
 INSERT INTO role(id, name, description ) VALUES (1, "ROLE_ADMIN", "Admin");
 INSERT INTO role(id, name, description ) VALUES (2, "ROLE_USER", "Customer");
+INSERT INTO `shop_db`.`status` (`name`) VALUES ('Cart');
+INSERT INTO `shop_db`.`status` (`name`) VALUES ('Chưa xác nhận');
+INSERT INTO `shop_db`.`status` (`name`) VALUES ('Xác nhận');
+INSERT INTO `shop_db`.`status` (`name`) VALUES ('Hoàn thành');
+INSERT INTO `shop_db`.`status` (`name`) VALUES ('Đã hủy');

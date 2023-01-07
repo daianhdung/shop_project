@@ -23,6 +23,9 @@ public class OrderEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private StatusEntity status;
 
 
     public int getId() {
@@ -79,5 +82,13 @@ public class OrderEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public StatusEntity getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEntity status) {
+        this.status = status;
     }
 }

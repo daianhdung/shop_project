@@ -23,7 +23,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     private Set<OrderEntity> orders;
     @ManyToOne
-    @JoinColumn(name = "role_id", insertable = false, updatable = false)
+    @JoinColumn(name = "role_id")
     private RoleEntity role;
 
     public int getId() {
