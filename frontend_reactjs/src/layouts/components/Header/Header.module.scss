@@ -71,16 +71,28 @@
 
 .up_last_header {
     position: relative;
-    .nav_link {
-        margin-right: 30px;
-        &:first-child:after {
-            content: '';
-            position: absolute;
-            left: 35%;
-            width: 1px;
-            height: 20px;
-            background-color: rgba(22, 24, 35, 0.12);
-        }
+    .nav_link{
+        margin-left: 20px;
+    }
+    .nav_link1{
+        margin-left: 20px;
+    }
+
+    .nav_link:last-child::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        width: 1px;
+        height: 20px;
+        background-color: rgba(22, 24, 35, 0.12);
+    }
+    .nav_link1:last-child::after {
+        content: '';
+        position: absolute;
+        left: 55%;
+        width: 1px;
+        height: 20px;
+        background-color: rgba(22, 24, 35, 0.12);
     }
 }
 
