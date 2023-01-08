@@ -16,6 +16,8 @@ import AuthenLayout from "~/layouts/AuthenLayout";
     {path :  config.routes.login, component: Login, layout : AuthenLayout},
     {path :  config.routes.signup, component: Signup, layout : AuthenLayout}
 ]
-const privateRoutes = []
+const privateRoutes = [
+    
+]
 
 export{publicRoutes, privateRoutes}

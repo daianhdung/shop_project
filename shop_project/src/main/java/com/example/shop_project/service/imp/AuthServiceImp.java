@@ -14,7 +14,7 @@ public class AuthServiceImp implements AuthService {
     UserRepository userRepository;
     @Override
     public UserEntity checkLogin(String email) {
-        List<UserEntity> users = userRepository.findByEmailAndPassword(email);
+        List<UserEntity> users = userRepository.findByEmail(email);
         return users.size() > 0 ? users.get(0) : null;
     }
 }
