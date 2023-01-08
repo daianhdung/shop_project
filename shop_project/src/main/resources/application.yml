@@ -17,3 +17,6 @@ spring:
 file:
   upload-dir: E:\Java\SpringBoot\food_project_fe\preview\osahan-eat\theme-sidebar\img
 
+server:
+  servlet:
+    context-path: /api

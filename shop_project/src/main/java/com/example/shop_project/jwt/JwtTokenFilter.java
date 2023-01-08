@@ -33,9 +33,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 System.out.println(map);
                 if (StringUtils.hasText(map.get("type").toString()) && !map.get("type").toString().equals("refresh")) {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(map.get("username"),"", new ArrayList<>());
+                    System.out.println(map.get("username") + "ghaha");
                     SecurityContext securityContext = SecurityContextHolder.getContext();
                     securityContext.setAuthentication(authenticationToken);
                 }
+            }else {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             }
         }
         filterChain.doFilter(request, response);
