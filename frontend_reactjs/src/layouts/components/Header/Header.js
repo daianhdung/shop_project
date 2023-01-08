@@ -7,11 +7,16 @@ import config from '~/config';
 import styles from './Header.module.scss';
 import images from '~/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { removeCookie } from '~/utils/utilsCookie';
 
 const cx = classNames.bind(styles);
 
-function Header() {
+function Header(props) {
     const [over, setOver] = useState(false);
+    function handleLogoutClick() {
+        removeCookie('tokenJwt')
+        props.onLogout();
+    }
 
     return (
         <header className={cx('wrapper')}>
@@ -46,30 +51,39 @@ function Header() {
                     </div>
                     <div className={cx('up_last_header')}>
                         <nav className="header-nav">
-                            <NavLink to={config.routes.signup} className={cx('nav_link')}>Đăng kí</NavLink>
+                            {props.isLoggedIn ? (
+                                <React.Fragment>
+                                    <NavLink onClick={handleLogoutClick} className={cx('nav_link1')}>Đăng xuất</NavLink>
+                                    <NavLink to={config.routes.login} className={cx('nav_link1')}>Username</NavLink>
+                                </React.Fragment>
+                        ) : (
+                        <React.Fragment>
+                            <NavLink to={config.routes.signup} className={cx('nav_link')}>Đăng kí </NavLink>
                             <NavLink to={config.routes.login} className={cx('nav_link')}>Đăng nhập</NavLink>
+                        </React.Fragment>
+                            )}
 
-                        </nav>
-                    </div>
-                </div>
-                <div className={cx('bottom_header')}>
-                    <div className={cx('bottom_left_header')}>
-                        <nav className="header-nav">
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
-                        </nav>
-                    </div>
-                    <div className={cx('bottom_right_header')}>
-                        <img width='20' height='20' src="https://salt.tikicdn.com/ts/upload/88/5c/9d/f5ee506836792eb7775e527ef8350a44.png" alt="header-icon-location" />
-                        <h4 >Giao đến:</h4>
-                        <div >Q. 1, P. Bến Nghé, Hồ Chí Minh</div></div>
-
+                    </nav>
                 </div>
             </div>
-        </header>
+            <div className={cx('bottom_header')}>
+                <div className={cx('bottom_left_header')}>
+                    <nav className="header-nav">
+                        <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
+                        <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
+                        <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
+                        <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
+                        <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
+                    </nav>
+                </div>
+                <div className={cx('bottom_right_header')}>
+                    <img width='20' height='20' src="https://salt.tikicdn.com/ts/upload/88/5c/9d/f5ee506836792eb7775e527ef8350a44.png" alt="header-icon-location" />
+                    <h4 >Giao đến:</h4>
+                    <div >Q. 1, P. Bến Nghé, Hồ Chí Minh</div></div>
+
+            </div>
+        </div>
+        </header >
     );
 }
 
