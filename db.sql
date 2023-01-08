@@ -109,3 +109,5 @@ INSERT INTO `shop_db`.`status` (`name`) VALUES ('Chưa xác nhận');
 INSERT INTO `shop_db`.`status` (`name`) VALUES ('Xác nhận');
 INSERT INTO `shop_db`.`status` (`name`) VALUES ('Hoàn thành');
 INSERT INTO `shop_db`.`status` (`name`) VALUES ('Đã hủy');
+
+INSERT INTO user( email, password, fullname, role_id ) VALUES ('admin', '$2a$10$IhrjhZcZiATnxdnUVZlxC.1sF5bflxtiFCxpaeCvYtMnykred/WR6', 'ADMIN', 1);
