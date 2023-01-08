@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.example.shop_project.constant.ApiConstant.*;
+
 @Configuration
 @EnableWebSecurity
 public class SecSecurityConfig {
@@ -28,8 +30,7 @@ public class SecSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/signin").permitAll()
-                .antMatchers("/auth/signup").permitAll()
+                .antMatchers(API_LOGIN, API_SIGNUP).permitAll()
                 .anyRequest().authenticated();
 //        http.authorizeRequests()
 //                .antMatchers("/product/insert").hasAuthority("Admin");
