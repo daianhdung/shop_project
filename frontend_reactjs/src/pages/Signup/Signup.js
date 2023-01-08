@@ -4,10 +4,38 @@ import { Link } from 'react-router-dom';
 import config from '~/config';
 import images from '~/assets/images';
 import styles from './Signup.module.scss';
+import { useRef, useState } from 'react';
+import * as signupService from '~/service/signupService';
 
 const cx = classNames.bind(styles);
 
 function Signup() {
+    const email = useRef(null);
+    const password = useRef(null);
+    const fullname = useRef(null);
+    const phone = useRef(null);
+    const address = useRef(null);
+    const [state, setState] = useState({ email: '', password: '', fullname: '', phone: '', address: '' });
+
+
+    const handleClick = () => {
+        setState({
+            email: email.current.value,
+            password: password.current.value,
+            fullname: fullname.current.value,
+            phone: phone.current.value,
+            address: address.current.value,
+        });
+    }
+    if (state.email && state.password) {
+        const fetchApi = async () => {
+            const result = await signupService.signup(state.email, state.password, state.fullname, state.phone, state.address);
+            console.log(result);
+
+            return result;
+        };
+        fetchApi();
+    }
     return (<div className={cx('wrapper')}>
         <div className={cx('inner')}>
             <div className={cx('header')}>
@@ -30,25 +58,46 @@ function Signup() {
                                 <label >Email</label>
                             </div>
                             <div className={cx('input_wrap')}>
-                                <input placeholder="Địa chỉ email" name="email" maxLength="50" />
+                                <input placeholder="Địa chỉ email" name="email" maxLength="50" ref={email} />
                             </div>
                         </div>
                     </div>
                     <div className={cx('wrapper-form')}>
                         <div className={cx('wrapper_input')}>
                             <div className={cx('input_wrap')}>
-                                <input name="password" placeholder="Mật khẩu" type="password" autoComplete="password" />
+                                <input name="fullname" placeholder="Họ và tên" type="text" ref={fullname} />
                             </div>
                         </div>
                     </div>
                     <div className={cx('wrapper-form')}>
+                        <div className={cx('wrapper_input')}>
+                            <div className={cx('input_wrap')}>
+                                <input name="password" placeholder="Mật khẩu" type="password" ref={password} />
+                            </div>
+                        </div>
+                    </div>
+                    {/* <div className={cx('wrapper-form')}>
                         <div className={cx('wrapper_input')}>
                             <div className={cx('input_wrap')}>
                                 <input name="password" placeholder="Nhập lại mật khẩu" type="password" autoComplete="password" />
                             </div>
                         </div>
+                    </div> */}
+                    <div className={cx('wrapper-form')}>
+                        <div className={cx('wrapper_input')}>
+                            <div className={cx('input_wrap')}>
+                                <input name="phone" placeholder="Số điện thoại" type="text" ref={phone} />
+                            </div>
+                        </div>
                     </div>
-                    <button className={cx('button_form')} type="button">
+                    <div className={cx('wrapper-form')}>
+                        <div className={cx('wrapper_input')}>
+                            <div className={cx('input_wrap')}>
+                                <input name="address" placeholder="Địa chỉ" type="text" ref={address} />
+                            </div>
+                        </div>
+                    </div>
+                    <button onClick={handleClick} className={cx('button_form')} type="button">
                         <div >
                             <span className={cx('wrapper_input')}>
                                 Đăng kí
