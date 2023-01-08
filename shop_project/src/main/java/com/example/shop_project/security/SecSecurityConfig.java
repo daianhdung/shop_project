@@ -29,7 +29,11 @@ public class SecSecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/signin").permitAll()
+                .antMatchers("/auth/signup").permitAll()
                 .anyRequest().authenticated();
+//        http.authorizeRequests()
+//                .antMatchers("/product/insert").hasAuthority("Admin");
+
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
