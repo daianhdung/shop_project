@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -40,31 +42,33 @@ public class AuthController {
     public ResponseEntity<?> signin(@RequestBody SignInRequest request, HttpServletResponse response) {
         Gson gson = new Gson();
 
-        UsernamePasswordAuthenticationToken authRequest =
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
-        Authentication auth = authenticationManager.authenticate(authRequest);
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(auth);
+        try{
+            UsernamePasswordAuthenticationToken authRequest =
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
+            Authentication auth = authenticationManager.authenticate(authRequest);
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            securityContext.setAuthentication(auth);
+            long expiredDate = 10 * 1000;
+            long refreshExpiredDate = 8 * 60 * 60 * 1000;
+            String token = jwtTokenHelper.generateToken(request.getEmail(),"authen", expiredDate);
+            String refreshToken = jwtTokenHelper.generateToken(request.getEmail(),"refresh", refreshExpiredDate);
 
-        long expiredDate = 10 * 1000;
-        long refreshExpiredDate = 8 * 60 * 60 * 1000;
+            DataTokenResponse dataTokenResponse = new DataTokenResponse();
+            dataTokenResponse.setToken(token);
+            dataTokenResponse.setFreshToken(refreshToken);
+            dataTokenResponse.setRole(securityContext.getAuthentication().getAuthorities().iterator().next().toString());
 
-
-        String token = jwtTokenHelper.generateToken(request.getEmail(),"authen", expiredDate);
-        String refreshToken = jwtTokenHelper.generateToken(request.getEmail(),"refresh", refreshExpiredDate);
-
-        DataTokenResponse dataTokenResponse = new DataTokenResponse();
-        dataTokenResponse.setToken(token);
-        dataTokenResponse.setFreshToken(refreshToken);
-        dataTokenResponse.setRole(securityContext.getAuthentication().getAuthorities().iterator().next().toString());
-
-        DataResponse dataResponse = new DataResponse();
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setDesc("");
-        dataResponse.setData(dataTokenResponse);
-        dataResponse.setSuccess(true);
-
-        return new ResponseEntity<>(dataResponse , HttpStatus.OK);
+            DataResponse dataResponse = new DataResponse();
+            dataResponse.setStatus(HttpStatus.OK.value());
+            dataResponse.setDesc("");
+            dataResponse.setData(dataTokenResponse);
+            dataResponse.setSuccess(true);
+            return new ResponseEntity<>(dataResponse , HttpStatus.OK);
+        }catch (BadCredentialsException e){
+            return new ResponseEntity<>("Sai tài khoản hoặc mật khẩu" , HttpStatus.BAD_REQUEST);
+        }catch (UsernameNotFoundException e){
+            return new ResponseEntity<>("Tài khoản không tồn tại" , HttpStatus.BAD_REQUEST);
+        }
     }
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequest request) {

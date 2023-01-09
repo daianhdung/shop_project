@@ -4,10 +4,12 @@ import com.example.shop_project.entity.UserEntity;
 import com.example.shop_project.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -34,10 +36,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             if (isMatchPassword) {
                 return new UsernamePasswordAuthenticationToken(user.getId(), user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole().getName()));
             } else {
-                return null;
+                throw new BadCredentialsException("Bad credentials");
             }
         } else {
-            return null;
+            throw new UsernameNotFoundException("User not found");
         }
     }
 

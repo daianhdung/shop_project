@@ -5,8 +5,7 @@ import styles from './DefaultLayout.module.scss';
 import Header from '~/layouts/components/Header/Header';
 import Sidebar from '~/layouts/components/Sidebar/Sidebar';
 import Footer from '~/layouts/components/Footer/Footer';
-import images from '~/assets/images';
-import { getCookie } from '~/utils/utilsCookie';
+import { getCookie, removeCookie } from '~/utils/utilsCookie';
 
 const cx = classNames.bind(styles)
 
@@ -14,11 +13,9 @@ const cx = classNames.bind(styles)
 function DefaultLayout({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(getCookie('tokenJwt') != null ? true : false);
 
-    function handleLogin() {
-        setIsLoggedIn(true);
-    }
 
     function handleLogout() {
+        removeCookie('tokenJwt')
         setIsLoggedIn(false);
     }
 

@@ -7,14 +7,12 @@ import config from '~/config';
 import styles from './Header.module.scss';
 import images from '~/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { removeCookie } from '~/utils/utilsCookie';
 
 const cx = classNames.bind(styles);
 
 function Header(props) {
     const [over, setOver] = useState(false);
     function handleLogoutClick() {
-        removeCookie('tokenJwt')
         props.onLogout();
     }
 

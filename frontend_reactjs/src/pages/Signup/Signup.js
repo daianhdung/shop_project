@@ -28,13 +28,11 @@ function Signup() {
         });
     }
     if (state.email && state.password) {
-        const fetchApi = async () => {
+        const fetchApiSignup = async () => {
             const result = await signupService.signup(state.email, state.password, state.fullname, state.phone, state.address);
-            console.log(result);
-
             return result;
         };
-        fetchApi();
+        fetchApiSignup();
     }
     return (<div className={cx('wrapper')}>
         <div className={cx('inner')}>
