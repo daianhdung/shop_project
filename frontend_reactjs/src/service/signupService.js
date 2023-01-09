@@ -1,5 +1,5 @@
 import * as httpRequest from '~/utils/httpRequest';
-import Popups, { errorToast, successToast } from '~/components/Popups'
+import { errorToast, successToast } from '~/components/Popups'
 
 export const signup = async (email, password, fullname, phone, address) => {
     try {

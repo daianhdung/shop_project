@@ -1,4 +1,4 @@
-import Popups, { errorToast} from '~/components/Popups'
+import { errorToast} from '~/components/Popups'
 import { saveCookie } from '~/utils/utilsCookie';
 
 import * as httpRequest from '~/utils/httpRequest';
