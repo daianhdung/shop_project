@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link, NavLink } from 'react-router-dom';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -7,14 +7,19 @@ import config from '~/config';
 import styles from './Header.module.scss';
 import images from '~/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import useAuth from '~/hooks/useAuth';
+
 
 const cx = classNames.bind(styles);
 
 function Header(props) {
+    
+    const context = useAuth()
+    
+
     const [over, setOver] = useState(false);
-    function handleLogoutClick() {
-        props.onLogout();
-    }
+
+
 
     return (
         <header className={cx('wrapper')}>
@@ -49,10 +54,10 @@ function Header(props) {
                     </div>
                     <div className={cx('up_last_header')}>
                         <nav className="header-nav">
-                            {props.isLoggedIn ? (
+                            {context.auth ? (
                                 <React.Fragment>
-                                    <NavLink onClick={handleLogoutClick} className={cx('nav_link1')}>Đăng xuất</NavLink>
-                                    <NavLink to={config.routes.login} className={cx('nav_link1')}>Username</NavLink>
+                                    <NavLink onClick={context.logout} className={cx('nav_link1')}>Đăng xuất</NavLink>
+                                    <NavLink to={config.routes.profile} className={cx('nav_link1')}>Username</NavLink>
                                 </React.Fragment>
                         ) : (
                         <React.Fragment>

@@ -1,18 +1,24 @@
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
-
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import config from '~/config';
 import images from '~/assets/images';
 import styles from './Login.module.scss';
 import { useRef, useState } from 'react';
 import * as loginService from '~/service/loginService'
+import useAuth from '~/hooks/useAuth';
 
 
 const cx = classNames.bind(styles);
 
 
 function Login() {
+    const contextAuth = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || "/";
+    console.log(contextAuth);
+
     const email = useRef(null);
     const password = useRef(null);
     const [state, setState] = useState({ email: '', password: '' });
@@ -27,6 +33,10 @@ function Login() {
     if (state.email && state.password) {
         const fetchApi = async () => {
             const result = await loginService.login(state.email, state.password);
+            if(result.success){
+                contextAuth.auth = true
+                navigate(from, {replace: true})
+            }
             return result;
         };
         fetchApi();
