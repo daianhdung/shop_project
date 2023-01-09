@@ -32,6 +32,11 @@ body {
     text-rendering: optimizeSpeed;
 }
 
+.swal2-popup {
+    font-size: 1.6rem !important;
+    font-weight: 700;
+}
+
 button,
 input,
 [tabindex] {
@@ -50,6 +55,6 @@ a[href] {
     }
 }
 
-li{
+li {
     list-style-type: none;
 }

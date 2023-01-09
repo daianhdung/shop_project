@@ -7,7 +7,6 @@ import images from '~/assets/images';
 import styles from './Login.module.scss';
 import { useRef, useState } from 'react';
 import * as loginService from '~/service/loginService'
-import { saveCookie } from '~/utils/utilsCookie';
 
 
 const cx = classNames.bind(styles);
@@ -28,7 +27,6 @@ function Login() {
     if (state.email && state.password) {
         const fetchApi = async () => {
             const result = await loginService.login(state.email, state.password);
-            saveCookie('tokenJwt', 'Bearer ' + result.data.token, 20 / 24 / 60 / 60)
             return result;
         };
         fetchApi();
