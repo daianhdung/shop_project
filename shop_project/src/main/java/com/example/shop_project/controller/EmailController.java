@@ -4,6 +4,7 @@ import com.example.shop_project.entity.UserEntity;
 import com.example.shop_project.jwt.JwtTokenHelper;
 import com.example.shop_project.model.EmailDetail;
 import com.example.shop_project.model.PasswordRandom;
+import com.example.shop_project.payload.request.SignInRequest;
 import com.example.shop_project.payload.response.DataResponse;
 import com.example.shop_project.service.EmailService;
 import com.example.shop_project.service.UserService;
@@ -27,24 +28,26 @@ public class EmailController {
 
 
     @PostMapping("/forgot")
-    public ResponseEntity<?> forgotEmail(@RequestParam(name = "email") String email) {
+    public ResponseEntity<?> forgotEmail(@RequestBody SignInRequest email) {
         System.out.println(email);
-        boolean isFindEmail = userService.checkUser(email);
+        boolean isFindEmail = userService.checkUser(email.getEmail());
         DataResponse dataResponse = new DataResponse();
         if (isFindEmail) {
-            EmailDetail emailDetail = emailService.getEmailDetailWithTokenPassword(email);
+            EmailDetail emailDetail = emailService.getEmailDetailWithTokenPassword(email.getEmail());
             emailService.sendEmail(emailDetail);
             dataResponse.setData("");
             dataResponse.setDesc("Sent email forgot password");
             dataResponse.setStatus(HttpStatus.OK.value());
             dataResponse.setSuccess(isFindEmail);
+            return new ResponseEntity<>(dataResponse, HttpStatus.OK);
         } else  {
             dataResponse.setData("");
             dataResponse.setDesc("Cant find email");
-            dataResponse.setStatus(HttpStatus.OK.value());
+            dataResponse.setStatus(HttpStatus.NO_CONTENT.value());
             dataResponse.setSuccess(isFindEmail);
+            return new ResponseEntity<>(dataResponse, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+
     }
     @GetMapping("/sendpassword/{token}")
     public ResponseEntity<?> sendPassword(@PathVariable(name = "token") String token) {
