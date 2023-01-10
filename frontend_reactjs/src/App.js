@@ -6,6 +6,7 @@ import { DefaultLayout } from '~/layouts';
 import { AuthProvider } from './context/AuthProvider';
 import RequireAuth from './components/RequiredAuth';
 
+
 function App() {
     return (
         <Router>
