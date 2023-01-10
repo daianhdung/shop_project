@@ -49,6 +49,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public boolean checkUser(String email) {
+        return userRepository.findByEmail(email).size() > 0 ? true : false;
+    }
+
+    @Override
     public UserEntity getUser(String email) {
         return userRepository.findByEmail(email).size() > 0 ? userRepository.findByEmail(email).get(0) : null;
     }
