@@ -31,7 +31,7 @@ public class SecSecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers(API_LOGIN, API_SIGNUP, API_FORGOT_PASSWORD).permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
 //        http.authorizeRequests()
 //                .antMatchers("/product/insert").hasAuthority("Admin");
 

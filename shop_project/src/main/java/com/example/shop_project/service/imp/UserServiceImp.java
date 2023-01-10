@@ -3,6 +3,8 @@ package com.example.shop_project.service.imp;
 
 import com.example.shop_project.entity.RoleEntity;
 import com.example.shop_project.entity.UserEntity;
+import com.example.shop_project.jwt.JwtTokenHelper;
+import com.example.shop_project.model.PasswordRandom;
 import com.example.shop_project.payload.request.SignUpRequest;
 import com.example.shop_project.repository.RoleRepository;
 import com.example.shop_project.repository.UserRepository;
@@ -14,7 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.Charset;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -27,6 +31,8 @@ public class UserServiceImp implements UserService {
     PasswordEncoder passwordEncoder;
     @Autowired
     StringUtil stringUtil;
+    @Autowired
+    private JwtTokenHelper jwtTokenHelper;
 
 
 
@@ -51,6 +57,37 @@ public class UserServiceImp implements UserService {
     @Override
     public boolean checkUser(String email) {
         return userRepository.findByEmail(email).size() > 0 ? true : false;
+    }
+
+    @Override
+    public PasswordRandom generateRandomPassword(String token) {
+        boolean isSucess = jwtTokenHelper.validateToken(token);
+        if (isSucess) {
+            int leftLimit = 97; // letter 'a'
+            int rightLimit = 122; // letter 'z'
+            int targetStringLength = 10;
+            Random random = new Random();
+            String generatedPassword = random.ints(leftLimit, rightLimit + 1)
+                    .limit(targetStringLength)
+                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                    .toString();
+            System.out.println(generatedPassword);
+            String email = jwtTokenHelper.decodeToken(token);
+            UserEntity user = userRepository.findUserEntityByEmail(email);
+            user.setPassword(passwordEncoder.encode(generatedPassword));
+            try {
+                userRepository.save(user);
+                PasswordRandom passwordRandom = new PasswordRandom();
+                passwordRandom.setEmail(email);
+                passwordRandom.setPassword(generatedPassword);
+                return passwordRandom;
+            } catch (Exception e) {
+                return null;
+            }
+
+        } else {
+            return null;
+        }
     }
 
     @Override
