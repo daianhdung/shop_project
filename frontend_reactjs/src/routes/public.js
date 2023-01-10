@@ -7,6 +7,7 @@ import Profile from "~/pages/Profile";
 import Login from "~/pages/Login/Login";
 import Signup from "~/pages/Signup/Signup";
 import AuthenLayout from "~/layouts/AuthenLayout";
+import Forgot from "~/pages/Forgot/Forgot";
 
 const publicRoutes = [
     { path: '/', component: Home },
@@ -14,6 +15,7 @@ const publicRoutes = [
     { path: config.routes.detail, component: Detail },
     { path: config.routes.login, component: Login, layout: AuthenLayout },
     { path: config.routes.signup, component: Signup, layout: AuthenLayout },
+    { path: config.routes.forgot, component: Forgot, layout: AuthenLayout }
 ]
 const privateRoutes = [
     { path: config.routes.profile, component: Profile }

@@ -86,7 +86,7 @@ function Login() {
                     </button>
                 </div>
                 <p className={cx('dont_have_acc')} >Bạn chưa có tài khoản? <Link to={config.routes.signup}>Đăng ký</Link></p>
-                <p className={cx('forgot_password')}>Quên mật khẩu?</p>
+                <Link to={config.routes.forgot} className={cx('forgot_password')}>Quên mật khẩu?</Link>
             </div>
             <div className={cx('footer')}>
                 Footer
