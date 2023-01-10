@@ -48,7 +48,7 @@ public class AuthController {
             Authentication auth = authenticationManager.authenticate(authRequest);
             SecurityContext securityContext = SecurityContextHolder.getContext();
             securityContext.setAuthentication(auth);
-            long expiredDate = 10 * 1000;
+            long expiredDate = 8 * 60 * 60 * 1000;
             long refreshExpiredDate = 8 * 60 * 60 * 1000;
             String token = jwtTokenHelper.generateToken(request.getEmail(),"authen", expiredDate);
             String refreshToken = jwtTokenHelper.generateToken(request.getEmail(),"refresh", refreshExpiredDate);
@@ -105,4 +105,5 @@ public class AuthController {
         }
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
 }

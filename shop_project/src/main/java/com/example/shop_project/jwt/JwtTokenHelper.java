@@ -33,6 +33,20 @@ public class JwtTokenHelper {
                 .signWith(secretKey, SignatureAlgorithm.HS256) // thuật toán mã hóa và secret Key
                 .compact(); // trả về token đã được mã hóa
     }
+    public String generateToken(String data, long expiredDate) {
+        Date now = new Date();
+        Date dateExpired = new Date(now.getTime() + expiredDate);
+        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(strKey));
+
+
+
+        return Jwts.builder()
+                .setSubject(data) // lữu trữ dữ liệu vào trong token kiểu String
+                .setIssuedAt(now) // thời gian tạo ra token
+                .setExpiration(dateExpired) // thời gian hết hạn token
+                .signWith(secretKey, SignatureAlgorithm.HS256) // thuật toán mã hóa và secret Key
+                .compact(); // trả về token đã được mã hóa
+    }
     public String generateRefreshToken(String data) {
         return "";
     }

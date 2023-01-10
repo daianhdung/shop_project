@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3307/shop_db
     username: root
-    password: admin123
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
@@ -12,7 +12,17 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
-
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: thienlachinh@gmail.com
+    password: ufomzacqcgloiarb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 file:
   upload-dir: E:\Java\SpringBoot\food_project_fe\preview\osahan-eat\theme-sidebar\img
