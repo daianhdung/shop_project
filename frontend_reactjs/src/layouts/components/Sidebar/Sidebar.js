@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames/bind';
-import { Link, NavLink } from 'react-router-dom';
 
-import config from '~/config';
 import styles from './Sidebar.module.scss';
 
 const cx = classNames.bind(styles);
