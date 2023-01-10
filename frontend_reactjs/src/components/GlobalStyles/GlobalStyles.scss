@@ -13,6 +13,8 @@
     --default-layout-width: 1440px;
 
     --btn-color: #4f9bbf;
+    // --swiper-navigation-color: blue;
+    // --swiper-theme-color: red;
 }
 
 * {
@@ -29,7 +31,6 @@ body {
     font-family: var(--font-family);
     font-size: 1.6rem;
     line-height: 1.5;
-    text-rendering: optimizeSpeed;
 }
 
 .swal2-popup {

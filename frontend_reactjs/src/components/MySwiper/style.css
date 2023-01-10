@@ -1,0 +1,19 @@
+.swiper{
+    height: 100%;
+    margin-top: 10px;
+}
+
+.product-info {
+    min-height: 112px;
+    position: relative;
+    width: 100%;
+    float: left;
+    z-index: 10;
+    padding: 10px 0;
+    max-width: 250px;
+}
+
+.old-price .price{
+    color: #8e8e8e;
+    text-decoration: line-through;
+}
