@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3307/shop_db
     username: root
-    password: admin123
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
@@ -24,6 +24,10 @@ spring:
           starttls:
             enable: true
 
+redis:
+  host: localhost
+  port: 6379
+  expireTokenForgot: 3600000
 file:
   upload-dir: E:\Java\SpringBoot\food_project_fe\preview\osahan-eat\theme-sidebar\img
 

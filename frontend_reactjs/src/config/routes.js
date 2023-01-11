@@ -5,6 +5,7 @@ const routes = {
     login: '/login',
     signup: '/signup',
     forgot: '/forgot',
+    change: '/change'
     cart: '/cart'
 };
 

@@ -49,22 +49,29 @@ public class EmailController {
         }
 
     }
-    @GetMapping("/sendpassword/{token}")
-    public ResponseEntity<?> sendPassword(@PathVariable(name = "token") String token) {
-        PasswordRandom passwordRandom = userService.generateRandomPassword(token);
-        String result = "";
+    @PostMapping("/changepasswordforgot")
+    public ResponseEntity<?> sendPassword(@RequestParam(name = "token") String token,
+                                          @RequestParam(name = "password") String password
+    ) {
+        PasswordRandom passwordRandom = userService.generateRandomPassword(token, password);
+        DataResponse dataResponse = new DataResponse();
         if (passwordRandom != null) {
-            result = "Sent password";
+            dataResponse.setDesc("update change password success");
+            dataResponse.setSuccess(true);
             EmailDetail emailDetail = emailService.getEmailDetailWithPassword(passwordRandom);
             emailService.sendEmail(emailDetail);
         } else {
-            result = "Cant sent password";
+            dataResponse.setDesc("update change password fail");
+            dataResponse.setSuccess(false);
         }
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
-    @GetMapping ("/test")
-    String test() {
-        return "test";
+    @GetMapping("/checktokenforget/{token}")
+    public ResponseEntity<?> checkTokenForget(@PathVariable(name = "token") String token) {
+        DataResponse dataResponse = new DataResponse();
+        boolean isContain = emailService.checkTokenForgot(token);
+        dataResponse.setSuccess(isContain);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
 
