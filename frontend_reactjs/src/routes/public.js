@@ -8,11 +8,13 @@ import Login from "~/pages/Login/Login";
 import Signup from "~/pages/Signup/Signup";
 import AuthenLayout from "~/layouts/AuthenLayout";
 import Forgot from "~/pages/Forgot/Forgot";
+import Cart from "~/pages/Cart/Cart";
 
 const publicRoutes = [
     { path: '/', component: Home },
     { path: config.routes.home, component: Home },
     { path: config.routes.detail, component: Detail },
+    { path: config.routes.cart, component: Cart },
     { path: config.routes.login, component: Login, layout: AuthenLayout },
     { path: config.routes.signup, component: Signup, layout: AuthenLayout },
     { path: config.routes.forgot, component: Forgot, layout: AuthenLayout }

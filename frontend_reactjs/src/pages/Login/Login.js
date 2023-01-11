@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate} from 'react-router-dom';
 
 import config from '~/config';
 import images from '~/assets/images';
@@ -13,6 +13,7 @@ const cx = classNames.bind(styles);
 
 
 function Login() {
+    
     const contextAuth = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
@@ -22,7 +23,10 @@ function Login() {
     const email = useRef(null);
     const password = useRef(null);
     const [state, setState] = useState({ email: '', password: '' });
-
+    //Check if login , redirect to home
+    if (contextAuth.auth) {
+        navigate(from, { replace: true })
+    }
 
     const handleClick = () => {
         setState({
@@ -33,15 +37,16 @@ function Login() {
     if (state.email && state.password) {
         const fetchApi = async () => {
             const result = await loginService.login(state.email, state.password);
-            if(result.success){
+            if (result.success) {
                 contextAuth.auth = true
-                navigate(from, {replace: true})
+                navigate(from, { replace: true })
             }
             return result;
         };
         fetchApi();
     }
 
+    
 
 
     return (<div className={cx('wrapper')}>

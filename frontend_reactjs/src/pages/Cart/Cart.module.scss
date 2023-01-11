@@ -5,7 +5,7 @@
     border-radius: 8px;
 }
 
-.header-detail {
+.header-cart {
     padding: 10px 0;
 
     .link-header {
@@ -17,68 +17,37 @@
     }
 }
 
-.mid-detail {
+.bot-cart {
+    .wrap_td {
+        display: flex;
+        img {
+            padding: 10px;
+        }
+        .descrip-product {
+            padding: 10px;
+        }
+        p,
+        span,
+        div {
+            margin: 5px 0;
+        }
+        .modal-close {
+            cursor: pointer;
+        }
+    }
+    td {
+        padding: 0px 15px;
+    }
+}
+
+.quantity_setup {
     display: flex;
-    justify-content: space-between;
-    height: 100vh;
-
-    .left-detail {
-        border-radius: 5px;
-        width: 500px;
-        background-color: rgb(233, 233, 233);
-        height: 60%;
-    }
-
-    .right-detail {
-        border-radius: 5px;
-        width: 500px;
-        height: 100%;
-    }
-}
-
-.description_detail {
-    h3 {
-        color: var(--disabled-color);
-        font-weight: 500;
-        margin: 10px 0;
-    }
-    span {
-        color: #000;
-        font-weight: 700;
-    }
-}
-
-.span-yellow {
-    width: 120px;
-    height: 25px;
-    background-color: #ffba35;
-    font-weight: 700;
-    color: #fff;
-    border-radius: 4px 4px 10px 10px;
-    text-align: center;
-    line-height: 1.5;
-}
-
-.product_action {
-    margin-top: 15px;
-}
-
-.product_size {
-    margin: 15px 0;
-    display: flex;
-    justify-content: space-between;
-    label{
+    label {
         font-size: 2rem;
     }
-}
-
-.quantity_setup{
-    label{
-        font-size: 2rem;
-    }
-    input{
-        width: 40px;
-        height: 40px;
+    input {
+        width: 30px;
+        height: 30px;
         text-align: center;
         font-size: 1.6rem;
         border-radius: 50%;
@@ -86,8 +55,8 @@
         margin: 0 5px;
     }
     .btn {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         line-height: 30px;
         text-align: center;
         margin: 0 auto;
@@ -97,19 +66,20 @@
         cursor: pointer;
     }
 
-    .btn-reduce{
+    .btn-reduce {
         margin-left: 15px;
-    }
-    .btn-increase{
-        
     }
 }
 
-.button_action {
+.cart-footer {
+    display: flex;
+    justify-content: flex-end;
+
     button {
+        margin-left: 15px;
         margin-top: 20px;
-        width: 400px;
-        height: 70px;
+        width: 300px;
+        height: 50px;
         font-size: 1.8rem;
         cursor: pointer;
         background: #3498db;
@@ -142,6 +112,7 @@
         transition: all 0.3s ease;
     }
     button.grow_spin:hover::after {
-        transform: scale(1, 1) rotate(0deg);transition: all 0.3s ease-out;
+        transform: scale(1, 1) rotate(0deg);
+        transition: all 0.3s ease-out;
     }
 }
