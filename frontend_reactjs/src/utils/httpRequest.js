@@ -9,4 +9,16 @@ export const post = async (path, option = {}) => {
     return response.data;
 }
 
+export const postParams = async (path, json = {}, params = {}) => {
+    const response = await httpRequest.post(path, json, {
+        params: params
+    })
+    return response.data;
+}
+
+export const get = async (path = {}) => {
+    const response = await httpRequest.get(path)
+    return response.data;
+}
+
 export default httpRequest;

@@ -8,4 +8,5 @@ public interface EmailService {
     void sendEmail(EmailDetail emailDetail);
     EmailDetail getEmailDetailWithTokenPassword(String email);
     EmailDetail getEmailDetailWithPassword(PasswordRandom passwordRandom );
+    boolean checkTokenForgot(String token);
 }

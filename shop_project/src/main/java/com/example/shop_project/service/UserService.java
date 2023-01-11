@@ -7,7 +7,7 @@ import com.example.shop_project.payload.request.SignUpRequest;
 public interface UserService {
     boolean insertUser(SignUpRequest request);
     boolean checkUser(String email);
-    PasswordRandom generateRandomPassword(String token);
+    PasswordRandom generateRandomPassword(String token, String password);
 
     public UserEntity getUser(String email);
 }

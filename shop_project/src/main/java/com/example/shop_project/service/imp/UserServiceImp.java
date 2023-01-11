@@ -12,6 +12,7 @@ import com.example.shop_project.service.UserService;
 import com.example.shop_project.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,8 @@ public class UserServiceImp implements UserService {
     RoleRepository roleRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    RedisTemplate redisTemplate;
     @Autowired
     StringUtil stringUtil;
     @Autowired
@@ -60,26 +63,18 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public PasswordRandom generateRandomPassword(String token) {
+    public PasswordRandom generateRandomPassword(String token, String password) {
         boolean isSucess = jwtTokenHelper.validateToken(token);
         if (isSucess) {
-            int leftLimit = 97; // letter 'a'
-            int rightLimit = 122; // letter 'z'
-            int targetStringLength = 10;
-            Random random = new Random();
-            String generatedPassword = random.ints(leftLimit, rightLimit + 1)
-                    .limit(targetStringLength)
-                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                    .toString();
-            System.out.println(generatedPassword);
             String email = jwtTokenHelper.decodeToken(token);
             UserEntity user = userRepository.findUserEntityByEmail(email);
-            user.setPassword(passwordEncoder.encode(generatedPassword));
+            user.setPassword(passwordEncoder.encode(password));
             try {
                 userRepository.save(user);
                 PasswordRandom passwordRandom = new PasswordRandom();
                 passwordRandom.setEmail(email);
-                passwordRandom.setPassword(generatedPassword);
+                passwordRandom.setPassword(password);
+                redisTemplate.opsForValue().getAndDelete(email);
                 return passwordRandom;
             } catch (Exception e) {
                 return null;

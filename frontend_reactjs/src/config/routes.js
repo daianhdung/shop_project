@@ -4,7 +4,8 @@ const routes = {
     detail: '/detail',
     login: '/login',
     signup: '/signup',
-    forgot: '/forgot'
+    forgot: '/forgot',
+    change: '/change'
 };
 
 export default routes;

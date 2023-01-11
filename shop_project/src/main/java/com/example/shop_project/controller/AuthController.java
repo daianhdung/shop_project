@@ -50,8 +50,8 @@ public class AuthController {
             securityContext.setAuthentication(auth);
             long expiredDate = 8 * 60 * 60 * 1000;
             long refreshExpiredDate = 8 * 60 * 60 * 1000;
-            String token = jwtTokenHelper.generateToken(request.getEmail(),"authen", expiredDate);
-            String refreshToken = jwtTokenHelper.generateToken(request.getEmail(),"refresh", refreshExpiredDate);
+            String token = jwtTokenHelper.generateToken(request.getEmail(),"authen",securityContext.getAuthentication().getAuthorities().iterator().next().toString() , expiredDate);
+            String refreshToken = jwtTokenHelper.generateToken(request.getEmail(),"refresh",securityContext.getAuthentication().getAuthorities().iterator().next().toString() ,refreshExpiredDate);
 
             DataTokenResponse dataTokenResponse = new DataTokenResponse();
             dataTokenResponse.setToken(token);
@@ -84,8 +84,8 @@ public class AuthController {
             long expiredDate = 8 * 60 * 60 * 1000;
             long refreshExpiredDate = 8 * 60 * 60 * 1000;
 
-            String token = jwtTokenHelper.generateToken(request.getEmail(), "authen", expiredDate);
-            String refreshToken = jwtTokenHelper.generateToken(request.getEmail(), "refresh", refreshExpiredDate);
+            String token = jwtTokenHelper.generateToken(request.getEmail(), "authen", securityContext.getAuthentication().getAuthorities().iterator().next().toString(), expiredDate);
+            String refreshToken = jwtTokenHelper.generateToken(request.getEmail(), "refresh", securityContext.getAuthentication().getAuthorities().iterator().next().toString(), refreshExpiredDate);
 
             DataTokenResponse dataTokenResponse = new DataTokenResponse();
             dataTokenResponse.setToken(token);

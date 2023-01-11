@@ -1,5 +1,6 @@
 package com.example.shop_project.jwt;
 
+import com.example.shop_project.entity.UserEntity;
 import com.google.gson.Gson;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -16,7 +17,7 @@ public class JwtTokenHelper {
 
     private final String strKey = "xJHDonkgbMOgIGNodeG7l2kgYuG6o28gbeG6rXQgxJHhuqd5IMSR4bunIDI1NiBiaXQ=";
     private Gson gson = new Gson();
-    public String generateToken(String data, String type, long expiredDate) {
+    public String generateToken(String data, String type, String role, long expiredDate) {
         Date now = new Date();
         Date dateExpired = new Date(now.getTime() + expiredDate);
         SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(strKey));
@@ -24,6 +25,7 @@ public class JwtTokenHelper {
         Map<String, Object> map = new HashMap<>();
         map.put("username", data);
         map.put("type", type);
+        map.put("role", role);
         String json = gson.toJson(map);
 
         return Jwts.builder()
@@ -47,9 +49,7 @@ public class JwtTokenHelper {
                 .signWith(secretKey, SignatureAlgorithm.HS256) // thuật toán mã hóa và secret Key
                 .compact(); // trả về token đã được mã hóa
     }
-    public String generateRefreshToken(String data) {
-        return "";
-    }
+
     public String decodeToken(String token) {
 
         SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(strKey));
