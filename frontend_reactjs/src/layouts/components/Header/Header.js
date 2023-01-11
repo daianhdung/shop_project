@@ -46,9 +46,9 @@ function Header(props) {
                     <div className={cx('up_right_header')}>
                         <nav className="header-nav">
                             <NavLink to={config.routes.home} className={cx('nav_link')}>Trang chủ</NavLink>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
+                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Thương hiệu</NavLink>
                             <NavLink to="/blog" className={cx('nav_link')}>Tin tức</NavLink>
-                            <NavLink to="/about-us" className={cx('nav_link')}>Giới thiệu</NavLink>
+                            <NavLink to="/cart" className={cx('nav_link')}>Giỏ hàng</NavLink>
                             <NavLink to="/contact" className={cx('nav_link')}>Liên hệ</NavLink>
                         </nav>
                     </div>
