@@ -60,3 +60,7 @@ a[href] {
 li {
     list-style-type: none;
 }
+
+button, input[type=submit]{
+    user-select: none;
+}
