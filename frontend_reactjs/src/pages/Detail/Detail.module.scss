@@ -1,0 +1,40 @@
+.wrapper {
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    
+}
+
+.header-detail{
+    padding: 10px 0;
+
+    span:not(:last-child) {
+        color: var(--disabled-color);
+        margin-right: 10px;
+    }
+    span:last-child {
+        margin-left: 5px;
+    }
+}
+
+.mid-detail {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+
+    .left-detail {
+        border-radius: 5px;
+        width: 500px;
+        background-color: rgb(233, 233, 233);
+        height: 60%;
+    }
+    
+    .right-detail {
+        border-radius: 5px;
+        width: 500px;
+        height: 100%;
+    }
+}
+
+

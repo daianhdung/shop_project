@@ -1,0 +1,23 @@
+.swiper-shoes-wrapper {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+
+.swiper-shoes-thumb {
+    display: flex;
+    text-align: center;
+
+    .swiper-shoes-thumb-wrapper{
+        background-color: rgba(246,246, 246, 1);
+        border: 1px dashed var(--disabled-color);
+
+        &:hover{
+            border: 1px solid #cbdb95;
+        }
+    }
+    
+}
