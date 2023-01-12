@@ -29,8 +29,10 @@ redis:
   port: 6379
   expireTokenForgot: 3600000
 file:
-  upload-dir: E:\Java\SpringBoot\food_project_fe\preview\osahan-eat\theme-sidebar\img
+  upload-dir: src/main/resources/static/image
+
 
 server:
   servlet:
     context-path: /api
+

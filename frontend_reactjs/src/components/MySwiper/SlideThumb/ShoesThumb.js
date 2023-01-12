@@ -10,6 +10,7 @@ import "swiper/swiper-bundle.css"
 import config from '~/config';
 import styles from './ShoesThumb.module.scss';
 import { useState } from 'react';
+import '~/components/MySwiper/Swiper.scss'
 
 
 const cx = classNames.bind(styles)

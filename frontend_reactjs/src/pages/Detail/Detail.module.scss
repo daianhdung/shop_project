@@ -3,13 +3,12 @@
     padding: 12px 15px;
     background-color: rgb(255, 255, 255);
     border-radius: 8px;
-    
 }
 
-.header-detail{
+.header-detail {
     padding: 10px 0;
 
-    span:not(:last-child) {
+    .link-header {
         color: var(--disabled-color);
         margin-right: 10px;
     }
@@ -29,7 +28,7 @@
         background-color: rgb(233, 233, 233);
         height: 60%;
     }
-    
+
     .right-detail {
         border-radius: 5px;
         width: 500px;
@@ -37,4 +36,112 @@
     }
 }
 
+.description_detail {
+    h3 {
+        color: var(--disabled-color);
+        font-weight: 500;
+        margin: 10px 0;
+    }
+    span {
+        color: #000;
+        font-weight: 700;
+    }
+}
 
+.span-yellow {
+    width: 120px;
+    height: 25px;
+    background-color: #ffba35;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 4px 4px 10px 10px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.product_action {
+    margin-top: 15px;
+}
+
+.product_size {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    label{
+        font-size: 2rem;
+    }
+}
+
+.quantity_setup{
+    label{
+        font-size: 2rem;
+    }
+    input{
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        font-size: 1.6rem;
+        border-radius: 50%;
+        border: 1px dashed var(--disabled-color);
+        margin: 0 5px;
+    }
+    .btn {
+        width: 40px;
+        height: 40px;
+        line-height: 30px;
+        text-align: center;
+        margin: 0 auto;
+        font-size: 1.28571em;
+        background: #ebebeb;
+        border-radius: 999px;
+        cursor: pointer;
+    }
+
+    .btn-reduce{
+        margin-left: 15px;
+    }
+    .btn-increase{
+        
+    }
+}
+
+.button_action {
+    button {
+        margin-top: 20px;
+        width: 400px;
+        height: 70px;
+        font-size: 1.8rem;
+        cursor: pointer;
+        background: #3498db;
+        color: #fff;
+        border: 0.25rem solid #3498db;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        border-radius: 50px;
+        &:hover {
+            color: #3498db;
+        }
+
+        &::after {
+            content: '';
+            background: #ecf0f1;
+            position: absolute;
+            z-index: -1;
+            padding: 0.85em 0.75em;
+            display: block;
+        }
+    }
+
+    button.grow_spin::after {
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        transform: scale(0, 0) rotate(-180deg);
+        transition: all 0.3s ease;
+    }
+    button.grow_spin:hover::after {
+        transform: scale(1, 1) rotate(0deg);transition: all 0.3s ease-out;
+    }
+}

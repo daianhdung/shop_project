@@ -6,18 +6,16 @@
     padding: 10px;
 }
 
-
 .swiper-shoes-thumb {
     display: flex;
     text-align: center;
 
-    .swiper-shoes-thumb-wrapper{
-        background-color: rgba(246,246, 246, 1);
+    .swiper-shoes-thumb-wrapper {
+        background-color: rgba(246, 246, 246, 1);
         border: 1px dashed var(--disabled-color);
 
-        &:hover{
+        &:hover {
             border: 1px solid #cbdb95;
         }
     }
-    
 }
