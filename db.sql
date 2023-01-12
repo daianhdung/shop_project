@@ -508,4 +508,5 @@ INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '6'
 INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '7');
 INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '8');
 INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '9');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '10');
 
