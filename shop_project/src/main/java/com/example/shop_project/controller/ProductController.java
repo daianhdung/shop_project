@@ -46,5 +46,25 @@ public class ProductController {
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/top-product")
+    public ResponseEntity<?> getTopProductByAmountSold(){
+        List<ProductDTO> productDTOList = productService.getProductByTop10AmountOfSold();
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setStatus(200);
+        dataResponse.setSuccess(true);
+        dataResponse.setData(productDTOList);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/top-product-branch")
+    public ResponseEntity<?> getTopProductByBranchAndPrice(){
+        List<ProductDTO> productDTOList = productService.getFeaturedProductByTop1Price();
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setStatus(200);
+        dataResponse.setSuccess(true);
+        dataResponse.setData(productDTOList);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
 
 }

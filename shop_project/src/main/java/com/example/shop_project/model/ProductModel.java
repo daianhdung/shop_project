@@ -1,9 +1,12 @@
 package com.example.shop_project.model;
 
+import java.util.List;
+
 public class ProductModel {
     private int id;
     private String name;
     private int price;
+
     private String image;
     private boolean isBookmark;
 

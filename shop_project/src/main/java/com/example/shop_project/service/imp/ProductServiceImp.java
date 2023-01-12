@@ -38,6 +38,7 @@ public class ProductServiceImp implements ProductService {
     @Override
     public ProductDTO getProducts(int currentPage) {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+
         Pageable pageable = PageRequest.of(currentPage, num);
         Page<ProductEntity> productEntityPage = productRepository.findAll(pageable);
         List<ProductEntity> productEntities = productEntityPage.getContent();
@@ -68,4 +69,35 @@ public class ProductServiceImp implements ProductService {
         List<ProductEntity> productEntities = productRepository.findProductEntitiesByFilter("%did%", ids1, ids1, ids1);
         System.out.println(productEntities.size());
     }
+
+    @Override
+    public List<ProductDTO> getFeaturedProductByTop1Price() {
+        List<Integer> listPrice = productRepository.findMaxPricePerBrand();
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        List<ProductEntity> productEntityList = productRepository.findAllByPriceIsIn(listPrice);
+        productEntityList.forEach(productEntity -> {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(productEntity.getId());
+            productDTO.setName(productEntity.getName());
+            productDTO.setPrice(productEntity.getPrice());
+            productDTOList.add(productDTO);
+        });
+        return productDTOList;
+    }
+
+    @Override
+    public List<ProductDTO> getProductByTop10AmountOfSold() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        List<ProductEntity> productEntityList = productRepository.findByTop10Product();
+        productEntityList.forEach(productEntity -> {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(productEntity.getId());
+            productDTO.setName(productEntity.getName());
+            productDTO.setPrice(productEntity.getPrice());
+            productDTOList.add(productDTO);
+        });
+        return productDTOList;
+    }
+
+
 }

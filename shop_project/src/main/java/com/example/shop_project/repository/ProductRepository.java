@@ -17,4 +17,13 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
                                                     Iterable<Integer> idsBrand,
                                                     Iterable<Integer> idsSize,
                                                     Iterable<Integer> idsCate );
+
+    @Query(value = "SELECT MAX(price) from product GROUP BY brand_id", nativeQuery = true)
+    List<Integer> findMaxPricePerBrand();
+
+    List<ProductEntity> findAllByPriceIsIn(List<Integer> listPrice);
+
+    @Query(value = "SELECT * from product GROUP BY brand_id", nativeQuery = true)
+    List<ProductEntity> findByTop10Product();
+
 }

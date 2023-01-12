@@ -30,7 +30,10 @@ public class SecSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(API_LOGIN, API_SIGNUP, API_MAIL, API_FILE + "/**").permitAll()
+
+                .antMatchers(API_LOGIN, API_SIGNUP, API_MAIL, API_FILE + "/**", API_FEATURED_PRODUCT).permitAll()
+
+
                 .antMatchers(API_INSERT_PRODUCT).hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated();
 

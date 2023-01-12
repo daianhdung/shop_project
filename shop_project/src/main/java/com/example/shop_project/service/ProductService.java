@@ -6,4 +6,7 @@ public interface ProductService {
     int getTotalPage();
     ProductDTO getProducts(int currentPage);
     void test();
+
+    List<ProductDTO> getFeaturedProductByTop1Price();
+    List<ProductDTO> getProductByTop10AmountOfSold();
 }

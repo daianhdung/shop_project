@@ -15,7 +15,10 @@ import '~/components/MySwiper/Swiper.scss'
 const cx = classNames.bind(styles)
 
 
-function ShoesSwiper() {
+function ShoesSwiper(children) {
+  function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
   return (
     <Swiper
       slidesPerView={3}
@@ -30,35 +33,29 @@ function ShoesSwiper() {
       modules={[Pagination, Navigation]}
       className={cx('mySwiper')}
     >
-      <SwiperSlide><Link className={cx('link-a')} to={config.routes.detail}>
-        <img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-zoom-alphafly.jpeg'} />
-        <div className={cx('product-info')} >
-          <h3 className="product-name">
-              Nike Air Force 1 Low Pastel Reveal (DJ6901-600)
-          </h3>
-          <div className="price-box price-loop-style res-item">
-            <span className="special-price">
-              <span className="price">2.990.000₫</span>
-            </span>
-            <div className={cx('old-price')}>
-              <span className={cx('price')}>
-                3.950.000₫
+      {children.children && children.children.map((item) => (
+        <SwiperSlide key={item.id}><Link className={cx('link-a')} to={config.routes.detail}>
+          <img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-zoom-alphafly.jpeg'} />
+          <div className={cx('product-info')} >
+            <h3 className="product-name">
+              {item.name}
+            </h3>
+            <div className="price-box price-loop-style res-item">
+              <span className="special-price">
+                <span className="price">{formatNumber(item.price)}₫</span>
               </span>
+              <div className={cx('old-price')}>
+                <span className={cx('price')}>
+                  3.950.000₫
+                </span>
+              </div>
+            </div>
+            <div className="product_swatch">
             </div>
           </div>
-          <div className="product_swatch">
-          </div>
-        </div>
         </Link>
-      </SwiperSlide>
-      <SwiperSlide><img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-zoom-alphafly.jpeg'} /> 2</SwiperSlide>
-      <SwiperSlide><img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-zoom-alphafly.jpeg'} /> 3</SwiperSlide>
-      <SwiperSlide><img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-zoom-alphafly.jpeg'} /> 4</SwiperSlide>
-      <SwiperSlide><img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-zoom-alphafly.jpeg'} /> 5</SwiperSlide>
-      <SwiperSlide><img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-zoom-alphafly.jpeg'} /> 6</SwiperSlide>
-      <SwiperSlide><img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-zoom-alphafly.jpeg'} /> 7</SwiperSlide>
-      <SwiperSlide><img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-zoom-alphafly.jpeg'} /> 8</SwiperSlide>
-      <SwiperSlide><img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-zoom-alphafly.jpeg'} /> 9</SwiperSlide>
+        </SwiperSlide>
+      ))}
     </Swiper>
   );
 }
