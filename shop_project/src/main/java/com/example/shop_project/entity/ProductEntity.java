@@ -10,10 +10,13 @@ public class ProductEntity {
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "image")
-    private String image;
     @Column(name = "price")
     private int price;
+    @Column(name = "amount_of_sold")
+    private int amountOfSold;
+
+    @OneToMany(mappedBy = "product")
+    private Set<ImageProductEntity> imageProductEntities;
     @OneToMany(mappedBy = "product")
     private Set<ProductSizeEntity> productSizes;
     @OneToMany(mappedBy = "product")
@@ -26,6 +29,8 @@ public class ProductEntity {
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private BrandEntity brand;
+
+
 
     public int getId() {
         return id;
@@ -43,20 +48,20 @@ public class ProductEntity {
         this.name = name;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public int getPrice() {
         return price;
     }
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getAmountOfSold() {
+        return amountOfSold;
+    }
+
+    public void setAmountOfSold(int amountOfSold) {
+        this.amountOfSold = amountOfSold;
     }
 
     public CategoryEntity getCategory() {
@@ -97,5 +102,13 @@ public class ProductEntity {
 
     public void setProductOrders(Set<ProductOrderEntity> productOrders) {
         this.productOrders = productOrders;
+    }
+
+    public Set<ImageProductEntity> getImageProductEntities() {
+        return imageProductEntities;
+    }
+
+    public void setImageProductEntities(Set<ImageProductEntity> imageProductEntities) {
+        this.imageProductEntities = imageProductEntities;
     }
 }

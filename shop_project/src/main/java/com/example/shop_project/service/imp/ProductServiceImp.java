@@ -47,7 +47,6 @@ public class ProductServiceImp implements ProductService {
             ProductModel productModel = new ProductModel();
             productModel.setId(product.getId());
             productModel.setName(product.getName());
-            productModel.setImage(product.getImage());
             productModel.setPrice(product.getPrice());
             boolean isBookMark = product.getBookmarkProducts()
                     .stream()
@@ -59,7 +58,37 @@ public class ProductServiceImp implements ProductService {
         productDTO.setTotalPage(this.getTotalPage());
         productDTO.setCurrentPage(currentPage);
         productDTO.setProducts(productModels);
-
         return productDTO;
     }
+
+    @Override
+    public List<ProductDTO> getFeaturedProductByTop1Price() {
+        List<Integer> listPrice = productRepository.findMaxPricePerBrand();
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        List<ProductEntity> productEntityList = productRepository.findAllByPriceIsIn(listPrice);
+        productEntityList.forEach(productEntity -> {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(productEntity.getId());
+            productDTO.setName(productEntity.getName());
+            productDTO.setPrice(productEntity.getPrice());
+            productDTOList.add(productDTO);
+        });
+        return productDTOList;
+    }
+
+    @Override
+    public List<ProductDTO> getProductByTop10AmountOfSold() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        List<ProductEntity> productEntityList = productRepository.findByTop10Product();
+        productEntityList.forEach(productEntity -> {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(productEntity.getId());
+            productDTO.setName(productEntity.getName());
+            productDTO.setPrice(productEntity.getPrice());
+            productDTOList.add(productDTO);
+        });
+        return productDTOList;
+    }
+
+
 }

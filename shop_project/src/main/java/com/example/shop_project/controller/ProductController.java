@@ -13,10 +13,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
 
 
 @RestController
 @RequestMapping("/product")
+@CrossOrigin
 public class ProductController {
     @Autowired
     ProductService productService;
@@ -43,6 +45,26 @@ public class ProductController {
         dataResponse.setDesc("get product with current page");
         dataResponse.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/top-product")
+    public ResponseEntity<?> getTopProductByAmountSold(){
+        List<ProductDTO> productDTOList = productService.getProductByTop10AmountOfSold();
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setStatus(200);
+        dataResponse.setSuccess(true);
+        dataResponse.setData(productDTOList);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/top-product-branch")
+    public ResponseEntity<?> getTopProductByBranchAndPrice(){
+        List<ProductDTO> productDTOList = productService.getFeaturedProductByTop1Price();
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setStatus(200);
+        dataResponse.setSuccess(true);
+        dataResponse.setData(productDTOList);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
     
 
