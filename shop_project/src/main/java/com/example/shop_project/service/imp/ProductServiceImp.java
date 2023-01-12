@@ -38,7 +38,6 @@ public class ProductServiceImp implements ProductService {
     @Override
     public ProductDTO getProducts(int currentPage) {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-
         Pageable pageable = PageRequest.of(currentPage, num);
         Page<ProductEntity> productEntityPage = productRepository.findAll(pageable);
         List<ProductEntity> productEntities = productEntityPage.getContent();
@@ -61,5 +60,12 @@ public class ProductServiceImp implements ProductService {
         productDTO.setProducts(productModels);
 
         return productDTO;
+    }
+
+    @Override
+    public void test() {
+        List<Integer> ids1 = List.of(1,2);
+        List<ProductEntity> productEntities = productRepository.findProductEntitiesByFilter("%did%", ids1, ids1, ids1);
+        System.out.println(productEntities.size());
     }
 }

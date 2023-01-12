@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS brand (
 CREATE TABLE IF NOT EXISTS product (
     id INT AUTO_INCREMENT,
     name varchar(255),
+    image varchar(100),
     price int,
     category_id int,
     brand_id int,
@@ -371,4 +372,139 @@ INSERT INTO image_product(name, product_id ) VALUES ('
 puma-bari-mule-black3.webp' ,22);
 INSERT INTO image_product(name, product_id ) VALUES ('
 puma-bari-mule-black4.webp' ,22);
+
+
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('35');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('35.5');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('36');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('36.5');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('37');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('37.5');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('38');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('38.5');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('39');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('39.5');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('40');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('40.5');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('41');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('41.5');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('42');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('42.5');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('43');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('43.5');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('44');
+INSERT INTO `shop_db`.`size` (`name`) VALUES ('44.5');
+
+
+INSERT INTO `shop_db`.`category` (`name`) VALUES ('Giày chạy bộ');
+INSERT INTO `shop_db`.`category` (`name`) VALUES ('Giày đi bộ');
+INSERT INTO `shop_db`.`category` (`name`) VALUES ('Giày tennis');
+INSERT INTO `shop_db`.`category` (`name`) VALUES ('Giày đá bóng');
+INSERT INTO `shop_db`.`category` (`name`) VALUES ('Giày địa hình');
+
+
+UPDATE `shop_db`.`product` SET `category_id` = '1' WHERE (`id` = '1');
+UPDATE `shop_db`.`product` SET `category_id` = '2' WHERE (`id` = '2');
+UPDATE `shop_db`.`product` SET `category_id` = '3' WHERE (`id` = '3');
+UPDATE `shop_db`.`product` SET `category_id` = '4' WHERE (`id` = '4');
+UPDATE `shop_db`.`product` SET `category_id` = '1' WHERE (`id` = '5');
+UPDATE `shop_db`.`product` SET `category_id` = '2' WHERE (`id` = '6');
+UPDATE `shop_db`.`product` SET `category_id` = '3' WHERE (`id` = '7');
+UPDATE `shop_db`.`product` SET `category_id` = '4' WHERE (`id` = '8');
+UPDATE `shop_db`.`product` SET `category_id` = '1' WHERE (`id` = '9');
+UPDATE `shop_db`.`product` SET `category_id` = '2' WHERE (`id` = '10');
+UPDATE `shop_db`.`product` SET `category_id` = '3' WHERE (`id` = '11');
+UPDATE `shop_db`.`product` SET `category_id` = '4' WHERE (`id` = '12');
+UPDATE `shop_db`.`product` SET `category_id` = '1' WHERE (`id` = '13');
+UPDATE `shop_db`.`product` SET `category_id` = '2' WHERE (`id` = '14');
+UPDATE `shop_db`.`product` SET `category_id` = '3' WHERE (`id` = '15');
+UPDATE `shop_db`.`product` SET `category_id` = '4' WHERE (`id` = '16');
+UPDATE `shop_db`.`product` SET `category_id` = '1' WHERE (`id` = '17');
+UPDATE `shop_db`.`product` SET `category_id` = '2' WHERE (`id` = '18');
+UPDATE `shop_db`.`product` SET `category_id` = '3' WHERE (`id` = '19');
+UPDATE `shop_db`.`product` SET `category_id` = '4' WHERE (`id` = '20');
+UPDATE `shop_db`.`product` SET `category_id` = '1' WHERE (`id` = '21');
+UPDATE `shop_db`.`product` SET `category_id` = '2' WHERE (`id` = '22');
+
+
+
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('1', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('1', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('1', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('1', '4');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('1', '5');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('1', '6');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('1', '7');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('1', '8');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('1', '9');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('2', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('2', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('2', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('2', '4');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('2', '5');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('2', '6');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('2', '7');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('2', '8');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('3', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('3', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('3', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('3', '4');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('3', '5');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('3', '6');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('3', '7');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('4', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('4', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('4', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('4', '4');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('4', '5');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('4', '6');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('5', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('5', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('5', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('5', '4');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('5', '5');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('5', '6');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('5', '7');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('5', '8');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('6', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('6', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('6', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('6', '4');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('6', '5');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('6', '6');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('6', '7');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('7', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('7', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('7', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('7', '4');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('7', '5');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('7', '6');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('7', '7');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('7', '8');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('7', '9');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('8', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('8', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('8', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('8', '4');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('8', '5');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('8', '6');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('8', '7');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('8', '8');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('9', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('9', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('9', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('9', '4');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('9', '5');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('9', '6');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('9', '7');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('9', '8');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('9', '9');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '4');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '5');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '6');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '7');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '8');
 

@@ -10,4 +10,11 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<ProductEntity, Integer> {
 //    @Query("from product as p order by p.id asc")
 //    List<ProductEntity> findAll();
+
+    @Query("from product as p join product_size as ps on p.id = ps.productId join size as s on ps.sizeId = s.id " +
+            "where p.name like ?1 and p.brand.id in ?2 and s.id in ?3 and p.category.id in ?4")
+    List<ProductEntity> findProductEntitiesByFilter(String name,
+                                                    Iterable<Integer> idsBrand,
+                                                    Iterable<Integer> idsSize,
+                                                    Iterable<Integer> idsCate );
 }

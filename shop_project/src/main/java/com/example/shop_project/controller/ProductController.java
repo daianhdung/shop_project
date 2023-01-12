@@ -23,6 +23,7 @@ public class ProductController {
 
     @PostMapping("/insert")
     public ResponseEntity<?> insertPrpduct() {
+        productService.test();
         return new ResponseEntity<>("test", HttpStatus.OK);
     }
     @GetMapping("/totalpage")
@@ -44,6 +45,6 @@ public class ProductController {
         dataResponse.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
-    
+
 
 }

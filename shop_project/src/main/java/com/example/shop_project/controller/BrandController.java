@@ -22,7 +22,7 @@ public class BrandController {
     private BrandService brandService;
 
     @GetMapping("")
-     public ResponseEntity<?> getALlSize() {
+     public ResponseEntity<?> getALlBrand() {
         DataResponse dataResponse = new DataResponse();
         List<BrandDTO> list = brandService.getALLBrand();
         dataResponse.setSuccess(true);
