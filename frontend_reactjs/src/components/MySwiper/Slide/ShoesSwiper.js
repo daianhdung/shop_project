@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/swiper-bundle.css"
 import config from '~/config';
 import styles from './ShoesSwiper.module.scss';
+import '~/components/MySwiper/Swiper.scss'
 
 
 const cx = classNames.bind(styles)
