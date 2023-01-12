@@ -10,5 +10,5 @@ export const sendCodeToMail = async (email) => {
     }catch (error) {
         console.log(error);
         errorToast(error.response.data.desc)
-}
+    }
 }

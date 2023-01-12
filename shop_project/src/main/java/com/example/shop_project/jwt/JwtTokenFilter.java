@@ -3,6 +3,7 @@ package com.example.shop_project.jwt;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -30,10 +31,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             if (jwtTokenHelper.validateToken(token)) {
                 String json = jwtTokenHelper.decodeToken(token);
                 Map<String, Object> map = gson.fromJson(json, Map.class);
-                System.out.println(map);
+
                 if (StringUtils.hasText(map.get("type").toString()) && !map.get("type").toString().equals("refresh")) {
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(map.get("username"),"", new ArrayList<>());
-                    System.out.println(map.get("username") + "ghaha");
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(map.get("username"),"", AuthorityUtils.createAuthorityList(((String) map.get("role"))));
                     SecurityContext securityContext = SecurityContextHolder.getContext();
                     securityContext.setAuthentication(authenticationToken);
                 }
