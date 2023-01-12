@@ -14,6 +14,7 @@ public class ProductEntity {
     private String image;
     @Column(name = "price")
     private int price;
+    //Lỗi
 //    @Column(name = "amount_of_sold")
 //    private int amountOfSold;
 

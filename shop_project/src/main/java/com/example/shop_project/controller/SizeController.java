@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +24,16 @@ public class SizeController {
      public ResponseEntity<?> getALlSize() {
         DataResponse dataResponse = new DataResponse();
         List<SizeDTO> list = sizeService.getAllSize();
+        dataResponse.setSuccess(true);
+        dataResponse.setData(list);
+        dataResponse.setStatus(HttpStatus.OK.value());
+        dataResponse.setDesc("List All Size");
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+    @GetMapping("/{productId}")
+    public ResponseEntity<?> getSizeByProductId(@PathVariable(name = "productId") int id) {
+        DataResponse dataResponse = new DataResponse();
+        List<SizeDTO> list = sizeService.getSizeByProductId(id);
         dataResponse.setSuccess(true);
         dataResponse.setData(list);
         dataResponse.setStatus(HttpStatus.OK.value());
