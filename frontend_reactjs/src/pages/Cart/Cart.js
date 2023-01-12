@@ -70,6 +70,7 @@ function Cart() {
                 <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: 5.000.000VND</td></tr>
             </table>
         </div>
+        
         <div className={cx('cart-footer')}>
             <Link to={config.routes.home}><button style={{background: 'var(--disabled-color)', borderColor: 'var(--disabled-color)'}} className={cx('grow_spin')} type="submit"><FontAwesomeIcon icon={faLongArrowLeft} /> Quay lại mua hàng </button></Link>
             <button className={cx('grow_spin')} type="submit">Tiến hành đặt hàng <FontAwesomeIcon icon={faLongArrowRight} /></button>
@@ -78,3 +79,5 @@ function Cart() {
 }
 
 export default Cart;
+
+
