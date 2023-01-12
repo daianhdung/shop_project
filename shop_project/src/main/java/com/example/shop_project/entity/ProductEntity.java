@@ -10,10 +10,12 @@ public class ProductEntity {
     private int id;
     @Column(name = "name")
     private String name;
+    @Column(name = "image")
+    private String image;
     @Column(name = "price")
     private int price;
-    @Column(name = "amount_of_sold")
-    private int amountOfSold;
+//    @Column(name = "amount_of_sold")
+//    private int amountOfSold;
 
     @OneToMany(mappedBy = "product")
     private Set<ImageProductEntity> imageProductEntities;
@@ -48,6 +50,14 @@ public class ProductEntity {
         this.name = name;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public int getPrice() {
         return price;
     }
@@ -56,13 +66,13 @@ public class ProductEntity {
         this.price = price;
     }
 
-    public int getAmountOfSold() {
-        return amountOfSold;
-    }
-
-    public void setAmountOfSold(int amountOfSold) {
-        this.amountOfSold = amountOfSold;
-    }
+//    public int getAmountOfSold() {
+//        return amountOfSold;
+//    }
+//
+//    public void setAmountOfSold(int amountOfSold) {
+//        this.amountOfSold = amountOfSold;
+//    }
 
     public CategoryEntity getCategory() {
         return category;
@@ -111,4 +121,5 @@ public class ProductEntity {
     public void setImageProductEntities(Set<ImageProductEntity> imageProductEntities) {
         this.imageProductEntities = imageProductEntities;
     }
+
 }
