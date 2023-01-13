@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/product")
-@CrossOrigin
 public class ProductController {
     @Autowired
     ProductService productService;
@@ -46,6 +45,18 @@ public class ProductController {
         dataResponse.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
+    @GetMapping("/filter/{current}")
+    public ResponseEntity<?> getProductWithPageByFilter(@PathVariable(name = "current") int current) {
+        List<Integer> ids = List.of(1,2);
+        ProductDTO productDTO = productService.getProductByFilter("%did%", ids, ids, ids, current);
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData(productDTO);
+        dataResponse.setSuccess(true);
+        dataResponse.setDesc("get product with current page by filter");
+        dataResponse.setStatus(HttpStatus.OK.value());
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    }
+
 
     @GetMapping("/top-product")
     public ResponseEntity<?> getTopProductByAmountSold(){
@@ -66,6 +77,6 @@ public class ProductController {
         dataResponse.setData(productDTOList);
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
-    
+
 
 }

@@ -22,7 +22,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("")
-    public ResponseEntity<?> getALlSize() {
+    public ResponseEntity<?> getALlCategory() {
         DataResponse dataResponse = new DataResponse();
         List<CategoryDTO> list = categoryService.getAllCategory();
         dataResponse.setSuccess(true);

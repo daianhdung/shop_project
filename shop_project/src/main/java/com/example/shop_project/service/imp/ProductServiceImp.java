@@ -23,9 +23,20 @@ public class ProductServiceImp implements ProductService {
     @Autowired
     ProductRepository productRepository;
     private int num = 9;
+
     @Override
     public int getTotalPage() {
         int size = productRepository.findAll().size();
+        int totalPage = 0;
+        if (size % num == 0) {
+            totalPage = size / num;
+        } else {
+            totalPage = size / num + 1;
+        }
+        return totalPage;
+    }
+    @Override
+    public int getTotalPage(int size) {
         int totalPage = 0;
         if (size % num == 0) {
             totalPage = size / num;
@@ -38,7 +49,6 @@ public class ProductServiceImp implements ProductService {
     @Override
     public ProductDTO getProducts(int currentPage) {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-
         Pageable pageable = PageRequest.of(currentPage, num);
         Page<ProductEntity> productEntityPage = productRepository.findAll(pageable);
         List<ProductEntity> productEntities = productEntityPage.getContent();
@@ -47,6 +57,7 @@ public class ProductServiceImp implements ProductService {
             ProductModel productModel = new ProductModel();
             productModel.setId(product.getId());
             productModel.setName(product.getName());
+            productModel.setImage(product.getImage());
             productModel.setPrice(product.getPrice());
             boolean isBookMark = product.getBookmarkProducts()
                     .stream()
@@ -55,10 +66,44 @@ public class ProductServiceImp implements ProductService {
             productModels.add(productModel);
         });
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setTotalPage(this.getTotalPage());
+        productDTO.setTotalPage(this.getTotalPage(productEntities.size()));
         productDTO.setCurrentPage(currentPage);
         productDTO.setProducts(productModels);
+
         return productDTO;
+    }
+
+    @Override
+    public ProductDTO getProductByFilter(String search, List<Integer> idsBrand, List<Integer> idsSize, List<Integer> idsCate,
+                                         int currentPage) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Pageable pageable = PageRequest.of(currentPage, num);
+        Page<ProductEntity> productEntityPage = productRepository.findProductEntitiesByFilter(search, idsBrand, idsSize, idsCate,pageable);
+        //List<ProductEntity> productEntities = productEntityPage.getContent();
+
+        List<ProductEntity> productEntities = productRepository.findProductEntitiesByFilter(search, idsBrand, idsSize, idsSize);
+
+
+        List<ProductModel> productModels = new ArrayList<>();
+        productEntities.forEach(product -> {
+            ProductModel productModel = new ProductModel();
+            productModel.setId(product.getId());
+            productModel.setName(product.getName());
+            productModel.setImage(product.getImage());
+            productModel.setPrice(product.getPrice());
+            boolean isBookMark = product.getBookmarkProducts()
+                    .stream()
+                    .anyMatch(bookmarkProductEntity -> bookmarkProductEntity.getUser().getEmail().equals(email));
+            productModel.setBookmark(isBookMark);
+            productModels.add(productModel);
+        });
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setTotalPage(this.getTotalPage(productEntities.size()));
+        productDTO.setCurrentPage(currentPage);
+        productDTO.setProducts(productModels);
+
+        return productDTO;
+
     }
 
     @Override

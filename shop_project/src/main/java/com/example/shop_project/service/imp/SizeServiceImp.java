@@ -27,4 +27,16 @@ public class SizeServiceImp implements SizeService {
         });
         return list;
     }
+
+    @Override
+    public List<SizeDTO> getSizeByProductId(int productId) {
+        List<SizeDTO> list = new ArrayList<>();
+        sizeRepository.findSizeEntitiesByProductID(productId).forEach(sizeEntity -> {
+            SizeDTO sizeDTO = new SizeDTO();
+            sizeDTO.setId(sizeEntity.getId());
+            sizeDTO.setName(sizeEntity.getName());
+            list.add(sizeDTO);
+        });
+        return list;
+    }
 }
