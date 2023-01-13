@@ -10,7 +10,9 @@ public class ProductDTO {
     private int id;
     private String name;
     private int price;
-    private Set<ImageProductEntity> images;
+    private String mainImage;
+    private String brandName;
+    private List<String> images;
     private int totalPage;
     private int currentPage;
     private List<ProductModel> products;
@@ -43,6 +45,22 @@ public class ProductDTO {
         return id;
     }
 
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -63,11 +81,11 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public Set<ImageProductEntity> getImages() {
+    public List<String> getImages() {
         return images;
     }
 
-    public void setImages(Set<ImageProductEntity> images) {
+    public void setImages(List<String> images) {
         this.images = images;
     }
 }

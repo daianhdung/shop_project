@@ -10,3 +10,21 @@ export const getFeaturedProduct = async() => {
         console.log(error);
     }
 }
+
+export const getTopSoldProduct = async() => {
+    try{
+        const response = await httpRequest.get('product/top-product')
+        return response.data
+    }catch(error){
+        console.log(error);
+    }
+}
+
+export const getDetailProduct = async(id) => {
+    try{
+        const response = await httpRequest.get('product/detail-product/' + id)
+        return response.data
+    }catch(error){
+        console.log(error);
+    }
+}

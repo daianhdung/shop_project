@@ -37,36 +37,41 @@ function CartModal({ closeModal }) {
                     </div>
                     <div className={cx('modal-body')}>
                         <table border={1}>
-                            <tr>
-                                <th>SẢN PHẨM</th>
-                                <th>ĐƠN GIÁ</th>
-                                <th>SỐ LƯỢNG</th>
-                                <th>THÀNH TIỀN</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className={cx('wrap_td')}>
-                                        <img src={process.env.PUBLIC_URL + '/image/air-jordan.webp'} />
-                                        <div className={cx('descrip-product')}>
-                                            <p>Jordan 1 High Zoom Air CMFT Canyon Rust (CT0979-602)</p>
-                                            <span>- 38.5</span>
-                                            <div className={cx('modal-close')}>&times; Xóa sản phẩm</div>
+                            <thead>
+                                <tr>
+                                    <th>SẢN PHẨM</th>
+                                    <th>ĐƠN GIÁ</th>
+                                    <th>SỐ LƯỢNG</th>
+                                    <th>THÀNH TIỀN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div className={cx('wrap_td')}>
+                                            <img src={process.env.PUBLIC_URL + '/image/air-jordan.webp'} />
+                                            <div className={cx('descrip-product')}>
+                                                <p>Jordan 1 High Zoom Air CMFT Canyon Rust (CT0979-602)</p>
+                                                <span>- 38.5</span>
+                                                <div className={cx('modal-close')}>&times; Xóa sản phẩm</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>5.000.000 VND</td>
-                                <td>
-                                    <div className={cx('quantity_setup')}>
-                                        <button onClick={onReduce} className={cx('btn-reduce', 'btn')} type="button">
-                                            -
-                                        </button>
-                                        <input value={count} type="text" title="Số lượng" maxLength="3" id="qty" name="quantity" onChange={handleChange} />
-                                        <button onClick={onIncrease} className={cx('btn-increase', 'btn')} type="button">+</button>
-                                    </div>
-                                </td>
-                                <td>5.000.000 VND</td>
-                            </tr>
-                            <tr><td style={{padding: '5px'}} colSpan={5} align='right'>Tổng tiền: 5.000.000VND</td></tr>
+                                    </td>
+                                    <td>5.000.000 VND</td>
+                                    <td>
+                                        <div className={cx('quantity_setup')}>
+                                            <button onClick={onReduce} className={cx('btn-reduce', 'btn')} type="button">
+                                                -
+                                            </button>
+                                            <input value={count} type="text" title="Số lượng" maxLength="3" id="qty" name="quantity" onChange={handleChange} />
+                                            <button onClick={onIncrease} className={cx('btn-increase', 'btn')} type="button">+</button>
+                                        </div>
+                                    </td>
+                                    <td>5.000.000 VND</td>
+                                </tr>
+                                <tr><td style={{padding: '5px'}} colSpan={5} align='right'>Tổng tiền: 5.000.000VND</td></tr>
+                            </tbody>
+                            
                         </table>
                     </div>
                     <div className={cx('modal-footer')}>

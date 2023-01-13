@@ -32,7 +32,9 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 
     List<ProductEntity> findAllByPriceIsIn(List<Integer> listPrice);
 
-    @Query(value = "SELECT * from product GROUP BY brand_id", nativeQuery = true)
+    @Query(value = "SELECT * from product ORDER BY amount_of_sold DESC LIMIT 10", nativeQuery = true)
     List<ProductEntity> findByTop10Product();
+
+    ProductEntity findById(int id);
 
 }

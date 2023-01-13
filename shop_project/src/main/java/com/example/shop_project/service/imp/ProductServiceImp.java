@@ -2,26 +2,31 @@ package com.example.shop_project.service.imp;
 
 
 import com.example.shop_project.dto.ProductDTO;
+import com.example.shop_project.entity.BrandEntity;
+import com.example.shop_project.entity.ImageProductEntity;
 import com.example.shop_project.entity.ProductEntity;
 import com.example.shop_project.model.ProductModel;
+import com.example.shop_project.repository.BrandRepository;
 import com.example.shop_project.repository.ProductRepository;
 import com.example.shop_project.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProductServiceImp implements ProductService {
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    BrandRepository brandRepository;
     private int num = 9;
 
     @Override
@@ -57,7 +62,7 @@ public class ProductServiceImp implements ProductService {
             ProductModel productModel = new ProductModel();
             productModel.setId(product.getId());
             productModel.setName(product.getName());
-            productModel.setImage(product.getImage());
+            productModel.setImage(product.getMainImage());
             productModel.setPrice(product.getPrice());
             boolean isBookMark = product.getBookmarkProducts()
                     .stream()
@@ -89,7 +94,7 @@ public class ProductServiceImp implements ProductService {
             ProductModel productModel = new ProductModel();
             productModel.setId(product.getId());
             productModel.setName(product.getName());
-            productModel.setImage(product.getImage());
+            productModel.setImage(product.getMainImage());
             productModel.setPrice(product.getPrice());
             boolean isBookMark = product.getBookmarkProducts()
                     .stream()
@@ -115,6 +120,7 @@ public class ProductServiceImp implements ProductService {
             ProductDTO productDTO = new ProductDTO();
             productDTO.setId(productEntity.getId());
             productDTO.setName(productEntity.getName());
+            productDTO.setMainImage(productEntity.getMainImage());
             productDTO.setPrice(productEntity.getPrice());
             productDTOList.add(productDTO);
         });
@@ -129,10 +135,32 @@ public class ProductServiceImp implements ProductService {
             ProductDTO productDTO = new ProductDTO();
             productDTO.setId(productEntity.getId());
             productDTO.setName(productEntity.getName());
+            productDTO.setMainImage(productEntity.getMainImage());
             productDTO.setPrice(productEntity.getPrice());
             productDTOList.add(productDTO);
         });
         return productDTOList;
+    }
+
+    @Override
+    public ProductDTO getDetailProduct(int id) {
+        ProductDTO productDTO = new ProductDTO();
+        ProductEntity productEntity = productRepository.findById(id);
+        productDTO.setId(productEntity.getId());
+        productDTO.setPrice(productEntity.getPrice());
+        Optional<BrandEntity> brand = brandRepository.findById(productEntity.getBrand().getId());
+        if(brand.isPresent()){
+            productDTO.setBrandName(brand.get().getName());
+        }
+        productDTO.setName(productEntity.getName());
+        Set<ImageProductEntity> imageProduct = productEntity.getImageProductEntities();
+        List<String> images = new ArrayList<>();
+        for(ImageProductEntity data : imageProduct){
+            images.add(data.getName());
+        }
+        productDTO.setImages(images);
+
+        return productDTO;
     }
 
 

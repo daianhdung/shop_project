@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS brand (
 CREATE TABLE IF NOT EXISTS product (
     id INT AUTO_INCREMENT,
     name varchar(255),
-    image varchar(100),
+    main_image varchar(100),
+	amount_of_sold int default 0,
     price int,
     category_id int,
     brand_id int,
@@ -127,34 +128,34 @@ INSERT INTO brand(name) VALUES ("Converse");
 INSERT INTO brand(name) VALUES ("Vans");
 INSERT INTO brand(name) VALUES ("Adidas");
 
-INSERT INTO product(name, price, brand_id ) VALUES ('
-Adidas FLB_Runner Shoes - Black (CQ1970)', "699000", 1);
+INSERT INTO product(name, price, brand_id, amount_of_sold ) VALUES ('
+Adidas FLB_Runner Shoes - Black (CQ1970)', "699000", 1, 3);
 INSERT INTO product(name, price, brand_id ) VALUES ('
 Adidas Superstar Slipon Core Black (S81337/BZ0112)', "1550000", 1);
 INSERT INTO product(name, price, brand_id ) VALUES ('
 Adidas Continental 80 Shoes - Crystal White (EF2101)', "1290000", 1);
-INSERT INTO product(name, price, brand_id ) VALUES ('
-Adidas Stan Smith Green (M20324)', "1550000", 1);
+INSERT INTO product(name, price, brand_id, amount_of_sold ) VALUES ('
+Adidas Stan Smith Green (M20324)', "1550000", 1, 5);
 INSERT INTO product(name, price, brand_id ) VALUES ('
 Adidas Alphabounce Beyond Core Black W (CG5581)', "999000", 1);
-INSERT INTO product(name, price, brand_id ) VALUES ('
-Adidas Superstar Gold Label (C77124/EG4958)', "1850000", 1);
+INSERT INTO product(name, price, brand_id, amount_of_sold ) VALUES ('
+Adidas Superstar Gold Label (C77124/EG4958)', "1850000", 1, 9);
 INSERT INTO product(name, price, brand_id ) VALUES ('
 Adidas Superstar Gold Label (FV3284)', "1650000", 1);
 INSERT INTO product(name, price, brand_id ) VALUES ('
 Adidas Ultraboost 4.0 Shoes - Triple Black (EH1420)', "2990000", 1);
-INSERT INTO product(name, price, brand_id ) VALUES ('
-Adidas Ultraboost Reflective Shoes - Coreblack (EG8105)', "2490000", 1);
-INSERT INTO product(name, price, brand_id ) VALUES ('
-Nike Court Legacy White Black Canvas (CW6539-101)', "1450000", 2);
+INSERT INTO product(name, price, brand_id , amount_of_sold) VALUES ('
+Adidas Ultraboost Reflective Shoes - Coreblack (EG8105)', "2490000", 1, 14);
+INSERT INTO product(name, price, brand_id , amount_of_sold) VALUES ('
+Nike Court Legacy White Black Canvas (CW6539-101)', "1450000", 2, 7);
 INSERT INTO product(name, price, brand_id ) VALUES ('
 Nike Court Legacy White Desert Ochre (DA5380-102)', "1450000", 2);
 INSERT INTO product(name, price, brand_id ) VALUES ('
 Nike Zoom Gravity Metallic Silver (BQ3202-001 / BQ3203-002)', "999000", 2);
 INSERT INTO product(name, price, brand_id ) VALUES ('
 Nike Court Legacy White Desert Ochre Next Nature (DH3162-100)', "1850000", 2);
-INSERT INTO product(name, price, brand_id ) VALUES ('
-Nike Blazer Low 77 Vintage (DA6364-101)', "2450000", 2);
+INSERT INTO product(name, price, brand_id, amount_of_sold ) VALUES ('
+Nike Blazer Low 77 Vintage (DA6364-101)', "2450000", 2, 1);
 INSERT INTO product(name, price, brand_id ) VALUES ('
 Jordan 1 Low Vintage Grey (553558-053)', "5150000", 3);
 INSERT INTO product(name, price, brand_id ) VALUES ('
@@ -167,8 +168,8 @@ INSERT INTO product(name, price, brand_id ) VALUES ('
 Jordan 1 Low White Wolf Grey (DC0774-105)', "7050000", 3);
 INSERT INTO product(name, price, brand_id ) VALUES ('
 Puma Smash Vulc Mule - Black (309680-02)', "999000", 4);
-INSERT INTO product(name, price, brand_id ) VALUES ('
-Puma Smash Vulc Mule - White (309680-01)', "999000", 4);
+INSERT INTO product(name, price, brand_id , amount_of_sold) VALUES ('
+Puma Smash Vulc Mule - White (309680-01)', "999000", 4, 2);
 INSERT INTO product(name, price, brand_id ) VALUES ('
 Puma Bari Mule Black (371318-01)', "999000", 4);
 
@@ -509,4 +510,30 @@ INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '7'
 INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '8');
 INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '9');
 INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '10');
+
+UPDATE `shop_db`.`product` SET `main_image` = 'adidas-alphabounce-beyond1.webp' WHERE (`id` = '5');
+UPDATE `shop_db`.`product` SET `main_image` = 'adidas-continental-shoes4.webp' WHERE (`id` = '3');
+UPDATE `shop_db`.`product` SET `main_image` = 'adidas-fub-runner2.webp' WHERE (`id` = '1');
+UPDATE `shop_db`.`product` SET `main_image` = 'adidas-stan-smith-green1.webp' WHERE (`id` = '4');
+UPDATE `shop_db`.`product` SET `main_image` = 'adidas-superstar-gold-label1.webp' WHERE (`id` = '6');
+UPDATE `shop_db`.`product` SET `main_image` = 'adidas-superstar-gold-labelFV3284-1.webp' WHERE (`id` = '7');
+UPDATE `shop_db`.`product` SET `main_image` = 'adidas-superstar-slipon1.webp' WHERE (`id` = '2');
+UPDATE `shop_db`.`product` SET `main_image` = 'adidas-ultraboost-reflective-shoes1.webp' WHERE (`id` = '9');
+UPDATE `shop_db`.`product` SET `main_image` = 'adidas-ultraboost-shoes-1.webp' WHERE (`id` = '8');
+UPDATE `shop_db`.`product` SET `main_image` = 'nike-court-legacy-white-desert-ochre13.webp' WHERE (`id` = '11');
+UPDATE `shop_db`.`product` SET `main_image` = 'nike-blazer-low77-vintage1.webp' WHERE (`id` = '14');
+UPDATE `shop_db`.`product` SET `main_image` = 'nike-court-legacy-white-desert-ochre1.webp' WHERE (`id` = '13');
+UPDATE `shop_db`.`product` SET `main_image` = 'nike-court-legacy-white-black-canvas1.webp' WHERE (`id` = '10');
+UPDATE `shop_db`.`product` SET `main_image` = 'nike-zoom-gravity-metallic-silver3.webp' WHERE (`id` = '12');
+UPDATE `shop_db`.`product` SET `main_image` = 'jordan1-low-vintage-grey1.webp' WHERE (`id` = '15');
+UPDATE `shop_db`.`product` SET `main_image` = 'jordan1-low-shadow-toe1.webp' WHERE (`id` = '16');
+UPDATE `shop_db`.`product` SET `main_image` = 'jordan1-low-white-wolf-grey3.webp' WHERE (`id` = '19');
+UPDATE `shop_db`.`product` SET `main_image` = 'jordan1-retro-high-og1.webp' WHERE (`id` = '17');
+UPDATE `shop_db`.`product` SET `main_image` = 'jordan1-low-bred-toe1.webp' WHERE (`id` = '18');
+UPDATE `shop_db`.`product` SET `main_image` = 'puma-bari-mule-black1.webp' WHERE (`id` = '20');
+UPDATE `shop_db`.`product` SET `main_image` = 'puma-smash-vulc-mule-black1.webp' WHERE (`id` = '21');
+UPDATE `shop_db`.`product` SET `main_image` = 'puma-smash-vulc-mule-white1.webp' WHERE (`id` = '22');
+
+
+
 

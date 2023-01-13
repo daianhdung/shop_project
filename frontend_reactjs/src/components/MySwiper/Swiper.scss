@@ -1,7 +1,12 @@
-.swiper-button-prev, .swiper-button-next{
+.swiper-button-prev,
+.swiper-button-next {
     user-select: none;
 }
 
 .swiper-pagination-bullet {
     user-select: none;
+}
+
+.swiper.mySwiper {
+    height: 100%;
 }

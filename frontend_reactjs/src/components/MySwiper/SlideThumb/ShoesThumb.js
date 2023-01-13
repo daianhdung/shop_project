@@ -16,7 +16,10 @@ import '~/components/MySwiper/Swiper.scss'
 const cx = classNames.bind(styles)
 
 
-function ShoesThumb() {
+function ShoesThumb({ children }) {
+  console.log(children);
+
+  console.log(1);
   const [activeThumb, setActiveThumb] = useState()
 
   return (
@@ -29,26 +32,16 @@ function ShoesThumb() {
         thumbs={{ swiper: activeThumb }}
         className={cx('swiper-shoes')}
       >
-        <SwiperSlide>
-          <div className={cx('swiper-shoes-wrapper')}>
-            <img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-1.jpeg'} />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={cx('swiper-shoes-wrapper')}>
-            <img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-2.jpeg'} />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={cx('swiper-shoes-wrapper')}>
-            <img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-3.jpeg'} />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={cx('swiper-shoes-wrapper')}>
-            <img width={250} height={250} src={process.env.PUBLIC_URL + '/image/nike-air-4.jpeg'} />
-          </div>
-        </SwiperSlide>
+
+
+          {children && children.map((item, index) => (
+            <SwiperSlide key={index}>
+            <div className={cx('swiper-shoes-wrapper')}>
+              <img width={250} height={250} src={process.env.REACT_APP_IMG_URL + item} />
+            </div>
+          </SwiperSlide>
+          ))}
+        
       </Swiper>
       <Swiper
         onSwiper={setActiveThumb}
@@ -58,26 +51,13 @@ function ShoesThumb() {
         modules={[Navigation, Thumbs]}
         className={cx('swiper-shoes-thumb')}
       >
-        <SwiperSlide>
+        {children && children.map((item, index) => (
+          <SwiperSlide key={index}>
           <div className={cx('swiper-shoes-thumb-wrapper')}>
-            <img width={100} height={100} src={process.env.PUBLIC_URL + '/image/nike-air-1.jpeg'} />
+            <img width={100} height={100} src={process.env.REACT_APP_IMG_URL + item} />
           </div>
         </SwiperSlide>
-        <SwiperSlide>
-          <div className={cx('swiper-shoes-thumb-wrapper')}>
-            <img width={100} height={100} src={process.env.PUBLIC_URL + '/image/nike-air-2.jpeg'} />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={cx('swiper-shoes-thumb-wrapper')}>
-            <img width={100} height={100} src={process.env.PUBLIC_URL + '/image/nike-air-3.jpeg'} />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className={cx('swiper-shoes-thumb-wrapper')}>
-            <img width={100} height={100} src={process.env.PUBLIC_URL + '/image/nike-air-4.jpeg'} />
-          </div>
-        </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );
