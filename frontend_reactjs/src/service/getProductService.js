@@ -28,3 +28,17 @@ export const getDetailProduct = async(id) => {
         console.log(error);
     }
 }
+
+export const searchProduct = async (keyword, type = 'less') => {
+    try {
+        const res = await httpRequest.getParams('product/search-product', {
+            params: {
+                keyword,
+                type
+            },
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};

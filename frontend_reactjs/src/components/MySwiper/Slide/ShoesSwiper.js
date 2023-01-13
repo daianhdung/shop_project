@@ -1,6 +1,6 @@
 // import Swiper core and required modules
 import { Link } from 'react-router-dom';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper';
 import classNames from 'classnames/bind';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -24,13 +24,14 @@ function ShoesSwiper(children) {
       slidesPerView={3}
       spaceBetween={10}
       slidesPerGroup={1}
+      autoplay={{delay: "5000"}}
       loop={true}
       loopFillGroupWithBlank={true}
       pagination={{
         clickable: true,
       }}
       navigation={true}
-      modules={[Pagination, Navigation]}
+      modules={[Pagination, Navigation, Autoplay]}
       className={cx('mySwiper')}
     >
       {children.children && children.children.map((item) => (

@@ -17,9 +17,6 @@ const cx = classNames.bind(styles)
 
 
 function ShoesThumb({ children }) {
-  console.log(children);
-
-  console.log(1);
   const [activeThumb, setActiveThumb] = useState()
 
   return (

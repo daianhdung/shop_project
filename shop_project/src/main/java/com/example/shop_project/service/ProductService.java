@@ -13,4 +13,6 @@ public interface ProductService {
     List<ProductDTO> getFeaturedProductByTop1Price();
     List<ProductDTO> getProductByTop10AmountOfSold();
     ProductDTO getDetailProduct(int id);
+
+    List<ProductDTO> searchProduct(String name);
 }
