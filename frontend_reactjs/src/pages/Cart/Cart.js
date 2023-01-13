@@ -1,4 +1,4 @@
-import { faAngleRight, faLongArrowLeft, faLongArrowRight, faRecycle, faRemove, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight, faLongArrowLeft, faLongArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useState } from 'react';

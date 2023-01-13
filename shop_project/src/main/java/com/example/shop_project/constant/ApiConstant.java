@@ -9,5 +9,5 @@ public class ApiConstant {
     public static final String API_INSERT_PRODUCT = "/product/insert";
     public static final String API_FILE = "/file";
 
-    public static final String API_FEATURED_PRODUCT = "/product/top-product-branch";
+    public static final String API_PRODUCT = "/product";
 }

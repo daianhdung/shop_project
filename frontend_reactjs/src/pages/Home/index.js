@@ -21,6 +21,16 @@ function Home() {
         fetchApiFeaturedProduct()
     }, [])
 
+    const [topSoldProduct, setTopSoldProduct] = useState([]);
+    
+    useEffect(() => {
+        const fetchApiTopSoldProduct = async() => {
+            const response = await productService.getTopSoldProduct()
+            setTopSoldProduct(response)
+        }
+        fetchApiTopSoldProduct()
+    }, [])
+
     return (<React.Fragment>
         <div className={cx('separate')}>
             <h2>Top nổi bật</h2>
@@ -34,7 +44,7 @@ function Home() {
             <h2>Top bán chạy</h2>
             <div className={cx('wrapper')}>
                 <div className={cx('wrap_swiper')}>
-                    <div className={cx('top_branch_slide')}><ShoesSwiper /></div>
+                    <div className={cx('top_branch_slide')}><ShoesSwiper children={topSoldProduct}/></div>
                 </div>
             </div>
         </div>

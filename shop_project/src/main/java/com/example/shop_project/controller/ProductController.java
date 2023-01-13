@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/product")
+@CrossOrigin
 public class ProductController {
     @Autowired
     ProductService productService;
@@ -65,6 +66,15 @@ public class ProductController {
         dataResponse.setStatus(200);
         dataResponse.setSuccess(true);
         dataResponse.setData(productDTOList);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+    @GetMapping("/detail-product/{id}")
+    public ResponseEntity<?> getDetailProduct(@PathVariable("id") int id){
+        ProductDTO productDTO = productService.getDetailProduct(id);
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setStatus(200);
+        dataResponse.setSuccess(true);
+        dataResponse.setData(productDTO);
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
