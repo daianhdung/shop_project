@@ -1,6 +1,13 @@
+.swiper-button-prev{
+    margin-left: -17px;
+}
+.swiper-button-next{
+    margin-right: -17px;
+}
 .swiper-button-prev,
 .swiper-button-next {
     user-select: none;
+    padding: 20px;
 }
 
 .swiper-pagination-bullet {

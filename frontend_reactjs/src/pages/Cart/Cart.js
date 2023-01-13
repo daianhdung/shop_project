@@ -35,39 +35,43 @@ function Cart() {
         </div>
         <div className={cx('bot-cart')}>
             <table border={1}>
-                <tr>
-                    <th>ẢNH SẢN PHẨM</th>
-                    <th>THÔNG TIN</th>
-                    <th>ĐƠN GIÁ</th>
-                    <th>SỐ LƯỢNG</th>
-                    <th>THÀNH TIỀN</th>
-                    <th>XÓA</th>
-                </tr>
-                <tr>
-                    <td><img src={process.env.PUBLIC_URL + '/image/air-jordan.webp'} /></td>
-                    <td>
-                        <div className={cx('wrap_td')}>
-                            <div className={cx('descrip-product')}>
-                                <p>Jordan 1 High Zoom Air CMFT Canyon Rust (CT0979-602)</p>
-                                <span>- 38.5</span>
-                                <div className={cx('modal-close')}>&times; Xóa sản phẩm</div>
+                <thead>
+                    <tr>
+                        <th>ẢNH SẢN PHẨM</th>
+                        <th>THÔNG TIN</th>
+                        <th>ĐƠN GIÁ</th>
+                        <th>SỐ LƯỢNG</th>
+                        <th>THÀNH TIỀN</th>
+                        <th>XÓA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img src={process.env.PUBLIC_URL + '/image/air-jordan.webp'} /></td>
+                        <td>
+                            <div className={cx('wrap_td')}>
+                                <div className={cx('descrip-product')}>
+                                    <p>Jordan 1 High Zoom Air CMFT Canyon Rust (CT0979-602)</p>
+                                    <span>- 38.5</span>
+                                    <div className={cx('modal-close')}>&times; Xóa sản phẩm</div>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>5.000.000 VND</td>
-                    <td>
-                        <div className={cx('quantity_setup')}>
-                            <button onClick={onReduce} className={cx('btn-reduce', 'btn')} type="button">
-                                -
-                            </button>
-                            <input value={count} type="text" title="Số lượng" maxLength="3" id="qty" name="quantity" onChange={handleChange} />
-                            <button onClick={onIncrease} className={cx('btn-increase', 'btn')} type="button">+</button>
-                        </div>
-                    </td>
-                    <td>5.000.000 VND</td>
-                    <td><FontAwesomeIcon icon={faTrash} /></td>
-                </tr>
-                <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: 5.000.000VND</td></tr>
+                        </td>
+                        <td>5.000.000 VND</td>
+                        <td>
+                            <div className={cx('quantity_setup')}>
+                                <button onClick={onReduce} className={cx('btn-reduce', 'btn')} type="button">
+                                    -
+                                </button>
+                                <input value={count} type="text" title="Số lượng" maxLength="3" id="qty" name="quantity" onChange={handleChange} />
+                                <button onClick={onIncrease} className={cx('btn-increase', 'btn')} type="button">+</button>
+                            </div>
+                        </td>
+                        <td>5.000.000 VND</td>
+                        <td><FontAwesomeIcon icon={faTrash} /></td>
+                    </tr>
+                    <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: 5.000.000VND</td></tr>
+                </tbody>
             </table>
         </div>
         

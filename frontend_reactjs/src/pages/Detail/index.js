@@ -29,8 +29,7 @@ function Detail() {
             setDetailProduct(response)
         }
         fetchApiDetailProduct()
-    }, [])
-    console.log(2);
+    }, [id])
 
     const onReduce = () => {
         if (count > 0) {
@@ -41,7 +40,6 @@ function Detail() {
         setCount(count + 1)
     }
     const onSubmit = () => {
-        console.log(count)
         setModalOpen(true)
     }
     const handleChange = (e) => {

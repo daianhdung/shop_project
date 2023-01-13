@@ -88,5 +88,14 @@ public class ProductController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
-
+    @GetMapping("/search-product")
+    public ResponseEntity<?> searchProduct(@RequestParam("keyword") String name,
+                                           @RequestParam("type") String type){
+        List<ProductDTO> productDTOList = productService.searchProduct(name);
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setStatus(200);
+        dataResponse.setSuccess(true);
+        dataResponse.setData(productDTOList);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
 }

@@ -9,6 +9,7 @@ import com.example.shop_project.model.ProductModel;
 import com.example.shop_project.repository.BrandRepository;
 import com.example.shop_project.repository.ProductRepository;
 import com.example.shop_project.service.ProductService;
+import com.example.shop_project.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,9 @@ public class ProductServiceImp implements ProductService {
     ProductRepository productRepository;
     @Autowired
     BrandRepository brandRepository;
+
+    @Autowired
+    StringUtil stringUtil;
     private int num = 9;
 
     @Override
@@ -161,6 +165,23 @@ public class ProductServiceImp implements ProductService {
         productDTO.setImages(images);
 
         return productDTO;
+    }
+
+    @Override
+    public List<ProductDTO> searchProduct(String name) {
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        name = stringUtil.removeWhiteSpaceBeginAndEnd(name);
+        name = "%" + name + "%";
+        List<ProductEntity> productEntityList = productRepository.findByKeyword(name);
+        productEntityList.forEach(productEntity -> {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(productEntity.getId());
+            productDTO.setName(productEntity.getName());
+            productDTO.setMainImage(productEntity.getMainImage());
+            productDTO.setPrice(productEntity.getPrice());
+            productDTOList.add(productDTO);
+        });
+        return productDTOList;
     }
 
 
