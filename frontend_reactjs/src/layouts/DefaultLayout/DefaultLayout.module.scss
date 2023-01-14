@@ -1,18 +1,18 @@
 .container{
     display: flex;
-    padding-left: 24px;
-    padding-right: 24px;
     margin-right: auto;
     margin-left: auto;
     width: var(--default-layout-width);
 }
 
 .inner{
+    width: 100%;
     display: flex;
     padding-top: 16px;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .content{

@@ -33,4 +33,15 @@ public class BrandController {
         dataResponse.setDesc("List All Brand");
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
+
+    @GetMapping("/top-5-smallest-brand")
+    public ResponseEntity<?> get5BrandHaveSmallestAmountSold() {
+        DataResponse dataResponse = new DataResponse();
+        List<BrandDTO> list = brandService.get5BrandHaveSmallestAmountSold();
+        dataResponse.setSuccess(true);
+        dataResponse.setData(list);
+        dataResponse.setStatus(HttpStatus.OK.value());
+        dataResponse.setDesc("List 5 Smallest Amount Sold Brand");
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
 }
