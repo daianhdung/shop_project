@@ -12,4 +12,6 @@ public interface SizeRepository extends JpaRepository<SizeEntity,Integer> {
     @Query("from size as s join product_size as ps on s.id = ps.sizeId join product as p on p.id = ps.productId " +
             "where p.id = ?1 ")
     List<SizeEntity> findSizeEntitiesByProductID(int id);
+//    @Query("select distinct s from size as s join product_size as ps on s.id = ps.sizeId")
+//    List<SizeEntity> findSizeEntities();
 }
