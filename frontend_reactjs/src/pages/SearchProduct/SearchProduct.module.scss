@@ -1,0 +1,31 @@
+.wrapper {
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    user-select: none;
+}
+
+.inner {
+    display: flex;
+    flex-wrap:wrap;
+    align-self: stretch;
+    padding: 10px;
+}
+
+.link-a {
+    width: 25%;
+}
+
+.wrap_item {
+    
+    padding: 10px;
+    &:hover{
+        box-shadow: rgba(62, 62, 69, 0.2) 0px 7px 29px 0px;
+    }
+}

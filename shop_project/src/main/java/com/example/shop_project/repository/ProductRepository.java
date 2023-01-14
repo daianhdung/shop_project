@@ -40,4 +40,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
     @Query(value = "SELECT * FROM product WHERE name LIKE ?1 LIMIT 5", nativeQuery = true)
     List<ProductEntity> findByKeyword(String name);
 
+    List<ProductEntity> findAllByBrandId(int brandId);
+    List<ProductEntity> findAllByCategoryId(int categoryId);
+
 }

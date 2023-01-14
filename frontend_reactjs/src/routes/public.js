@@ -10,6 +10,7 @@ import AuthenLayout from "~/layouts/AuthenLayout";
 import Forgot from "~/pages/Forgot/Forgot";
 import Change from "~/pages/Change/Change";
 import Cart from "~/pages/Cart/Cart";
+import SearchProduct from "~/pages/SearchProduct/SearchProduct";
 
 
 const publicRoutes = [
@@ -21,7 +22,8 @@ const publicRoutes = [
     { path: config.routes.login, component: Login, layout: AuthenLayout },
     { path: config.routes.signup, component: Signup, layout: AuthenLayout },
     { path: config.routes.forgot, component: Forgot, layout: AuthenLayout },
-    { path: config.routes.change, component: Change, layout: AuthenLayout }
+    { path: config.routes.change, component: Change, layout: AuthenLayout },
+    { path: config.routes.search, component: SearchProduct }
 ]
 const privateRoutes = [
     { path: config.routes.profile, component: Profile }

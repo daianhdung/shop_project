@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -92,6 +93,21 @@ public class ProductController {
     public ResponseEntity<?> searchProduct(@RequestParam("keyword") String name,
                                            @RequestParam("type") String type){
         List<ProductDTO> productDTOList = productService.searchProduct(name);
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setStatus(200);
+        dataResponse.setSuccess(true);
+        dataResponse.setData(productDTOList);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+    @GetMapping("/search-productby")
+    public ResponseEntity<?> searchProduct(@RequestParam(value = "categoryId", required = false) Integer catetegoryId,
+                                           @RequestParam(value = "brandId", required = false) Integer brandId){
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        if(catetegoryId != null){
+            productDTOList = productService.searchProductByCategoryId(catetegoryId);
+        } else if (brandId != null) {
+            productDTOList = productService.searchProductByBrandId(brandId);
+        }
         DataResponse dataResponse = new DataResponse();
         dataResponse.setStatus(200);
         dataResponse.setSuccess(true);

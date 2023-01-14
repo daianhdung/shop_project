@@ -15,4 +15,6 @@ public interface ProductService {
     ProductDTO getDetailProduct(int id);
 
     List<ProductDTO> searchProduct(String name);
+    List<ProductDTO> searchProductByBrandId(int brandId);
+    List<ProductDTO> searchProductByCategoryId(int categoryId);
 }

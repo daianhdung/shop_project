@@ -184,5 +184,35 @@ public class ProductServiceImp implements ProductService {
         return productDTOList;
     }
 
+    @Override
+    public List<ProductDTO> searchProductByBrandId(int brandId) {
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        List<ProductEntity> productEntityList = productRepository.findAllByBrandId(brandId);
+        productEntityList.forEach(productEntity -> {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(productEntity.getId());
+            productDTO.setName(productEntity.getName());
+            productDTO.setMainImage(productEntity.getMainImage());
+            productDTO.setPrice(productEntity.getPrice());
+            productDTOList.add(productDTO);
+        });
+        return productDTOList;
+    }
+
+    @Override
+    public List<ProductDTO> searchProductByCategoryId(int categoryId) {
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        List<ProductEntity> productEntityList = productRepository.findAllByCategoryId(categoryId);
+        productEntityList.forEach(productEntity -> {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setId(productEntity.getId());
+            productDTO.setName(productEntity.getName());
+            productDTO.setMainImage(productEntity.getMainImage());
+            productDTO.setPrice(productEntity.getPrice());
+            productDTOList.add(productDTO);
+        });
+        return productDTOList;
+    }
+
 
 }

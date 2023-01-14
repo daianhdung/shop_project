@@ -13,7 +13,7 @@ import Search from '../Search/Search';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleDown, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
-import { getAllBrandName } from '~/service/brandService';
+import { get5BrandSmallestAmountSold, getAllBrandName } from '~/service/brandService';
 import { getAllCategoryName } from '~/service/categoryService';
 
 
@@ -25,6 +25,7 @@ function Header(props) {
 
     const [allCategory, setAllCategory] = useState()
     const [allBrand, setAllBrand] = useState()
+    const [brandSmallSold, setBrandSmallSold] = useState()
 
     useEffect(() => {
         const fetchApiGetAllBrand = async () => {
@@ -35,9 +36,15 @@ function Header(props) {
             const response = await getAllCategoryName()
             setAllCategory(response)
         }
+        const fetchApiGet5BrandSmallestSold = async () => {
+            const response = await get5BrandSmallestAmountSold()
+            setBrandSmallSold(response)
+        }
         fetchApiGetAllBrand()
         fetchApiGetAllCategory()
+        fetchApiGet5BrandSmallestSold()
     }, [])
+    console.log(brandSmallSold);
 
     return (
         <header className={cx('wrapper')}>
@@ -63,7 +70,7 @@ function Header(props) {
                                 render={(attrs) => (
                                     <div className={cx('drop_down_wrap')}>
                                         <div className={cx('drop_down_content')} tabIndex="-1">
-                                            {allBrand && allBrand.map((item) => (<Link to={config.routes.detail} key={item.id} className={cx('block')} >{item.name}</Link>
+                                            {allBrand && allBrand.map((item) => (<Link to={config.routes.search + '?brandId=' + item.id} key={item.id} className={cx('block')} >{item.name}</Link>
                                             ))}
                                         </div>
                                     </div>
@@ -75,7 +82,7 @@ function Header(props) {
                                 render={(attrs) => (
                                     <div className={cx('drop_down_wrap')}>
                                         <div className={cx('drop_down_content')} tabIndex="-1">
-                                        {allCategory && allCategory.map((item) => (<Link to={config.routes.detail} key={item.id} className={cx('block')}>{item.name}</Link>
+                                            {allCategory && allCategory.map((item) => (<Link to={config.routes.search + '?categoryId=' + item.id} key={item.id} className={cx('block')}>{item.name}</Link>
                                             ))}
                                         </div>
                                     </div>
@@ -107,11 +114,9 @@ function Header(props) {
                 <div className={cx('bottom_header')}>
                     <div className={cx('bottom_left_header')}>
                         <nav className="header-nav">
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Sản phẩm</NavLink>
+                            {brandSmallSold && brandSmallSold.map((item) => (
+                                <NavLink key={item.id} to={config.routes.search + '?brandId=' + item.id} className={cx('nav_link')}>{item.name}</NavLink>
+                            ))}
                         </nav>
                     </div>
                     <div className={cx('bottom_right_header')}>

@@ -10,3 +10,12 @@ export const getAllBrandName = async() => {
         console.log(error);
     }
 }
+
+export const get5BrandSmallestAmountSold = async() => {
+    try{
+        const response = await httpRequest.get('brand/top-5-smallest-brand')
+        return response.data
+    }catch(error){
+        console.log(error);
+    }
+}
