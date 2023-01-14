@@ -6,6 +6,7 @@ import com.example.shop_project.entity.BrandEntity;
 import com.example.shop_project.entity.ImageProductEntity;
 import com.example.shop_project.entity.ProductEntity;
 import com.example.shop_project.model.ProductModel;
+import com.example.shop_project.payload.request.FilterProductRequest;
 import com.example.shop_project.repository.BrandRepository;
 import com.example.shop_project.repository.ProductRepository;
 import com.example.shop_project.service.ProductService;
@@ -34,6 +35,21 @@ public class ProductServiceImp implements ProductService {
     private int num = 9;
 
     @Override
+    public int getTotalPage(FilterProductRequest filterProduct) {
+        int size = productRepository.findProductEntitiesByFilter("%"+ filterProduct.getSearchName() + "%",
+                filterProduct.getBrandId().isEmpty() ? null : filterProduct.getBrandId(),
+                filterProduct.getSizeId().isEmpty() ? null : filterProduct.getSizeId(),
+                filterProduct.getCategoryId().isEmpty() ? null : filterProduct.getCategoryId()).size();
+        int totalPage = 0;
+        if (size % num == 0) {
+            totalPage = size / num;
+        } else {
+            totalPage = size / num + 1;
+        }
+
+        return totalPage;
+    }
+    @Override
     public int getTotalPage() {
         int size = productRepository.findAll().size();
         int totalPage = 0;
@@ -44,16 +60,7 @@ public class ProductServiceImp implements ProductService {
         }
         return totalPage;
     }
-    @Override
-    public int getTotalPage(int size) {
-        int totalPage = 0;
-        if (size % num == 0) {
-            totalPage = size / num;
-        } else {
-            totalPage = size / num + 1;
-        }
-        return totalPage;
-    }
+
 
     @Override
     public ProductDTO getProducts(int currentPage) {
@@ -61,6 +68,7 @@ public class ProductServiceImp implements ProductService {
         Pageable pageable = PageRequest.of(currentPage, num);
         Page<ProductEntity> productEntityPage = productRepository.findAll(pageable);
         List<ProductEntity> productEntities = productEntityPage.getContent();
+
         List<ProductModel> productModels = new ArrayList<>();
         productEntities.forEach(product -> {
             ProductModel productModel = new ProductModel();
@@ -75,7 +83,7 @@ public class ProductServiceImp implements ProductService {
             productModels.add(productModel);
         });
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setTotalPage(this.getTotalPage(productEntities.size()));
+        productDTO.setTotalPage(productEntityPage.getTotalPages());
         productDTO.setCurrentPage(currentPage);
         productDTO.setProducts(productModels);
 
@@ -83,15 +91,16 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public ProductDTO getProductByFilter(String search, List<Integer> idsBrand, List<Integer> idsSize, List<Integer> idsCate,
-                                         int currentPage) {
+    public ProductDTO getProductByFilter(FilterProductRequest filterProduct, int currentPage) {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Pageable pageable = PageRequest.of(currentPage, num);
-        Page<ProductEntity> productEntityPage = productRepository.findProductEntitiesByFilter(search, idsBrand, idsSize, idsCate,pageable);
-        //List<ProductEntity> productEntities = productEntityPage.getContent();
-
-        List<ProductEntity> productEntities = productRepository.findProductEntitiesByFilter(search, idsBrand, idsSize, idsSize);
-
+        Pageable pageable = PageRequest.of(currentPage - 1, num);
+        List<ProductEntity> productEntities = productRepository.findProductEntitiesByFilter(
+                "%"+ filterProduct.getSearchName() + "%",
+                filterProduct.getBrandId().isEmpty() ? null : filterProduct.getBrandId(),
+                filterProduct.getSizeId().isEmpty() ? null : filterProduct.getSizeId(),
+                filterProduct.getCategoryId().isEmpty() ? null : filterProduct.getCategoryId(),
+                pageable
+        );
 
         List<ProductModel> productModels = new ArrayList<>();
         productEntities.forEach(product -> {
@@ -107,7 +116,7 @@ public class ProductServiceImp implements ProductService {
             productModels.add(productModel);
         });
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setTotalPage(this.getTotalPage(productEntities.size()));
+        productDTO.setTotalPage(this.getTotalPage(filterProduct));
         productDTO.setCurrentPage(currentPage);
         productDTO.setProducts(productModels);
 
@@ -213,6 +222,5 @@ public class ProductServiceImp implements ProductService {
         });
         return productDTOList;
     }
-
 
 }
