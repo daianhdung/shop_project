@@ -20,7 +20,7 @@ public class ProductEntity {
 
     @OneToMany(mappedBy = "product")
     private Set<ImageProductEntity> imageProductEntities;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private Set<ProductSizeEntity> productSizes;
     @OneToMany(mappedBy = "product")
     private Set<BookmarkProductEntity> bookmarkProducts;
@@ -32,7 +32,6 @@ public class ProductEntity {
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private BrandEntity brand;
-
 
 
     public int getId() {

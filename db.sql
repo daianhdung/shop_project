@@ -510,6 +510,9 @@ INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '7'
 INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '8');
 INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '9');
 INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('10', '10');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('11', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('11', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('11', '3');
 
 UPDATE `shop_db`.`product` SET `main_image` = 'adidas-alphabounce-beyond1.webp' WHERE (`id` = '5');
 UPDATE `shop_db`.`product` SET `main_image` = 'adidas-continental-shoes4.webp' WHERE (`id` = '3');
@@ -534,6 +537,9 @@ UPDATE `shop_db`.`product` SET `main_image` = 'puma-bari-mule-black1.webp' WHERE
 UPDATE `shop_db`.`product` SET `main_image` = 'puma-smash-vulc-mule-black1.webp' WHERE (`id` = '21');
 UPDATE `shop_db`.`product` SET `main_image` = 'puma-smash-vulc-mule-white1.webp' WHERE (`id` = '22');
 
+INSERT INTO `shop_db`.`bookmark_product` (`user_id`, `product_id`) VALUES ('1', '1');
+INSERT INTO `shop_db`.`bookmark_product` (`user_id`, `product_id`) VALUES ('1', '2');
+INSERT INTO `shop_db`.`bookmark_product` (`user_id`, `product_id`) VALUES ('1', '3');
 
 
 
