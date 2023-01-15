@@ -7,6 +7,7 @@ public class FilterProductRequest {
     private List<Integer> brandId;
     private List<Integer> sizeId;
     private List<Integer> categoryId;
+    private String sort;
 
     public String getSearchName() {
         return searchName;
@@ -38,5 +39,13 @@ public class FilterProductRequest {
 
     public void setCategoryId(List<Integer> categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 }

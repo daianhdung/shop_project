@@ -11,10 +11,12 @@ import com.example.shop_project.repository.BrandRepository;
 import com.example.shop_project.repository.ProductRepository;
 import com.example.shop_project.service.ProductService;
 import com.example.shop_project.utils.StringUtil;
+import com.example.shop_project.utils.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -93,7 +95,15 @@ public class ProductServiceImp implements ProductService {
     @Override
     public ProductDTO getProductByFilter(FilterProductRequest filterProduct, int currentPage) {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Pageable pageable = PageRequest.of(currentPage - 1, num);
+        Pageable pageable = null;
+        if (filterProduct.getSort().equals("az"))  {
+            pageable = PageRequest.of(currentPage - 1, num, Sort.by("name").ascending());
+        } else if (filterProduct.getSort().equals("asc")){
+            pageable = PageRequest.of(currentPage - 1, num, Sort.by("price").ascending());
+        } else if (filterProduct.getSort().equals("dsc")) {
+            pageable = PageRequest.of(currentPage - 1, num, Sort.by("price").descending());
+        }
+
         List<ProductEntity> productEntities = productRepository.findProductEntitiesByFilter(
                 "%"+ filterProduct.getSearchName() + "%",
                 filterProduct.getBrandId().isEmpty() ? null : filterProduct.getBrandId(),
@@ -107,7 +117,7 @@ public class ProductServiceImp implements ProductService {
             ProductModel productModel = new ProductModel();
             productModel.setId(product.getId());
             productModel.setName(product.getName());
-            productModel.setImage(product.getMainImage());
+            productModel.setImage(Url.Image.getPath() + product.getMainImage());
             productModel.setPrice(product.getPrice());
             boolean isBookMark = product.getBookmarkProducts()
                     .stream()
