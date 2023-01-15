@@ -2,6 +2,7 @@ package com.example.shop_project.controller;
 
 
 import com.example.shop_project.dto.ProductDTO;
+import com.example.shop_project.payload.request.FilterProductRequest;
 import com.example.shop_project.payload.response.DataResponse;
 import com.example.shop_project.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -29,12 +32,12 @@ public class ProductController {
         return new ResponseEntity<>("test", HttpStatus.OK);
     }
     @GetMapping("/totalpage")
-    public ResponseEntity<?> getTotalPage() {
+    public ResponseEntity<?> getTotalPage(@RequestBody FilterProductRequest filterProduct) {
         DataResponse dataResponse = new DataResponse();
         dataResponse.setDesc("Total Page");
         dataResponse.setSuccess(true);
         dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setData(productService.getTotalPage());
+        dataResponse.setData(productService.getTotalPage(filterProduct));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
     @GetMapping("/page/{current}")
@@ -47,16 +50,16 @@ public class ProductController {
         dataResponse.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
-    @GetMapping("/filter/{current}")
-    public ResponseEntity<?> getProductWithPageByFilter(@PathVariable(name = "current") int current) {
-        List<Integer> ids = List.of(1,2);
-        ProductDTO productDTO = productService.getProductByFilter("%did%", ids, ids, ids, current);
+    @PostMapping("/filter/{current}")
+    public ResponseEntity<?> getProductWithPageByFilter(@PathVariable(name = "current") int current,
+                                                        @RequestBody FilterProductRequest filterProduct) {
+        ProductDTO productDTO = productService.getProductByFilter(filterProduct, current);
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(productDTO);
         dataResponse.setSuccess(true);
         dataResponse.setDesc("get product with current page by filter");
         dataResponse.setStatus(HttpStatus.OK.value());
-        return new ResponseEntity<>(productDTO, HttpStatus.OK);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
 
