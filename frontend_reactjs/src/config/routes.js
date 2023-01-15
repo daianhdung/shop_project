@@ -8,7 +8,10 @@ const routes = {
     forgot: '/forgot',
     change: '/change',
     cart: '/cart',
-    search: '/search/'
+    search: '/search/',
+    //Admin route
+    adminHome: '/home-admin',
+    adminProduct: '/product-admin'
 };
 
 export default routes;

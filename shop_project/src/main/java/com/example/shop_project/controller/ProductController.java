@@ -80,7 +80,7 @@ public class ProductController {
     }
 
     @GetMapping("/top-product-branch")
-    public ResponseEntity<?> getTopProductByBranchAndPrice(){
+    public ResponseEntity<?> getTopProductByBrandAndPrice(){
         List<ProductDTO> productDTOList = productService.getFeaturedProductByTop1Price();
         DataResponse dataResponse = new DataResponse();
         dataResponse.setStatus(200);

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route , Outlet} from 'react-router-dom';
 import { Fragment } from 'react';
 
-import { privateRoutes, publicRoutes } from './routes/public';
+import { privateRoutes, publicRoutes, adminRoutes } from './routes/public';
 import { DefaultLayout } from '~/layouts';
 import { AuthProvider } from './context/AuthProvider';
 import RequireAuth from './components/RequiredAuth';
@@ -36,6 +36,30 @@ function App() {
                         })}
                         <Route element={<RequireAuth />}>
                             {privateRoutes.map((route, index) => {
+                                //nếu không có layout trong item thì mặc định là LayoutDefault
+                                const Page = route.component;
+                                let Layout = DefaultLayout;
+                                if (route.layout) {
+                                    Layout = route.layout;
+                                } else if (route.layout === null) {
+                                    Layout = Fragment;
+                                }
+                                return (
+                                    <Route
+                                        key={index}
+                                        path={route.path}
+                                        element={
+                                            <Layout>
+                                                <Page />
+                                            </Layout>
+                                        }
+                                    />
+                                );
+                            })}
+                        </Route>
+                        <Route>
+                            {adminRoutes.map((route, index) => {
+                                //nếu không có layout trong item thì mặc định là LayoutDefault
                                 const Page = route.component;
                                 let Layout = DefaultLayout;
                                 if (route.layout) {

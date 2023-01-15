@@ -11,6 +11,9 @@ import Forgot from "~/pages/Forgot/Forgot";
 import Change from "~/pages/Change/Change";
 import Cart from "~/pages/Cart/Cart";
 import SearchProduct from "~/pages/SearchProduct/SearchProduct";
+import HomeAdmin from "~/pages/Admin/HomeAdmin";
+import ProductAdmin from "~/pages/Admin/ProductAdmin";
+import AdminLayout from "~/layouts/AdminLayout";
 
 
 const publicRoutes = [
@@ -28,5 +31,9 @@ const publicRoutes = [
 const privateRoutes = [
     { path: config.routes.profile, component: Profile }
 ]
+const adminRoutes = [
+    { path: config.routes.adminHome, component: HomeAdmin , layout: AdminLayout},
+    { path: config.routes.adminProduct, component: ProductAdmin, layout: AdminLayout }
+]
 
-export { publicRoutes, privateRoutes }
+export { publicRoutes, privateRoutes, adminRoutes }
