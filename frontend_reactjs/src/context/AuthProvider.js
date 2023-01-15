@@ -1,3 +1,4 @@
+import { isExpired, decodeToken } from "react-jwt";
 import { getCookie, removeCookie } from "~/utils/utilsCookie";
 
 const { createContext, useRef, useEffect, useState } = require("react");
@@ -8,8 +9,30 @@ const AuthContext = createContext()
 
 
 export const AuthProvider = ({ children }) => {
-    const authRef = useRef(getCookie('tokenJwt') != null ? true : false);
+    //decode token
+    if (getCookie('tokenJwt')) {
+        const token = getCookie('tokenJwt')
+        const myDecodedToken = decodeToken(token);
+        if (myDecodedToken) {
+            const decodeInform = JSON.parse(myDecodedToken.sub);
+            if (decodeInform.username != null) {
+                var userLogin = true;
+            }
+            if (decodeInform.role === 'ROLE_ADMIN') {
+                var isAdmin = true
+            }
+            console.log(decodeInform);
+        }
+    }
+    const authAdminRef = useRef(isAdmin)
+    console.log(authAdminRef);
+    const authRef = useRef(userLogin);
     const [isLogout, setIsLogout] = useState(authRef.current == true ? true : false)
+
+
+
+
+
 
     const login = function () {
         authRef.current = true;
@@ -20,21 +43,16 @@ export const AuthProvider = ({ children }) => {
     const logout = function () {
         removeCookie('tokenJwt');
         authRef.current = false
-        setIsLogout=true
-
+        setIsLogout = true
     }
-    useEffect(() => {
-
-        console.log(authRef);
-        console.log('da doi');
-    }, [authRef.current])
 
     const value = {
         auth: authRef.current,
+        admin: authAdminRef.current,
         login,
         logout
     }
-
+    console.log(value);
 
     return (
         <AuthContext.Provider value={value}>

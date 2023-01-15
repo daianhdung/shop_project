@@ -6,14 +6,13 @@ import Detail from "~/pages/Detail";
 import Profile from "~/pages/Profile";
 import Login from "~/pages/Login/Login";
 import Signup from "~/pages/Signup/Signup";
-import AuthenLayout from "~/layouts/AuthenLayout";
 import Forgot from "~/pages/Forgot/Forgot";
 import Change from "~/pages/Change/Change";
 import Cart from "~/pages/Cart/Cart";
 import SearchProduct from "~/pages/SearchProduct/SearchProduct";
 import HomeAdmin from "~/pages/Admin/HomeAdmin";
 import ProductAdmin from "~/pages/Admin/ProductAdmin";
-import AdminLayout from "~/layouts/AdminLayout";
+import { AuthenLayout, AdminLayout } from "~/layouts";
 
 
 const publicRoutes = [

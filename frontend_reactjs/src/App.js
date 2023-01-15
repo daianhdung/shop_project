@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route , Outlet} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { Fragment } from 'react';
 
 import { privateRoutes, publicRoutes, adminRoutes } from './routes/public';
@@ -7,12 +7,13 @@ import { AuthProvider } from './context/AuthProvider';
 import RequireAuth from './components/RequiredAuth';
 
 
+
 function App() {
     return (
         <Router>
             <AuthProvider>
                 <div className="App">
-                    <Outlet/>
+                    <Outlet />
                     <Routes>
                         {publicRoutes.map((route, index) => {
                             const Page = route.component;
@@ -57,6 +58,7 @@ function App() {
                                 );
                             })}
                         </Route>
+
                         <Route>
                             {adminRoutes.map((route, index) => {
                                 //nếu không có layout trong item thì mặc định là LayoutDefault
@@ -80,6 +82,7 @@ function App() {
                                 );
                             })}
                         </Route>
+
                     </Routes>
                 </div>
             </AuthProvider>

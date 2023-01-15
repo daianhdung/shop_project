@@ -11,11 +11,11 @@ const cx = classNames.bind(styles)
 
 
 function DefaultLayout({ children }) {
-    
+
 
     return (
         <div >
-            <Header/>
+            <Header />
             <div style={{ background: 'rgba(245, 245, 250, 1)' }} >
                 <div style={{ height: '2000px' }} className={cx('container')}>
                     <div className={cx('inner')}>
