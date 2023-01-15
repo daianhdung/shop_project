@@ -16,7 +16,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 
     @Query("select p from product as p join product_size as ps on p.id = ps.productId join size as s on ps.sizeId = s.id " +
             "where p.name like ?1 and (p.brand.id in ?2 or ?2 is null) and (ps.sizeId in ?3 or ?3 is null) and (p.category.id in ?4 or ?4 is null )" +
-            " group by p.id order by p.id asc ")
+            " group by p.id")
     List<ProductEntity> findProductEntitiesByFilter(String name,
                                                     Iterable<Integer> idsBrand,
                                                     Iterable<Integer> idsSize,
@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
                                                     Pageable pageable);
     @Query("select p from product as p join product_size as ps on p.id = ps.productId join size as s on ps.sizeId = s.id " +
             "where p.name like ?1 and (p.brand.id in ?2 or ?2 is null) and (ps.sizeId in ?3 or ?3 is null) and (p.category.id in ?4 or ?4 is null )" +
-            " group by p.id order by p.id asc ")
+            " group by p.id")
     List<ProductEntity> findProductEntitiesByFilter(String name,
                                                     Iterable<Integer> idsBrand,
                                                     Iterable<Integer> idsSize,
@@ -33,7 +33,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
             "join bookmark_product as bp on p.id = bp.productId join user as u on u.id = bp.userId " +
             "where p.name like ?1 and (p.brand.id in ?2 or ?2 is null) and (ps.sizeId in ?3 or ?3 is null) and (p.category.id in ?4 or ?4 is null) " +
             "and u.email = ?5 " +
-            "group by p.id order by p.id asc ")
+            "group by p.id")
     List<ProductEntity> findProductEntitiesByFilter(String name,
                                                     Iterable<Integer> idsBrand,
                                                     Iterable<Integer> idsSize,
@@ -44,7 +44,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
             "join bookmark_product as bp on p.id = bp.productId join user as u on u.id = bp.userId " +
             "where p.name like ?1 and (p.brand.id in ?2 or ?2 is null) and (ps.sizeId in ?3 or ?3 is null) and (p.category.id in ?4 or ?4 is null) " +
             "and u.email = ?5 " +
-            "group by p.id order by p.id asc ")
+            "group by p.id")
     List<ProductEntity> findProductEntitiesByFilter(String name,
                                                     Iterable<Integer> idsBrand,
                                                     Iterable<Integer> idsSize,
