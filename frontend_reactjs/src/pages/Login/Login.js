@@ -4,10 +4,12 @@ import { Link, useLocation, useNavigate} from 'react-router-dom';
 import config from '~/config';
 import images from '~/assets/images';
 import styles from './Login.module.scss';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as loginService from '~/service/loginService'
 import useAuth from '~/hooks/useAuth';
 
+import { saveCookie } from '~/utils/utilsCookie';
+// import { useJwt } from "react-jwt";
 
 const cx = classNames.bind(styles);
 
@@ -18,11 +20,15 @@ function Login() {
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || "/";
-    console.log(contextAuth);
+    // console.log(contextAuth);
 
     const email = useRef(null);
     const password = useRef(null);
     const [state, setState] = useState({ email: '', password: '' });
+
+    //JWT decode 
+
+    // const { decodedToken, isExpired } = useJwt();
     //Check if login , redirect to home
     if (contextAuth.auth) {
         navigate(from, { replace: true })
@@ -34,17 +40,26 @@ function Login() {
             password: password.current.value,
         });
     }
-    if (state.email && state.password) {
-        const fetchApi = async () => {
-            const result = await loginService.login(state.email, state.password);
-            if (result.success) {
-                contextAuth.auth = true
-                navigate(from, { replace: true })
-            }
-            return result;
-        };
-        fetchApi();
-    }
+    
+    useEffect(() => {
+        if (state.email && state.password) {
+            const fetchApi = async () => {
+                const result = await loginService.login(state.email, state.password);
+                saveCookie('tokenJwt', result.data.token, 120 / 24 / 60 / 60)
+                if (result.success) {
+                    contextAuth.auth = true
+                    if(result.data.role === 'ROLE_ADMIN'){
+                        contextAuth.admin = true
+                        navigate('/admin-home', { replace: true })
+                    }else{
+                        navigate(from, { replace: true })
+                    }
+                }
+                return result;
+            };
+            fetchApi();
+        }
+    }, [state])
 
     
 

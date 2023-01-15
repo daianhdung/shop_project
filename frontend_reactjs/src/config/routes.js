@@ -1,5 +1,5 @@
 const routes = {
-    home: '/',
+    home: '/home',
     profile: '/profile',
     detail : '/detail',
     detailId: '/detail/:id',
@@ -8,7 +8,10 @@ const routes = {
     forgot: '/forgot',
     change: '/change',
     cart: '/cart',
-    search: '/search/'
+    search: '/search/',
+    //Admin route
+    adminHome: '/admin-home',
+    adminProduct: '/admin-product'
 };
 
 export default routes;
