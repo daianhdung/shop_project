@@ -26,17 +26,17 @@ public class SecSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf().disable().cors().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
 
-                .antMatchers(API_LOGIN, API_SIGNUP, API_MAIL, API_FILE + "/**", API_PRODUCT + "/**",
+                .antMatchers(API_LOGIN, API_SIGNUP, API_MAIL, API_IMAGE, API_FILE + "/**", API_PRODUCT + "/**",
                         API_BRAND + "/**", API_CATEGORY + "/**" , API_SIZE + "/**").permitAll()
 
 
                 .antMatchers(API_INSERT_PRODUCT).hasAuthority("ROLE_ADMIN")
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

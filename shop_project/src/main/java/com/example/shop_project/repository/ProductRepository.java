@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Set;
@@ -15,41 +16,53 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 //    List<ProductEntity> findAll();
 
     @Query("select p from product as p join product_size as ps on p.id = ps.productId join size as s on ps.sizeId = s.id " +
-            "where p.name like ?1 and (p.brand.id in ?2 or ?2 is null) and (ps.sizeId in ?3 or ?3 is null) and (p.category.id in ?4 or ?4 is null )" +
+            "where p.name like (:name) and (( (:isBrand) = true) or (p.brand.id in (:idsBrand))) and (((:isSize) = true) or (ps.sizeId in (:idsSize))) and (((:isCate) = true) or (p.category.id in (:idsCate)))" +
             " group by p.id")
-    List<ProductEntity> findProductEntitiesByFilter(String name,
-                                                    Iterable<Integer> idsBrand,
-                                                    Iterable<Integer> idsSize,
-                                                    Iterable<Integer> idsCate,
+    List<ProductEntity> findProductEntitiesByFilter(@Param("name") String name,
+                                                    @Param("isBrand")boolean isBrand,
+                                                    @Param("idsBrand")Iterable<Integer> idsBrand,
+                                                    @Param("isSize")boolean isSize,
+                                                    @Param("idsSize")Iterable<Integer> idsSize,
+                                                    @Param("isCate")boolean isCate,
+                                                    @Param("idsCate")Iterable<Integer> idsCate,
                                                     Pageable pageable);
     @Query("select p from product as p join product_size as ps on p.id = ps.productId join size as s on ps.sizeId = s.id " +
-            "where p.name like ?1 and (p.brand.id in ?2 or ?2 is null) and (ps.sizeId in ?3 or ?3 is null) and (p.category.id in ?4 or ?4 is null )" +
+            "where p.name like (:name) and (( (:isBrand) = true) or (p.brand.id in (:idsBrand))) and (((:isSize) = true) or (ps.sizeId in (:idsSize))) and (((:isCate) = true) or (p.category.id in (:idsCate)))" +
             " group by p.id")
-    List<ProductEntity> findProductEntitiesByFilter(String name,
-                                                    Iterable<Integer> idsBrand,
-                                                    Iterable<Integer> idsSize,
-                                                    Iterable<Integer> idsCate);
+    List<ProductEntity> findProductEntitiesByFilter(@Param("name") String name,
+                                                    @Param("isBrand")boolean isBrand,
+                                                    @Param("idsBrand")Iterable<Integer> idsBrand,
+                                                    @Param("isSize")boolean isSize,
+                                                    @Param("idsSize")Iterable<Integer> idsSize,
+                                                    @Param("isCate")boolean isCate,
+                                                    @Param("idsCate")Iterable<Integer> idsCate);
     @Query("select p from product as p join product_size as ps on p.id = ps.productId join size as s on ps.sizeId = s.id " +
             "join bookmark_product as bp on p.id = bp.productId join user as u on u.id = bp.userId " +
-            "where p.name like ?1 and (p.brand.id in ?2 or ?2 is null) and (ps.sizeId in ?3 or ?3 is null) and (p.category.id in ?4 or ?4 is null) " +
-            "and u.email = ?5 " +
+            "where p.name like (:name) and (( (:isBrand) = true) or (p.brand.id in (:idsBrand))) and (((:isSize) = true) or (ps.sizeId in (:idsSize))) and (((:isCate) = true) or (p.category.id in (:idsCate))) " +
+            "and u.email = :email " +
             "group by p.id")
-    List<ProductEntity> findProductEntitiesByFilter(String name,
-                                                    Iterable<Integer> idsBrand,
-                                                    Iterable<Integer> idsSize,
-                                                    Iterable<Integer> idsCate,
-                                                    String email,
+    List<ProductEntity> findProductEntitiesByFilter(@Param("name") String name,
+                                                    @Param("isBrand")boolean isBrand,
+                                                    @Param("idsBrand")Iterable<Integer> idsBrand,
+                                                    @Param("isSize")boolean isSize,
+                                                    @Param("idsSize")Iterable<Integer> idsSize,
+                                                    @Param("isCate")boolean isCate,
+                                                    @Param("idsCate")Iterable<Integer> idsCate,
+                                                    @Param("email") String email,
                                                     Pageable pageable);
     @Query("select p from product as p join product_size as ps on p.id = ps.productId join size as s on ps.sizeId = s.id " +
             "join bookmark_product as bp on p.id = bp.productId join user as u on u.id = bp.userId " +
-            "where p.name like ?1 and (p.brand.id in ?2 or ?2 is null) and (ps.sizeId in ?3 or ?3 is null) and (p.category.id in ?4 or ?4 is null) " +
-            "and u.email = ?5 " +
+            "where p.name like (:name) and (( (:isBrand) = true) or (p.brand.id in (:idsBrand))) and (((:isSize) = true) or (ps.sizeId in (:idsSize))) and (((:isCate) = true) or (p.category.id in (:idsCate))) " +
+            "and u.email = :email " +
             "group by p.id")
-    List<ProductEntity> findProductEntitiesByFilter(String name,
-                                                    Iterable<Integer> idsBrand,
-                                                    Iterable<Integer> idsSize,
-                                                    Iterable<Integer> idsCate,
-                                                    String email);
+    List<ProductEntity> findProductEntitiesByFilter(@Param("name") String name,
+                                                    @Param("isBrand")boolean isBrand,
+                                                    @Param("idsBrand")Iterable<Integer> idsBrand,
+                                                    @Param("isSize")boolean isSize,
+                                                    @Param("idsSize")Iterable<Integer> idsSize,
+                                                    @Param("isCate")boolean isCate,
+                                                    @Param("idsCate")Iterable<Integer> idsCate,
+                                                    @Param("email") String email);
     @Query("select p from product as p join product_size as ps on p.id = ps.productId join size as s on ps.sizeId = s.id group by p.id")
     List<ProductEntity> findProductEntities();
 
