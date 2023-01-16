@@ -36,7 +36,7 @@ public class SecSecurityConfig {
 
 
                 .antMatchers(API_INSERT_PRODUCT).hasAuthority("ROLE_ADMIN")
-                .anyRequest().permitAll();
+                .anyRequest().authenticated();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

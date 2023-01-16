@@ -56,9 +56,9 @@ function Sidebar1() {
     useEffect( () => {
         setFilter( {
             ...filter,
-            checkBrand,
-            checkSize,
-            checkCategory
+            brandId:checkBrand,
+            sizeId:checkSize,
+            categoryId:checkCategory
         })
     }, [checkBrand, checkSize, checkCategory])
     useEffect( () => {
@@ -107,7 +107,7 @@ function Sidebar1() {
                         checked={checkCategory.includes(item.id)}
                         onChange={() => handleCheckCategory(item.id)}
                     />
-                    <label htmlFor={`${item.id}-size`} >{item.name}</label>
+                    <label htmlFor={`${item.id}-brand`} >{item.name}</label>
                 </div>
             ))}
         </div>
@@ -117,10 +117,10 @@ function Sidebar1() {
             {allBrand && allBrand.map(item => (
                 <div key={item.id}>
                     <input type="checkbox" id={`${item.id}-category`}
-                        checked={checkCategory.includes(item.id)}
+                        checked={checkBrand.includes(item.id)}
                         onChange={() => handleCheckBrand(item.id)}
                     />
-                    <label htmlFor={`${item.id}-size`} >{item.name}</label>
+                    <label htmlFor={`${item.id}-category`} >{item.name}</label>
                 </div>
             ))}
         </div>

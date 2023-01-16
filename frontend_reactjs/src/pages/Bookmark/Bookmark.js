@@ -8,36 +8,90 @@ import useFilter from '~/hooks/useFilter';
 import useAuth from '~/hooks/useAuth';
 import * as bookmarkService from '~/service/bookmarkService';
 import { getCookie } from '~/utils/utilsCookie';
+import Sort from '~/components/Sort/sort';
+import List from './List';
+import Paging from '~/components/Paging/Paging';
 
 
 
 function Bookmark() {
   
     const filterContext = useFilter()
-    const authContext = useAuth()
-    const isAuth = authContext.auth
-    const [current, SetCurrent] = useState(1)
+    const [page, SetPage] = useState({
+        currentPage: 1
+    })
     const [sort, SetSort] = useState("az")
-   
+    const [products, SetProducts] = useState(null)
+
+    const handleSort = (e) => {
+        SetSort(e.target.value)
+    }
+    const handleNext = () => {
+        if (page.currentPage < page.totalPage) {
+            SetPage(prev => {
+                return { 
+                    ...prev,
+                    currentPage: prev.currentPage + 1
+                }
+            })
+        }
+    }
+    const handlePrev = () => {
+        if (page.currentPage > 1) {
+            SetPage(prev => {
+                return { 
+                    ...prev,
+                    currentPage: prev.currentPage - 1
+                }
+            })
+        }
+    }
+    const handleSetCurrentPage = (num) => {
+        SetPage(prev => {
+            return { 
+                ...prev,
+                currentPage: num
+            }
+        })
+    }
+
     useEffect( () => {
-        const token = isAuth ? getCookie('tokenJwt') : ""
+        const token = getCookie('tokenJwt')
         var custtom = {
-            current,
+            current: page.currentPage,
             sort
         }
         var customFilter = {
             ...filterContext.filter,
-            ...sort
+            ...custtom
         }
-        bookmarkService.getProductBookmark( customFilter, current, token)
-            .then(data => {
-                console.log(data)
+        bookmarkService.getProductBookmark(customFilter, token)
+            .then(response => {
+                SetProducts(response.products)
+                SetPage({
+                    currentPage: response.currentPage,
+                    totalPage: response.totalPage
+                })
             })
-    }, [filterContext])
+    }, [filterContext, sort, page.currentPage])
+ 
+
+
+
     return (
-        
-        <div>
-            
+        <div id='wrapper'>
+            <div className='row'>
+                <div className='col-md-12'>
+                    <Sort sort={sort} handleSort={handleSort} />
+                    {products && <List products={products}/>}
+                </div>
+            </div>
+            <div className='row d-flex justify-content-center'>
+                <div className='col-md-6'>
+                    {products && <Paging currentPage={page.currentPage} totalPage={page.totalPage} handleNext={handleNext} handlePrev={handlePrev} handleSetCurrentPage={handleSetCurrentPage} />}
+                </div>
+            </div>
+
         </div>
     )
 }

@@ -15,12 +15,8 @@ export const postParams = async (path, json = {}, params = {}) => {
     })
     return response.data;
 }
-export const postTokenHeader = async (path, json = {}, params = {}, headers = {}) => {
-    const response = await httpRequest.post(path, json, {
-        params: params
-    }, {
-        headers: headers
-    })
+export const postTokenHeader = async (path, data, headers) => {
+    const response = await httpRequest.post(path, data, headers)
     return response.data;
 }
 

@@ -45,7 +45,7 @@ function Login() {
         if (state.email && state.password) {
             const fetchApi = async () => {
                 const result = await loginService.login(state.email, state.password);
-                saveCookie('tokenJwt', result.data.token, 120 / 24 / 60 / 60)
+                saveCookie('tokenJwt', result.data.token, result.data.expire)
                 if (result.success) {
                     contextAuth.auth = true
                     if(result.data.role === 'ROLE_ADMIN'){

@@ -65,6 +65,8 @@ function Header(props) {
                     <div className={cx('up_right_header')}>
                         <nav className="header-nav">
                             <NavLink to={config.routes.home} className={cx('nav_link')}>Trang chủ</NavLink>
+                            <NavLink to={config.routes.product} className={cx('nav_link')}>Sản phẩm</NavLink>
+                            {context.auth && <NavLink to={config.routes.bookmark} className={cx('nav_link')}>Yêu thích</NavLink>}
                             <Tippy
                                 interactive
                                 render={(attrs) => (
@@ -75,7 +77,7 @@ function Header(props) {
                                         </div>
                                     </div>
                                 )}>
-                                <NavLink to={config.routes.detail} className={cx('nav_link')}>Thương hiệu <FontAwesomeIcon icon={faAngleDown} /></NavLink>
+                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Thương hiệu <FontAwesomeIcon icon={faAngleDown} /></NavLink>
                             </Tippy>
                             <Tippy
                                 interactive
@@ -92,6 +94,7 @@ function Header(props) {
 
                             <NavLink to="/cart" className={cx('nav_link')}>Giỏ hàng</NavLink>
                             <NavLink to="/contact" className={cx('nav_link')}>Liên hệ</NavLink>
+
                         </nav>
                     </div>
                     <div className={cx('up_last_header')}>
