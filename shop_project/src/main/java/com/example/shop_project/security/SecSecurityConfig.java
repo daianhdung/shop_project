@@ -32,7 +32,7 @@ public class SecSecurityConfig {
                 .authorizeRequests()
 
                 .antMatchers(API_LOGIN, API_SIGNUP, API_MAIL, API_FILE + "/**", API_PRODUCT + "/**",
-                        API_BRAND + "/**", API_CATEGORY + API_PRODUCT_FILTER + "/**").permitAll()
+                        API_BRAND + "/**", API_CATEGORY + "/**" , API_SIZE + "/**").permitAll()
 
 
                 .antMatchers(API_INSERT_PRODUCT).hasAuthority("ROLE_ADMIN")

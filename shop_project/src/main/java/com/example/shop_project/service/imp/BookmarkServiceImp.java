@@ -47,15 +47,15 @@ public class BookmarkServiceImp implements BookmarkService {
         return totalPage;
     }
     @Override
-    public ProductDTO getProductBookMark(FilterProductRequest filterProduct, int currentPage) {
+    public ProductDTO getProductBookMark(FilterProductRequest filterProduct) {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         Pageable pageable = null;
         if (filterProduct.getSort().equals("az"))  {
-            pageable = PageRequest.of(currentPage - 1, num, Sort.by("name").ascending());
+            pageable = PageRequest.of(filterProduct.getCurrent()- 1, num, Sort.by("name").ascending());
         } else if (filterProduct.getSort().equals("asc")){
-            pageable = PageRequest.of(currentPage - 1, num, Sort.by("price").ascending());
+            pageable = PageRequest.of(filterProduct.getCurrent() - 1, num, Sort.by("price").ascending());
         } else if (filterProduct.getSort().equals("dsc")) {
-            pageable = PageRequest.of(currentPage - 1, num, Sort.by("price").descending());
+            pageable = PageRequest.of(filterProduct.getCurrent() - 1, num, Sort.by("price").descending());
         }
         List<ProductEntity> productEntities = productRepository.findProductEntitiesByFilter(
                 "%"+ filterProduct.getSearchName() + "%",
@@ -80,7 +80,7 @@ public class BookmarkServiceImp implements BookmarkService {
         });
         ProductDTO productDTO = new ProductDTO();
         productDTO.setTotalPage(this.getTotalPage(filterProduct));
-        productDTO.setCurrentPage(currentPage);
+        productDTO.setCurrentPage(filterProduct.getCurrent());
         productDTO.setProducts(productModels);
         return productDTO;
     }

@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bookmark")
+@CrossOrigin
 public class BookmarkController {
 
     @Autowired
     BookmarkService bookmarkService;
-    @PostMapping("/{current}")
-    public ResponseEntity<?> getProductWithPageByFilter(@PathVariable(name = "current") int current,
-                                                        @RequestBody FilterProductRequest filterProduct) {
-        ProductDTO productDTO = bookmarkService.getProductBookMark(filterProduct, current);
+    @PostMapping("")
+    public ResponseEntity<?> getProductWithPageByFilter( @RequestBody FilterProductRequest filterProduct) {
+        ProductDTO productDTO = bookmarkService.getProductBookMark(filterProduct);
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(productDTO);
         dataResponse.setSuccess(true);
