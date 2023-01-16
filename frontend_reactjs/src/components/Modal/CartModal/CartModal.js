@@ -4,24 +4,72 @@ import styles from './CartModal.module.scss';
 import React, { useState } from "react";
 import { faLongArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { formatNumber } from '~/utils/stringUtils';
 
 const cx = classNames.bind(styles);
 
 function CartModal({ closeModal }) {
-    const [count, setCount] = useState(1)
-    const onReduce = () => {
-        if (count > 0) {
-            setCount(count - 1)
+
+
+    const [localItems, setLocalItems] = useState(JSON.parse(localStorage.getItem('items')))
+
+
+    if (localItems) {
+        var onReduce = (id) => {
+            const updatedItemList = localItems.map((item) => {
+                if (item.id === id && item.quantity > 0) {
+                    item.quantity--;
+                }
+                return item;
+            });
+            setLocalItems(updatedItemList);
+            localStorage.setItem("items", JSON.stringify(updatedItemList));
+        }
+        var onIncrease = (id) => {
+            const updatedItemList = localItems.map((item) => {
+                if (item.id == id) {
+                    item.quantity++
+                }
+                return item
+            })
+            setLocalItems(updatedItemList);
+            localStorage.setItem("items", JSON.stringify(updatedItemList));
+        }
+
+        var onDelete = (id) => {
+            const updatedItemList = localItems.filter((item) => item.id !== id);
+            setLocalItems(updatedItemList);
+            if (updatedItemList.length === 0) {
+                localStorage.removeItem('items')
+                closeModal()
+            } else {
+                localStorage.setItem("items", JSON.stringify(updatedItemList));
+            }
+        }
+        var handleChange = (e, id) => {
+            const inputValue = e.target.value;
+            const updatedItemList = localItems.map((item) => {
+                const newCount = isNaN(inputValue) ? item.quantity : Number(inputValue);
+                if (item.id == id) {
+                    item.quantity = newCount
+                }
+                return item
+            })
+            setLocalItems(updatedItemList);
+            localStorage.setItem("items", JSON.stringify(updatedItemList));
+        }
+
+        var getTotalCart = () => {
+            let total = 0
+            localItems.map((item) => {
+                total += item.price * item.quantity
+            })
+            return total
         }
     }
-    const onIncrease = () => {
-        setCount(count + 1)
-    }
-    const handleChange = (e) => {
-        const inputValue = e.target.value;
-        const newCount = isNaN(inputValue) ? count : Number(inputValue);
-        setCount(newCount);
-    }
+
+    console.log(11111);
+    console.log(localItems);
 
     return (<React.Fragment>
         <div className={cx('modal-overlay')} onClick={closeModal}>
@@ -31,7 +79,7 @@ function CartModal({ closeModal }) {
                         <img src='//bizweb.dktcdn.net/100/347/064/themes/717243/assets/add_to_cart.svg?1671644724927' />
                         <div>
                             <h3>Bạn đã thêm sản phẩm ... vào giỏ hàng</h3>
-                            <h4>Giỏ hàng của bạn (0 sản phẩm )</h4>
+                            <h4>Giỏ hàng của bạn ({localItems.length} sản phẩm )</h4>
                         </div>
                         <span className={cx('modal-close')} onClick={closeModal}>&times;</span>
                     </div>
@@ -46,32 +94,39 @@ function CartModal({ closeModal }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div className={cx('wrap_td')}>
-                                            <img src={process.env.PUBLIC_URL + '/image/air-jordan.webp'} />
-                                            <div className={cx('descrip-product')}>
-                                                <p>Jordan 1 High Zoom Air CMFT Canyon Rust (CT0979-602)</p>
-                                                <span>- 38.5</span>
-                                                <div className={cx('modal-close')}>&times; Xóa sản phẩm</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>5.000.000 VND</td>
-                                    <td>
-                                        <div className={cx('quantity_setup')}>
-                                            <button onClick={onReduce} className={cx('btn-reduce', 'btn')} type="button">
-                                                -
-                                            </button>
-                                            <input value={count} type="text" title="Số lượng" maxLength="3" id="qty" name="quantity" onChange={handleChange} />
-                                            <button onClick={onIncrease} className={cx('btn-increase', 'btn')} type="button">+</button>
-                                        </div>
-                                    </td>
-                                    <td>5.000.000 VND</td>
-                                </tr>
-                                <tr><td style={{padding: '5px'}} colSpan={5} align='right'>Tổng tiền: 5.000.000VND</td></tr>
+                                {localItems ? <>
+                                    {localItems && localItems.map((item) => (
+                                        <tr key={item.id}>
+                                            <td>
+                                                <div className={cx('wrap_td')}>
+                                                    <img width={140} height={140} src={process.env.REACT_APP_IMG_URL + item.image} />
+                                                    <div className={cx('descrip-product')}>
+                                                        <p>{item.name}</p>
+                                                        <span>- 38.5</span>
+                                                        <div onClick={() => onDelete(item.id)} className={cx('modal-close')}>&times; Xóa sản phẩm</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{formatNumber(item.price)} VND</td>
+                                            <td>
+                                                <div className={cx('quantity_setup')}>
+                                                    <button onClick={() => onReduce(item.id)} className={cx('btn-reduce', 'btn')} type="button">
+                                                        -
+                                                    </button>
+                                                    <input value={item.quantity} type="text" title="Số lượng" maxLength="2" id="qty" name="quantity" onChange={(e) => handleChange(e, item.id)} />
+                                                    <button onClick={() => onIncrease(item.id)} className={cx('btn-increase', 'btn')} type="button">+</button>
+                                                </div>
+                                            </td>
+                                            <td>{formatNumber(item.price * item.quantity)} VND</td>
+                                        </tr>
+                                    ))}
+                                    <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: {getTotalCart && formatNumber(getTotalCart())} VND</td></tr>
+                                </> :
+                                    <tr><td colSpan={6}><h2>Chưa có sản phẩm trong giỏ hàng</h2></td></tr>
+                                }
+
                             </tbody>
-                            
+
                         </table>
                     </div>
                     <div className={cx('modal-footer')}>

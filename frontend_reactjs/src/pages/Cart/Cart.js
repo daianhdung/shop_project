@@ -15,25 +15,65 @@ function Cart() {
     const navigate = useNavigate();
 
 
+    const [localItems, setLocalItems] = useState(JSON.parse(localStorage.getItem('items')))
 
+    console.log(1);
 
-    var localItems = JSON.parse(localStorage.getItem('items'))
+    if (localItems) {
+        var onReduce = (id) => {
+            const updatedItemList = localItems.map((item) => {
+                if (item.id === id && item.quantity > 0) {
+                    item.quantity--;
+                }
+                return item;
+            });
+            setLocalItems(updatedItemList);
+            localStorage.setItem("items", JSON.stringify(updatedItemList));
+        }
+        var onIncrease = (id) => {
+            const updatedItemList = localItems.map((item) => {
+                if (item.id == id) {
+                    item.quantity++
+                }
+                return item
+            })
+            setLocalItems(updatedItemList);
+            localStorage.setItem("items", JSON.stringify(updatedItemList));
+        }
 
+        var onDelete = (id) => {
+            const updatedItemList = localItems.filter((item) => item.id !== id);
+            if(updatedItemList.length === 0){
+                localStorage.removeItem('items')
+                setLocalItems(null)
+            }else{
+                setLocalItems(updatedItemList);
+                localStorage.setItem("items", JSON.stringify(updatedItemList));
+            }
+           
+        }
+        var handleChange = (e, id) => {
+            const inputValue = e.target.value;
+            const updatedItemList = localItems.map((item) => {
+                const newCount = isNaN(inputValue) ? item.quantity : Number(inputValue);
+                if (item.id == id) {
+                    item.quantity = newCount
+                }
+                return item
+            })
+            setLocalItems(updatedItemList);
+            localStorage.setItem("items", JSON.stringify(updatedItemList));
+        }
 
-    const [count, setCount] = useState()
-    const onReduce = () => {
-        if (count > 0) {
-            setCount(count - 1)
+        var getTotalCart = () => {
+            let total = 0
+            localItems.map((item) => {
+                total += item.price * item.quantity
+            })
+            return total
         }
     }
-    const onIncrease = () => {
-        setCount(count + 1)
-    }
-    const handleChange = (e) => {
-        const inputValue = e.target.value;
-        const newCount = isNaN(inputValue) ? count : Number(inputValue);
-        setCount(newCount);
-    }
+
 
     return (<div className={cx('wrapper')}>
         <div className={cx('header-cart')}>
@@ -64,26 +104,25 @@ function Cart() {
                                         <div className={cx('wrap_td')}>
                                             <div className={cx('descrip-product')}>
                                                 <p>{item.name}</p>
-                                                <span>- 38.5</span>
-                                                <div className={cx('modal-close')}>&times; Xóa sản phẩm</div>
+                                                <span>Size - 38.5</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>{formatNumber(item.price)}</td>
                                     <td>
                                         <div className={cx('quantity_setup')}>
-                                            <button onClick={onReduce} className={cx('btn-reduce', 'btn')} type="button">
+                                            <button onClick={() => onReduce(item.id)} className={cx('btn-reduce', 'btn')} type="button">
                                                 -
                                             </button>
-                                            <input value={count} type="text" title="Số lượng" maxLength="3" id="qty" name="quantity" onChange={handleChange} />
-                                            <button onClick={onIncrease} className={cx('btn-increase', 'btn')} type="button">+</button>
+                                            <input value={item.quantity} type="text" title="Số lượng" maxLength="2" name="quantity" onChange={(e) => handleChange(e, item.id)} />
+                                            <button onClick={() => onIncrease(item.id)} className={cx('btn-increase', 'btn')} type="button">+</button>
                                         </div>
                                     </td>
-                                    <td>5.000.000 VND</td>
-                                    <td><FontAwesomeIcon icon={faTrash} /></td>
+                                    <td ><div className={cx('total')}>{formatNumber(item.price * item.quantity)} VND</div></td>
+                                    <td><FontAwesomeIcon style={{cursor: 'pointer'}} onClick={() => onDelete(item.id)} icon={faTrash} /></td>
                                 </tr>
                             ))}
-                            <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: 5.000.000VND</td></tr>
+                            <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: {getTotalCart &&  formatNumber(getTotalCart())} VND</td></tr>
                         </> : <tr><td colSpan={6}><h2>Chưa có sản phẩm trong giỏ hàng</h2></td></tr>}
                 </tbody>
             </table>
