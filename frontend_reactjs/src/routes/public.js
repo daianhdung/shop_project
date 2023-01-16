@@ -23,19 +23,21 @@ const publicRoutes = [
     { path: config.routes.detail, component: Home },
     { path: config.routes.detailId, component: Detail },
     { path: config.routes.cart, component: Cart },
-    { path: config.routes.bookmark, component: Bookmark},
+    { path: config.routes.search, component: SearchProduct }
+]
+const authRoutes = [
     { path: config.routes.login, component: Login, layout: AuthenLayout },
     { path: config.routes.signup, component: Signup, layout: AuthenLayout },
     { path: config.routes.forgot, component: Forgot, layout: AuthenLayout },
     { path: config.routes.change, component: Change, layout: AuthenLayout },
-    { path: config.routes.search, component: SearchProduct }
 ]
 const privateRoutes = [
+    { path: config.routes.bookmark, component: Bookmark},
     { path: config.routes.profile, component: Profile }
 ]
 const adminRoutes = [
-    { path: config.routes.adminHome, component: HomeAdmin , layout: AdminLayout},
+    { path: config.routes.adminHome, component: HomeAdmin, layout: AdminLayout },
     { path: config.routes.adminProduct, component: ProductAdmin, layout: AdminLayout }
 ]
 
-export { publicRoutes, privateRoutes, adminRoutes }
+export { publicRoutes, privateRoutes, adminRoutes , authRoutes}

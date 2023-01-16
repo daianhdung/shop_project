@@ -172,6 +172,7 @@ public class ProductServiceImp implements ProductService {
         ProductEntity productEntity = productRepository.findById(id);
         productDTO.setId(productEntity.getId());
         productDTO.setPrice(productEntity.getPrice());
+        productDTO.setMainImage(productEntity.getMainImage());
         Optional<BrandEntity> brand = brandRepository.findById(productEntity.getBrand().getId());
         if(brand.isPresent()){
             productDTO.setBrandName(brand.get().getName());
