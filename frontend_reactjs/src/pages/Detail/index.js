@@ -39,9 +39,36 @@ function Detail() {
     const onIncrease = () => {
         setCount(count + 1)
     }
+
+
     const onSubmit = () => {
+        const items = []
+        const item = {
+            id: detailProduct.id,
+            name: detailProduct.name,
+            price: detailProduct.price,
+            quantity: count,
+            image: detailProduct.mainImage
+        }
+        if (JSON.parse(localStorage.getItem('items') === null)) {
+            items.push(item)
+            localStorage.setItem('items', JSON.stringify(items))
+        } else {
+            const localItems = JSON.parse(localStorage.getItem('items'))
+            localItems.map((itemLocal) => {
+                if (item.id == itemLocal.id) {
+                    item.quantity = itemLocal.quantity + item.quantity
+                    
+                } else {
+                    items.push(itemLocal)
+                }
+            })
+            items.push(item)
+            localStorage.setItem('items', JSON.stringify(items))
+        }
         setModalOpen(true)
     }
+
     const handleChange = (e) => {
         const inputValue = e.target.value;
         const newCount = isNaN(inputValue) ? count : Number(inputValue);
