@@ -93,15 +93,16 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public ProductDTO getProductByFilter(FilterProductRequest filterProduct, int currentPage) {
+    public ProductDTO getProductByFilter(FilterProductRequest filterProduct) {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        System.out.println("email" + email);
         Pageable pageable = null;
         if (filterProduct.getSort().equals("az"))  {
-            pageable = PageRequest.of(currentPage - 1, num, Sort.by("name").ascending());
+            pageable = PageRequest.of(filterProduct.getCurrent() - 1, num, Sort.by("name").ascending());
         } else if (filterProduct.getSort().equals("asc")){
-            pageable = PageRequest.of(currentPage - 1, num, Sort.by("price").ascending());
+            pageable = PageRequest.of(filterProduct.getCurrent() - 1, num, Sort.by("price").ascending());
         } else if (filterProduct.getSort().equals("dsc")) {
-            pageable = PageRequest.of(currentPage - 1, num, Sort.by("price").descending());
+            pageable = PageRequest.of(filterProduct.getCurrent() - 1, num, Sort.by("price").descending());
         }
 
         List<ProductEntity> productEntities = productRepository.findProductEntitiesByFilter(
@@ -127,7 +128,7 @@ public class ProductServiceImp implements ProductService {
         });
         ProductDTO productDTO = new ProductDTO();
         productDTO.setTotalPage(this.getTotalPage(filterProduct));
-        productDTO.setCurrentPage(currentPage);
+        productDTO.setCurrentPage(filterProduct.getCurrent());
         productDTO.setProducts(productModels);
 
         return productDTO;

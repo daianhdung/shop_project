@@ -40,7 +40,7 @@ public class ProductController {
         dataResponse.setData(productService.getTotalPage(filterProduct));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
-    @GetMapping("/page/{current}")
+    @GetMapping("/page/{}")
     public ResponseEntity<?> getProductWithPage(@PathVariable(name = "current") int current) {
         ProductDTO productDTO = productService.getProducts(current);
         DataResponse dataResponse = new DataResponse();
@@ -50,10 +50,9 @@ public class ProductController {
         dataResponse.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
-    @PostMapping("/filter/{current}")
-    public ResponseEntity<?> getProductWithPageByFilter(@PathVariable(name = "current") int current,
-                                                        @RequestBody FilterProductRequest filterProduct) {
-        ProductDTO productDTO = productService.getProductByFilter(filterProduct, current);
+    @PostMapping("/filter")
+    public ResponseEntity<?> getProductWithPageByFilter(@RequestBody FilterProductRequest filterProduct) {
+        ProductDTO productDTO = productService.getProductByFilter(filterProduct);
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData(productDTO);
         dataResponse.setSuccess(true);

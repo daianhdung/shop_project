@@ -11,6 +11,7 @@ import Forgot from "~/pages/Forgot/Forgot";
 import Change from "~/pages/Change/Change";
 import Cart from "~/pages/Cart/Cart";
 import SearchProduct from "~/pages/SearchProduct/SearchProduct";
+import Bookmark from "~/pages/Bookmark/Bookmark";
 
 
 const publicRoutes = [
@@ -19,6 +20,7 @@ const publicRoutes = [
     { path: config.routes.detail, component: Home },
     { path: config.routes.detailId, component: Detail },
     { path: config.routes.cart, component: Cart },
+    { path: config.routes.bookmark, component: Bookmark},
     { path: config.routes.login, component: Login, layout: AuthenLayout },
     { path: config.routes.signup, component: Signup, layout: AuthenLayout },
     { path: config.routes.forgot, component: Forgot, layout: AuthenLayout },

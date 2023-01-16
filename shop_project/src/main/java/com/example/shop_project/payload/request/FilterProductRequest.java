@@ -3,6 +3,7 @@ package com.example.shop_project.payload.request;
 import java.util.List;
 
 public class FilterProductRequest {
+    private int current;
     private String searchName;
     private List<Integer> brandId;
     private List<Integer> sizeId;
@@ -47,5 +48,13 @@ public class FilterProductRequest {
 
     public void setSort(String sort) {
         this.sort = sort;
+    }
+
+    public int getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(int current) {
+        this.current = current;
     }
 }

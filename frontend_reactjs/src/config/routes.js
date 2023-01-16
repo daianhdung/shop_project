@@ -8,6 +8,7 @@ const routes = {
     forgot: '/forgot',
     change: '/change',
     cart: '/cart',
+    bookmark: '/bookmark',
     search: '/search/'
 };
 

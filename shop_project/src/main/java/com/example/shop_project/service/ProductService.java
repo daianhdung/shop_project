@@ -11,7 +11,7 @@ public interface ProductService {
     int getTotalPage();
 
     ProductDTO getProducts(int currentPage);
-    ProductDTO getProductByFilter(FilterProductRequest filterProduct, int currentPage);
+    ProductDTO getProductByFilter(FilterProductRequest filterProduct);
 
     List<ProductDTO> getFeaturedProductByTop1Price();
     List<ProductDTO> getProductByTop10AmountOfSold();

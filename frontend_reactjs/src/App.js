@@ -5,11 +5,13 @@ import { privateRoutes, publicRoutes } from './routes/public';
 import { DefaultLayout } from '~/layouts';
 import { AuthProvider } from './context/AuthProvider';
 import RequireAuth from './components/RequiredAuth';
+import { FilterProvider } from './context/FilterProvider';
 
 
 function App() {
     return (
         <Router>
+            <FilterProvider>
             <AuthProvider>
                 <div className="App">
                     <Outlet/>
@@ -59,6 +61,7 @@ function App() {
                     </Routes>
                 </div>
             </AuthProvider>
+            </FilterProvider>
         </Router>
     );
 }

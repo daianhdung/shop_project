@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import styles from './DefaultLayout.module.scss';
 import Header from '~/layouts/components/Header/Header';
-import Sidebar from '~/layouts/components/Sidebar/Sidebar';
+import Sidebar1 from '~/layouts/components/Sidebar/Sidebar1';
 import Footer from '~/layouts/components/Footer/Footer';
 
 
@@ -19,7 +19,7 @@ function DefaultLayout({ children }) {
             <div style={{ background: 'rgba(245, 245, 250, 1)' }} >
                 <div style={{ height: '2000px' }} className={cx('container')}>
                     <div className={cx('inner')}>
-                        <Sidebar />
+                        <Sidebar1 />
                         <div className={cx('content')}>
                             {children}
                             <Footer />
