@@ -38,8 +38,8 @@ function SearchProduct() {
         <div className={cx('wrapper')}>
             <div className={cx('inner')}>
                 {detailProduct && detailProduct.length ? detailProduct.map((item) => (
-                    <Link className={cx('link-a')} to={config.routes.detail + '/' + item.id}>
-                        <div className={cx('wrap_item')} key={item.id}>
+                    <Link key={item.id} className={cx('link-a')} to={config.routes.detail + '/' + item.id}>
+                        <div className={cx('wrap_item')}>
                             <img width={200} height={200} src={process.env.REACT_APP_IMG_URL + item.mainImage} />
                             <div>
                                 <h4>{item.name}</h4>

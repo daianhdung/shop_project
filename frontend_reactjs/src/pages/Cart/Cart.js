@@ -1,17 +1,26 @@
 import { faAngleRight, faLongArrowLeft, faLongArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import config from '~/config';
 import styles from './Cart.module.scss';
+import { formatNumber } from '~/utils/stringUtils';
 
 const cx = classNames.bind(styles);
 
 function Cart() {
 
-    const [count, setCount] = useState(1)
+    const navigate = useNavigate();
+
+
+
+
+    var localItems = JSON.parse(localStorage.getItem('items'))
+
+
+    const [count, setCount] = useState()
     const onReduce = () => {
         if (count > 0) {
             setCount(count - 1)
@@ -46,37 +55,42 @@ function Cart() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><img src={process.env.PUBLIC_URL + '/image/air-jordan.webp'} /></td>
-                        <td>
-                            <div className={cx('wrap_td')}>
-                                <div className={cx('descrip-product')}>
-                                    <p>Jordan 1 High Zoom Air CMFT Canyon Rust (CT0979-602)</p>
-                                    <span>- 38.5</span>
-                                    <div className={cx('modal-close')}>&times; Xóa sản phẩm</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>5.000.000 VND</td>
-                        <td>
-                            <div className={cx('quantity_setup')}>
-                                <button onClick={onReduce} className={cx('btn-reduce', 'btn')} type="button">
-                                    -
-                                </button>
-                                <input value={count} type="text" title="Số lượng" maxLength="3" id="qty" name="quantity" onChange={handleChange} />
-                                <button onClick={onIncrease} className={cx('btn-increase', 'btn')} type="button">+</button>
-                            </div>
-                        </td>
-                        <td>5.000.000 VND</td>
-                        <td><FontAwesomeIcon icon={faTrash} /></td>
-                    </tr>
-                    <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: 5.000.000VND</td></tr>
+                    {localItems ?
+                        <>
+                            {localItems && localItems.map((item) => (
+                                <tr key={item.id}>
+                                    <td><img width={140} height={140} src={process.env.REACT_APP_IMG_URL + item.image} /></td>
+                                    <td>
+                                        <div className={cx('wrap_td')}>
+                                            <div className={cx('descrip-product')}>
+                                                <p>{item.name}</p>
+                                                <span>- 38.5</span>
+                                                <div className={cx('modal-close')}>&times; Xóa sản phẩm</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{formatNumber(item.price)}</td>
+                                    <td>
+                                        <div className={cx('quantity_setup')}>
+                                            <button onClick={onReduce} className={cx('btn-reduce', 'btn')} type="button">
+                                                -
+                                            </button>
+                                            <input value={count} type="text" title="Số lượng" maxLength="3" id="qty" name="quantity" onChange={handleChange} />
+                                            <button onClick={onIncrease} className={cx('btn-increase', 'btn')} type="button">+</button>
+                                        </div>
+                                    </td>
+                                    <td>5.000.000 VND</td>
+                                    <td><FontAwesomeIcon icon={faTrash} /></td>
+                                </tr>
+                            ))}
+                            <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: 5.000.000VND</td></tr>
+                        </> : <tr><td colSpan={6}><h2>Chưa có sản phẩm trong giỏ hàng</h2></td></tr>}
                 </tbody>
             </table>
         </div>
-        
+
         <div className={cx('cart-footer')}>
-            <Link to={config.routes.home}><button style={{background: 'var(--disabled-color)', borderColor: 'var(--disabled-color)'}} className={cx('grow_spin')} type="submit"><FontAwesomeIcon icon={faLongArrowLeft} /> Quay lại mua hàng </button></Link>
+            <button onClick={() => navigate(-1)} style={{ background: 'var(--disabled-color)', borderColor: 'var(--disabled-color)' }} className={cx('grow_spin')} type="submit"><FontAwesomeIcon icon={faLongArrowLeft} /> Quay lại mua hàng </button>
             <button className={cx('grow_spin')} type="submit">Tiến hành đặt hàng <FontAwesomeIcon icon={faLongArrowRight} /></button>
         </div>
     </div>);

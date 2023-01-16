@@ -1,11 +1,9 @@
 import { isExpired, decodeToken } from "react-jwt";
 import { getCookie, removeCookie } from "~/utils/utilsCookie";
 
-const { createContext, useRef, useEffect, useState } = require("react");
+const { createContext, useRef, useState } = require("react");
 
 const AuthContext = createContext()
-
-
 
 
 export const AuthProvider = ({ children }) => {
@@ -29,15 +27,9 @@ export const AuthProvider = ({ children }) => {
     const authRef = useRef(userLogin);
     const [isLogout, setIsLogout] = useState(authRef.current == true ? true : false)
 
-
-
-
-
-
     const login = function () {
         authRef.current = true;
     }
-
 
 
     const logout = function () {
