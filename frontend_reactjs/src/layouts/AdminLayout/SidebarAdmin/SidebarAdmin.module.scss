@@ -1,0 +1,22 @@
+.wrapper {
+    padding: 20px;
+}
+
+.logo_wrap{
+    padding-bottom: 20px;
+}
+
+.nav_wrap, .auth_wrap{
+    padding-top: 20px;
+    padding-bottom: 30px;
+    li {
+        padding: 10px 0;
+        *{
+            margin-left: 15px;
+            font-size: 2rem;
+        }
+        span{
+            color: var(--disabled-color);
+        }
+    }
+}

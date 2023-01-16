@@ -61,6 +61,31 @@ li {
     list-style-type: none;
 }
 
-button, input[type=submit]{
+button,
+input[type='submit'] {
     user-select: none;
+}
+
+.f-spaceb {
+    display: flex;
+    justify-content: space-between;
+}
+
+.f-spaceb-align {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.f-center-align {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.color-disabled {
+    color: var(--disabled-color);
 }

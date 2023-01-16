@@ -119,6 +119,8 @@ INSERT INTO `shop_db`.`status` (`name`) VALUES ('Hoàn thành');
 INSERT INTO `shop_db`.`status` (`name`) VALUES ('Đã hủy');
 
 INSERT INTO user( email, password, fullname, role_id ) VALUES ('admin', '$2a$10$IhrjhZcZiATnxdnUVZlxC.1sF5bflxtiFCxpaeCvYtMnykred/WR6', 'ADMIN', 1);
+INSERT INTO user( email, password, fullname, role_id )
+VALUES ('daidung', '$2a$10$IhrjhZcZiATnxdnUVZlxC.1sF5bflxtiFCxpaeCvYtMnykred/WR6', 'Dai Dung', 2);
 
 INSERT INTO brand(name) VALUES ("Adidas");
 INSERT INTO brand(name) VALUES ("Nike");
@@ -126,7 +128,6 @@ INSERT INTO brand(name) VALUES ("Jordan");
 INSERT INTO brand(name) VALUES ("Puma");
 INSERT INTO brand(name) VALUES ("Converse");
 INSERT INTO brand(name) VALUES ("Vans");
-INSERT INTO brand(name) VALUES ("Adidas");
 
 INSERT INTO product(name, price, brand_id, amount_of_sold ) VALUES ('
 Adidas FLB_Runner Shoes - Black (CQ1970)', "699000", 1, 3);

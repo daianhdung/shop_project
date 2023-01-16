@@ -44,7 +44,7 @@ function Header(props) {
         fetchApiGetAllCategory()
         fetchApiGet5BrandSmallestSold()
     }, [])
-    console.log(brandSmallSold);
+
 
     return (
         <header className={cx('wrapper')}>
@@ -98,7 +98,7 @@ function Header(props) {
                         <nav className="header-nav">
                             {context.auth ? (
                                 <React.Fragment>
-                                    <NavLink onClick={context.logout} className={cx('nav_link1')}>Đăng xuất</NavLink>
+                                    <NavLink to={config.routes.home} onClick={context.logout} className={cx('nav_link1')}>Đăng xuất</NavLink>
                                     <NavLink to={config.routes.profile} className={cx('nav_link1')}>Username</NavLink>
                                 </React.Fragment>
                             ) : (
