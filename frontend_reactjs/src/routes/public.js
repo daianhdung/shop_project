@@ -10,9 +10,11 @@ import Forgot from "~/pages/Forgot/Forgot";
 import Change from "~/pages/Change/Change";
 import Cart from "~/pages/Cart/Cart";
 import SearchProduct from "~/pages/SearchProduct/SearchProduct";
+import Bookmark from "~/pages/Bookmark/Bookmark";
 import HomeAdmin from "~/pages/Admin/HomeAdmin";
 import ProductAdmin from "~/pages/Admin/ProductAdmin";
 import { AuthenLayout, AdminLayout } from "~/layouts";
+
 
 
 const publicRoutes = [
@@ -30,6 +32,7 @@ const authRoutes = [
     { path: config.routes.change, component: Change, layout: AuthenLayout },
 ]
 const privateRoutes = [
+    { path: config.routes.bookmark, component: Bookmark},
     { path: config.routes.profile, component: Profile }
 ]
 const adminRoutes = [
