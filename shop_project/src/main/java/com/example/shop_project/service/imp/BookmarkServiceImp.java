@@ -33,10 +33,11 @@ public class BookmarkServiceImp implements BookmarkService {
     @Override
     public int getTotalPage(FilterProductRequest filterProduct) {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        int size = productRepository.findProductEntitiesByFilter("%"+ filterProduct.getSearchName() + "%",
-                filterProduct.getBrandId().isEmpty() ? null : filterProduct.getBrandId(),
-                filterProduct.getSizeId().isEmpty() ? null : filterProduct.getSizeId(),
-                filterProduct.getCategoryId().isEmpty() ? null : filterProduct.getCategoryId(),
+        int size = productRepository.findProductEntitiesByFilter(
+                "%"+ filterProduct.getSearchName() + "%",
+                filterProduct.getBrandId().isEmpty(),  filterProduct.getBrandId(),
+                filterProduct.getBrandId().isEmpty(), filterProduct.getSizeId(),
+                filterProduct.getBrandId().isEmpty(), filterProduct.getCategoryId(),
                 email).size();
         int totalPage = 0;
         if (size % num == 0) {
@@ -59,10 +60,10 @@ public class BookmarkServiceImp implements BookmarkService {
         }
         List<ProductEntity> productEntities = productRepository.findProductEntitiesByFilter(
                 "%"+ filterProduct.getSearchName() + "%",
-                filterProduct.getBrandId().isEmpty() ? null : filterProduct.getBrandId(),
-                filterProduct.getSizeId().isEmpty() ? null : filterProduct.getSizeId(),
-                filterProduct.getCategoryId().isEmpty() ? null : filterProduct.getCategoryId(),
-                email
+                filterProduct.getBrandId().isEmpty(),  filterProduct.getBrandId(),
+                filterProduct.getBrandId().isEmpty(), filterProduct.getSizeId(),
+                filterProduct.getBrandId().isEmpty(), filterProduct.getCategoryId(),
+                email, pageable
         );
 
         List<ProductModel> productModels = new ArrayList<>();

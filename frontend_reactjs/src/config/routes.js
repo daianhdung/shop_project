@@ -9,6 +9,7 @@ const routes = {
     change: '/change',
     cart: '/cart',
     bookmark: '/bookmark',
+    product: '/product',
     search: '/search/',
     //Admin route
     adminHome: '/admin-home',

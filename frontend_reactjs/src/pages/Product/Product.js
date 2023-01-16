@@ -5,12 +5,11 @@ import images from '~/assets/images';
 import { Link } from 'react-router-dom';
 import * as changeService from '~/service/changeService'
 import useFilter from '~/hooks/useFilter';
-import useAuth from '~/hooks/useAuth';
-import * as bookmarkService from '~/service/bookmarkService';
+import * as productService from '~/service/productService';
 import { getCookie } from '~/utils/utilsCookie';
 import Sort from '~/components/Sort/sort';
-import List from './List';
 import Paging from '~/components/Paging/Paging';
+import List from '../Bookmark/List';
 
 
 
@@ -65,7 +64,7 @@ function Bookmark() {
             ...filterContext.filter,
             ...custtom
         }
-        bookmarkService.getProductBookmark(customFilter, token)
+        productService.getProduct(customFilter, token)
             .then(response => {
                 SetProducts(response.products)
                 SetPage({

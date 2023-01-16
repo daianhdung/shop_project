@@ -14,6 +14,7 @@ import Bookmark from "~/pages/Bookmark/Bookmark";
 import HomeAdmin from "~/pages/Admin/HomeAdmin";
 import ProductAdmin from "~/pages/Admin/ProductAdmin";
 import { AuthenLayout, AdminLayout } from "~/layouts";
+import Product from "~/pages/Product/Product";
 
 
 
@@ -23,6 +24,7 @@ const publicRoutes = [
     { path: config.routes.detail, component: Home },
     { path: config.routes.detailId, component: Detail },
     { path: config.routes.cart, component: Cart },
+    { path: config.routes.product, component: Product },
     { path: config.routes.search, component: SearchProduct }
 ]
 const authRoutes = [

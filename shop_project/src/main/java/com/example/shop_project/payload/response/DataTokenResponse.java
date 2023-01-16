@@ -4,6 +4,7 @@ public class DataTokenResponse {
     private String token;
     private String freshToken;
     private String role;
+    private long expire;
 
     public String getToken() {
         return token;
@@ -27,5 +28,13 @@ public class DataTokenResponse {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public long getExpire() {
+        return expire;
+    }
+
+    public void setExpire(long expire) {
+        this.expire = expire;
     }
 }

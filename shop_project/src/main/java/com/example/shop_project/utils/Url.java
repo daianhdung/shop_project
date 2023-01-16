@@ -3,7 +3,7 @@ package com.example.shop_project.utils;
 public enum Url {
     Root("http://localhost:8080/"),
     ChangePassword("http://localhost:3000/change?token="),
-    Image("http://localhost:8080/images/");
+    Image("http://localhost:8080/api/image/");
     private String path;
     Url(String path) {
         this.path = path;

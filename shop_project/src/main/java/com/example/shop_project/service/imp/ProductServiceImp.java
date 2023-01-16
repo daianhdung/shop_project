@@ -38,10 +38,11 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public int getTotalPage(FilterProductRequest filterProduct) {
-        int size = productRepository.findProductEntitiesByFilter("%"+ filterProduct.getSearchName() + "%",
-                filterProduct.getBrandId().isEmpty() ? null : filterProduct.getBrandId(),
-                filterProduct.getSizeId().isEmpty() ? null : filterProduct.getSizeId(),
-                filterProduct.getCategoryId().isEmpty() ? null : filterProduct.getCategoryId()).size();
+        int size = productRepository.findProductEntitiesByFilter(
+                "%"+ filterProduct.getSearchName() + "%",
+                filterProduct.getBrandId().isEmpty(), filterProduct.getBrandId(),
+                filterProduct.getSizeId().isEmpty(), filterProduct.getSizeId(),
+                filterProduct.getCategoryId().isEmpty(), filterProduct.getCategoryId()).size();
         int totalPage = 0;
         if (size % num == 0) {
             totalPage = size / num;
@@ -95,7 +96,6 @@ public class ProductServiceImp implements ProductService {
     @Override
     public ProductDTO getProductByFilter(FilterProductRequest filterProduct) {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        System.out.println("email" + email);
         Pageable pageable = null;
         if (filterProduct.getSort().equals("az"))  {
             pageable = PageRequest.of(filterProduct.getCurrent() - 1, num, Sort.by("name").ascending());
@@ -107,9 +107,9 @@ public class ProductServiceImp implements ProductService {
 
         List<ProductEntity> productEntities = productRepository.findProductEntitiesByFilter(
                 "%"+ filterProduct.getSearchName() + "%",
-                filterProduct.getBrandId().isEmpty() ? null : filterProduct.getBrandId(),
-                filterProduct.getSizeId().isEmpty() ? null : filterProduct.getSizeId(),
-                filterProduct.getCategoryId().isEmpty() ? null : filterProduct.getCategoryId(),
+                filterProduct.getBrandId().isEmpty(), filterProduct.getBrandId(),
+                filterProduct.getSizeId().isEmpty(), filterProduct.getSizeId(),
+                filterProduct.getCategoryId().isEmpty(), filterProduct.getCategoryId(),
                 pageable
         );
 

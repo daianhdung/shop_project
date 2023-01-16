@@ -57,7 +57,7 @@ public class AuthController {
             dataTokenResponse.setToken(token);
             dataTokenResponse.setFreshToken(refreshToken);
             dataTokenResponse.setRole(securityContext.getAuthentication().getAuthorities().iterator().next().toString());
-
+            dataTokenResponse.setExpire(expiredDate);
             DataResponse dataResponse = new DataResponse();
             dataResponse.setStatus(HttpStatus.OK.value());
             dataResponse.setDesc("");
