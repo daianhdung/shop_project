@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link, NavLink } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ import images from '~/assets/images';
 import useAuth from '~/hooks/useAuth';
 import Search from '../Search/Search';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDoubleDown, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDoubleDown, faAngleDown, faCartShopping, faHeart } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
 import { get5BrandSmallestAmountSold, getAllBrandName } from '~/service/brandService';
 import { getAllCategoryName } from '~/service/categoryService';
@@ -26,6 +26,13 @@ function Header(props) {
     const [allCategory, setAllCategory] = useState()
     const [allBrand, setAllBrand] = useState()
     const [brandSmallSold, setBrandSmallSold] = useState()
+
+    const [localItems, setLocalItems] = useState(JSON.parse(localStorage.getItem('items')));
+
+    const updateLocalStorage = (newItems) => {
+        localStorage.setItem('items', JSON.stringify(newItems));
+        setLocalItems(newItems);
+    }
 
     useEffect(() => {
         const fetchApiGetAllBrand = async () => {
@@ -66,7 +73,6 @@ function Header(props) {
                         <nav className="header-nav">
                             <NavLink to={config.routes.home} className={cx('nav_link')}>Trang chủ</NavLink>
                             <NavLink to={config.routes.product} className={cx('nav_link')}>Sản phẩm</NavLink>
-                            {context.auth && <NavLink to={config.routes.bookmark} className={cx('nav_link')}>Yêu thích</NavLink>}
                             <Tippy
                                 interactive
                                 render={(attrs) => (
@@ -77,7 +83,7 @@ function Header(props) {
                                         </div>
                                     </div>
                                 )}>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Thương hiệu <FontAwesomeIcon icon={faAngleDown} /></NavLink>
+                                <NavLink to={config.routes.detail} className={cx('nav_link')}>Thương hiệu <FontAwesomeIcon icon={faAngleDown} /></NavLink>
                             </Tippy>
                             <Tippy
                                 interactive
@@ -91,9 +97,12 @@ function Header(props) {
                                 )}>
                                 <NavLink to="/blog" className={cx('nav_link')}>Thể loại <FontAwesomeIcon icon={faAngleDown} /></NavLink>
                             </Tippy>
-
-                            <NavLink to="/cart" className={cx('nav_link')}>Giỏ hàng</NavLink>
                             <NavLink to="/contact" className={cx('nav_link')}>Liên hệ</NavLink>
+                            <NavLink to="/cart" className={cx('nav_link_logo')}>
+                                <FontAwesomeIcon icon={faCartShopping} />
+                                <span className={cx('logo_number')}>{context.cartNumber ? localItems.length : 0}</span>
+                            </NavLink>
+                            {context.auth && <NavLink to={config.routes.bookmark} className={cx('nav_link_logo')}><FontAwesomeIcon icon={faHeart} /></NavLink>}
 
                         </nav>
                     </div>

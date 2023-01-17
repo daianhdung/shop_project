@@ -25,13 +25,13 @@
 }
 
 html {
-    font-size: 62.5%;
+    font-size: 62.5% !important;
 }
 
 body {
-    font-family: var(--font-family);
-    font-size: 1.6rem;
-    line-height: 1.5;
+    font-family: var(--font-family)!important;
+    font-size: 1.6rem!important;
+    line-height: 1.5!important;
 }
 
 .swal2-popup {
@@ -88,4 +88,8 @@ input[type='submit'] {
 
 .color-disabled {
     color: var(--disabled-color);
+}
+
+img{
+    vertical-align:unset !important;
 }

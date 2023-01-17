@@ -97,7 +97,7 @@ function Sidebar1() {
                             className='btn-check'
                             
                         />
-                        <label class="btn btn-light"  htmlFor={`${item.id}-size`} >{item.name}</label>
+                        <label className="btn btn-light fs-4 my-2 mx-2"  htmlFor={`${item.id}-size`} >{item.name}</label>
                     </div>
                 ))}
                 </div>
@@ -114,7 +114,7 @@ function Sidebar1() {
                                 className='btn-check'
                                 
                             />
-                            <label class="btn btn-light" htmlFor={`${item.id}-brand`} >{item.name}</label>
+                            <label className="btn btn-light fs-4 my-2 mx-2" htmlFor={`${item.id}-brand`} >{item.name}</label>
                         </div>
                     ))}
                 </div>
@@ -131,7 +131,7 @@ function Sidebar1() {
                                 onChange={() => handleCheckBrand(item.id)}
                                 className='btn-check'
                             />
-                            <label class="btn btn-light" htmlFor={`${item.id}-category`} >{item.name}</label>
+                            <label className="btn btn-light fs-4 my-2 mx-2" htmlFor={`${item.id}-category`} >{item.name}</label>
                         </div>
                     ))}
                 </div>

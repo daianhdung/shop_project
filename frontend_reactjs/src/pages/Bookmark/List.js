@@ -7,11 +7,11 @@ function List({products}) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <div className="row">
+                <div className="row w-100">
                     {
                         products.map(product => {
                             return (
-                                <div className="col col-lg-4 col-md-4 col-sm-6 col-6" key={product.id}>
+                                <div className="col col-lg-3 col-md-3 col-sm-6 col-6" key={product.id}>
                                     <Item product={product}/>
                                 </div>
                             )

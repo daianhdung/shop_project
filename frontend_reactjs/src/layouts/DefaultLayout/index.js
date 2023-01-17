@@ -7,6 +7,7 @@ import Sidebar1 from '~/layouts/components/Sidebar/Sidebar1';
 import Footer from '~/layouts/components/Footer/Footer';
 import config from '~/config';
 import { useLocation } from 'react-router-dom';
+import Sidebar from '../components/Sidebar/Sidebar';
 
 
 const cx = classNames.bind(styles)
@@ -21,7 +22,7 @@ function DefaultLayout({ children }) {
             <div style={{ background: 'rgba(245, 245, 250, 1)' }} >
                 <div style={{ height: '2000px' }} className={cx('container')}>
                     <div className={cx('inner')}>
-                        {(location.pathname == config.routes.product || location.pathname == config.routes.bookmark) && <Sidebar1 />}
+                        {(location.pathname == config.routes.product || location.pathname == config.routes.bookmark || location.pathname === '/search/' && location.search) ? <Sidebar1/> : <Sidebar/> }
                         <div className={cx('content')}>
                             {children}
                             <Footer />

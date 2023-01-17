@@ -13,13 +13,13 @@ import List from '../Bookmark/List';
 
 
 
-function Bookmark() {
-  
+function Product() {
+
     const filterContext = useFilter()
     const [page, SetPage] = useState({
         currentPage: 1
     })
-    const [sort, SetSort] = useState("az")
+    const [sort, SetSort] = useState("")
     const [products, SetProducts] = useState(null)
 
     const handleSort = (e) => {
@@ -28,7 +28,7 @@ function Bookmark() {
     const handleNext = () => {
         if (page.currentPage < page.totalPage) {
             SetPage(prev => {
-                return { 
+                return {
                     ...prev,
                     currentPage: prev.currentPage + 1
                 }
@@ -38,7 +38,7 @@ function Bookmark() {
     const handlePrev = () => {
         if (page.currentPage > 1) {
             SetPage(prev => {
-                return { 
+                return {
                     ...prev,
                     currentPage: prev.currentPage - 1
                 }
@@ -47,14 +47,15 @@ function Bookmark() {
     }
     const handleSetCurrentPage = (num) => {
         SetPage(prev => {
-            return { 
+            return {
                 ...prev,
                 currentPage: num
             }
         })
     }
+    
 
-    useEffect( () => {
+    useEffect(() => {
         const token = getCookie('tokenJwt')
         var custtom = {
             current: page.currentPage,
@@ -72,9 +73,11 @@ function Bookmark() {
                     totalPage: response.totalPage
                 })
             })
-    }, [filterContext, sort, page.currentPage])
- 
 
+            console.log(customFilter);
+    }, [filterContext, sort, page.currentPage])
+
+   
 
 
     return (
@@ -82,17 +85,18 @@ function Bookmark() {
             <div className='row'>
                 <div className='col-md-12'>
                     <Sort sort={sort} handleSort={handleSort} />
-                    {products && <List products={products}/>}
+                    {products && <List products={products} />}
+                    <div className='row d-flex justify-content-center bg-white'>
+                        <div className='col-md-2'>
+                            {products && <Paging currentPage={page.currentPage} totalPage={page.totalPage} handleNext={handleNext} handlePrev={handlePrev} handleSetCurrentPage={handleSetCurrentPage} />}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className='row d-flex justify-content-center'>
-                <div className='col-md-6'>
-                    {products && <Paging currentPage={page.currentPage} totalPage={page.totalPage} handleNext={handleNext} handlePrev={handlePrev} handleSetCurrentPage={handleSetCurrentPage} />}
-                </div>
-            </div>
+
 
         </div>
     )
 }
 
-export default Bookmark;
+export default Product;

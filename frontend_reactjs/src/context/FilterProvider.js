@@ -4,7 +4,7 @@ const FilterContext = createContext()
 
 
 
-function FilterProvider({ children }) {
+export const FilterProvider = ({ children }) => {
 
     const [filter, setFilter] = useState({
         searchName:"",
@@ -32,4 +32,4 @@ function FilterProvider({ children }) {
     )
 }
 
-export {FilterProvider, FilterContext}
+export default FilterContext
