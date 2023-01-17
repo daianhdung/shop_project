@@ -1,0 +1,36 @@
+.wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    text-align: center;
+    z-index: 2;
+}
+
+.inner {
+    --width: 640px;
+    background: linear-gradient(127deg, rgba(255, 0, 0, 0.8), rgba(255, 0, 0, 0) 70.71%),
+        linear-gradient(336deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
+        linear-gradient(217deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
+    border-radius: 8px;
+    max-width: calc(100vw - 32px);
+    min-height: 600px;
+    padding: 48px 16px;
+    position: relative;
+    width: var(--width);
+}
+
+.header {
+    h1 {
+        color: #fff;
+    }
+}
+
+.body {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+}
+
+

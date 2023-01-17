@@ -4,9 +4,9 @@ import config from '~/config';
 import images from '~/assets/images';
 import { Link } from 'react-router-dom';
 import * as changeService from '~/service/changeService'
+import styles from '~/pages/Change/Change.module.scss'
 
-
-
+const cx = classNames.bind(styles);
 
 
 function Change() {
@@ -57,45 +57,52 @@ function Change() {
     }
 
     return (
-        <div>
+        <div className={cx('wrapper')}>
             {
                 valid ? (
-                    <div>
-                        <div>
-                            <input 
-                                value={password} 
-                                type="password" 
-                                placeholder='Mật khẩu mới'
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                        <div> 
-                        
-                        </div>
-                            <input 
-                                value={repeatPassword}
-                                type="password" 
-                                placeholder='Nhập lại mật khẩu'
-                                onChange={(e) => setRepeatPassword(e.target.value)}
-                                onBlur= {() => handleRepeatPassword() }
-                            />
-                        <div> 
-                            <button
-                                onClick={handleSubmit}
-                            >
-                                <span>Xác nhận</span>
-                            </button>
-                        </div>
+                    <div className={cx('inner')}>
 
-                        <div>
-                                {equal || <label>Vui lòng nhập lại password chính xác </label>}
+                        <div className={cx('header')}>
+                            <h1>Thay đổi mật khẩu mới</h1>
                         </div>
+                        <div className={cx('body')}>
+                            <div> 
+                                <div className='form-control form-control-lg'> 
+                                <input 
+                                    value={password} 
+                                    type="password" 
+                                    placeholder='Mật khẩu mới'
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                </div>
+                                <div className='form-control form-control-lg'> 
+                                    <input 
+                                        value={repeatPassword}
+                                        type="password" 
+                                        placeholder='Nhập lại mật khẩu'
+                                        onChange={(e) => setRepeatPassword(e.target.value)}
+                                        onBlur= {() => handleRepeatPassword() }
+                                    />
+                                </div>
+                                <div> 
+                                    <button
+                                        className='btn btn-success'
+                                        onClick={handleSubmit}
+                                    >
+                                        <span>Xác nhận</span>
+                                    </button>
+                                </div>
+                                <div>
+                                    {equal || <label className='badge badge-pill badge-warning'>Vui lòng nhập lại password chính xác </label>}
+                                </div>
+                            </div>
+                        </div>    
                     </div>
                 )
                 :
                 (
                     <div>
-                        <label >Link đã không còn hiệu lực</label>
+                        <label className='label label-default badge badge-pill badge-danger' >Link đã không còn hiệu lực</label>
                     </div>
                 )
 

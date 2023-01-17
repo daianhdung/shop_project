@@ -88,41 +88,53 @@ function Sidebar1() {
 
         <div className={cx('first_wrapper')}>
             <div className={cx('filter_div')}>Bộ lọc</div>
-            {allSize && allSize.map(item => (
-                <div key={item.id}>
-                    <input type="checkbox" id={`${item.id}-size`}
-                        checked={checkSize.includes(item.id)}
-                        onChange={() => handleCheckSize(item.id)}
-                    />
-                    <label htmlFor={`${item.id}-size`} >{item.name}</label>
+                <div className='d-flex align-content-start flex-wrap'>
+                    {allSize && allSize.map(item => (
+                    <div key={item.id}>
+                        <input type="checkbox" id={`${item.id}-size`}
+                            checked={checkSize.includes(item.id)}
+                            onChange={() => handleCheckSize(item.id)}
+                            className='btn-check'
+                            
+                        />
+                        <label class="btn btn-light"  htmlFor={`${item.id}-size`} >{item.name}</label>
+                    </div>
+                ))}
                 </div>
-            ))}
         </div>
   
         <div className={cx('first_wrapper')}>
             <div className={cx('filter_div')}>Thể loại</div>
-            {allCategory && allCategory.map(item => (
-                <div key={item.id}>
-                    <input type="checkbox" id={`${item.id}-brand`}
-                        checked={checkCategory.includes(item.id)}
-                        onChange={() => handleCheckCategory(item.id)}
-                    />
-                    <label htmlFor={`${item.id}-brand`} >{item.name}</label>
+                <div className='d-flex align-content-start flex-wrap'>
+                    {allCategory && allCategory.map(item => (
+                        <div key={item.id}>
+                            <input type="checkbox" id={`${item.id}-brand`}
+                                checked={checkCategory.includes(item.id)}
+                                onChange={() => handleCheckCategory(item.id)}
+                                className='btn-check'
+                                
+                            />
+                            <label class="btn btn-light" htmlFor={`${item.id}-brand`} >{item.name}</label>
+                        </div>
+                    ))}
                 </div>
-            ))}
+           
         </div>
 
         <div className={cx('first_wrapper')}>
             <div className={cx('filter_div')}>Thương hiệu</div>
-            {allBrand && allBrand.map(item => (
-                <div key={item.id}>
-                    <input type="checkbox" id={`${item.id}-category`}
-                        checked={checkBrand.includes(item.id)}
-                        onChange={() => handleCheckBrand(item.id)}
-                    />
-                    <label htmlFor={`${item.id}-category`} >{item.name}</label>
+                <div className='d-flex align-content-start flex-wrap'>
+                    {allBrand && allBrand.map(item => (
+                        <div key={item.id}>
+                            <input type="checkbox" id={`${item.id}-category`}
+                                checked={checkBrand.includes(item.id)}
+                                onChange={() => handleCheckBrand(item.id)}
+                                className='btn-check'
+                            />
+                            <label class="btn btn-light" htmlFor={`${item.id}-category`} >{item.name}</label>
+                        </div>
+                    ))}
                 </div>
-            ))}
         </div>
     </div>);
 }
