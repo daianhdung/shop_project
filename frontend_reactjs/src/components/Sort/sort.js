@@ -17,8 +17,8 @@ const sortList = [
 
 function Sort({handleSort, value}){
     return (
-        <div className="layout-page d-flex align-items-center">
-            <select className="btn-cart-list" value={value} onChange={(e)=>handleSort(e)}>
+        <div id="wrapper">
+            <select className="form-select-sm" value={value} onChange={(e)=>handleSort(e)}>
             {
                 sortList.map(item=>{
                 return (

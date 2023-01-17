@@ -80,14 +80,16 @@ function Bookmark() {
 
     return (
         <div id='wrapper'>
+            <div>
+                <Sort sort={sort} handleSort={handleSort} />
+            </div>
             <div className='row'>
-                <div className='col-md-12'>
-                    <Sort sort={sort} handleSort={handleSort} />
+                <div>
                     {products && <List products={products}/>}
                 </div>
             </div>
             <div className='row d-flex justify-content-center'>
-                <div className='col-md-6'>
+                <div>
                     {products && <Paging currentPage={page.currentPage} totalPage={page.totalPage} handleNext={handleNext} handlePrev={handlePrev} handleSetCurrentPage={handleSetCurrentPage} />}
                 </div>
             </div>
