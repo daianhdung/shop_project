@@ -11,7 +11,7 @@ function Item({product}) {
     return (
         <Link key={product.id} className={cx('link-a')} to={config.routes.detail + '/' + product.id}>
             <div className={cx('wrap_item')}>
-                <img width={200} height={200} src={product.image} />
+                <img width={200} height={200} src={process.env.REACT_APP_IMG_URL + product.image} />
                 <div>
                     <h4>{product.name}</h4>
                     <span>{formatNumber(product.price)}₫</span>

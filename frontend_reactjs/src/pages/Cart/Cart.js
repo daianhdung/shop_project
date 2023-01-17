@@ -1,12 +1,13 @@
 import { faAngleRight, faLongArrowLeft, faLongArrowRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import config from '~/config';
 import styles from './Cart.module.scss';
 import { formatNumber } from '~/utils/stringUtils';
+import useAuth from '~/hooks/useAuth';
 
 const cx = classNames.bind(styles);
 
@@ -16,6 +17,14 @@ function Cart() {
 
 
     const [localItems, setLocalItems] = useState(JSON.parse(localStorage.getItem('items')))
+
+    const context = useAuth()
+    useEffect(() => {
+        if (localStorage.getItem('items')) {
+            const items = (JSON.parse(localStorage.getItem('items'))).length
+            context.cartNumber = items
+        }
+    }, [localStorage.getItem('items')])
 
     console.log(1);
 
@@ -83,7 +92,7 @@ function Cart() {
             <span>Sản phẩm</span>
         </div>
         <div className={cx('bot-cart')}>
-            <table border={1}>
+            <table className={cx('table-bordered')}>
                 <thead>
                     <tr>
                         <th>ẢNH SẢN PHẨM</th>

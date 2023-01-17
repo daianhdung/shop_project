@@ -29,8 +29,6 @@
 .logo-link {
     margin-right: 48px;
 }
- 
-
 
 .up_right_header {
     display: flex;
@@ -39,14 +37,35 @@
     .nav_link {
         margin-right: 50px;
     }
+    .nav_link_logo {
+        margin-right: 20px;
+        position: relative;
+        &:hover .logo_number{
+            color: var(--bs-link-hover-color);
+        }
+    }
+
+    .logo_number {
+        position: absolute;
+        background-color: #ff7526;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 10px;
+        font-weight: 500;
+        min-width: 20px;
+        padding: 2px 0;
+        right: -15px;
+        top: -8px;
+        text-align: center;
+    }
 }
 
 .up_last_header {
     position: relative;
-    .nav_link{
+    .nav_link {
         margin-left: 20px;
     }
-    .nav_link1{
+    .nav_link1 {
         margin-left: 20px;
     }
 
@@ -68,7 +87,7 @@
     }
 }
 
-.drop_down_wrap{
+.drop_down_wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -78,10 +97,10 @@
     border-bottom-right-radius: 6px;
     overflow: hidden;
 
-    .drop_down_content{
+    .drop_down_content {
         overflow: hidden;
         * {
-            &:hover{
+            &:hover {
                 background: rgba(104, 153, 222, 0.5);
                 color: rgb(94, 71, 51);
                 overflow: hidden;
@@ -91,13 +110,11 @@
             padding: 10px 0;
             overflow: hidden;
         }
-        .block{
+        .block {
             display: block;
         }
     }
 }
-
-
 
 .bottom_header {
     height: 60%;
@@ -105,6 +122,11 @@
     display: flex;
     justify-content: space-between;
     line-height: 1.15;
+
+    h4{
+        font-weight: bold!important;
+        line-height: 150%;
+    }
 
     .bottom_left_header {
         margin-left: 105px;

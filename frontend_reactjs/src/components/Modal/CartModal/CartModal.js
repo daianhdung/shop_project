@@ -68,8 +68,6 @@ function CartModal({ closeModal }) {
         }
     }
 
-    console.log(11111);
-    console.log(localItems);
 
     return (<React.Fragment>
         <div className={cx('modal-overlay')} onClick={closeModal}>

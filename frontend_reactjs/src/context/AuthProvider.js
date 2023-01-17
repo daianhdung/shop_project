@@ -1,7 +1,7 @@
 import { isExpired, decodeToken } from "react-jwt";
 import { getCookie, removeCookie } from "~/utils/utilsCookie";
 
-const { createContext, useRef, useState } = require("react");
+const { createContext, useRef, useState, useEffect } = require("react");
 
 const AuthContext = createContext()
 
@@ -23,9 +23,14 @@ export const AuthProvider = ({ children }) => {
         }
     }
     const authAdminRef = useRef(isAdmin)
-    console.log(authAdminRef);
     const authRef = useRef(userLogin);
     const [isLogout, setIsLogout] = useState(authRef.current == true ? true : false)
+    
+    const cartNumber = useRef((JSON.parse(localStorage.getItem('items'))).length)
+    console.log(121313);
+    console.log(cartNumber);
+
+    
 
     const login = function () {
         authRef.current = true;
@@ -42,9 +47,9 @@ export const AuthProvider = ({ children }) => {
         auth: authRef.current,
         admin: authAdminRef.current,
         login,
-        logout
+        logout,
+        cartNumber: cartNumber.current
     }
-    console.log(value);
 
     return (
         <AuthContext.Provider value={value}>

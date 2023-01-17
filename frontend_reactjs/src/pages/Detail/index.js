@@ -17,11 +17,15 @@ const cx = classNames.bind(styles);
 
 
 function Detail() {
+
+    
+
     const [count, setCount] = useState(1)
     const [modalOpen, setModalOpen] = useState(false);
 
     const [detailProduct, setDetailProduct] = useState()
     const { id } = useParams();
+    
 
     useEffect(() => {
         const fetchApiDetailProduct = async () => {
