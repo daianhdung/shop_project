@@ -9,6 +9,7 @@ import * as loginService from '~/service/loginService'
 import useAuth from '~/hooks/useAuth';
 
 import { saveCookie } from '~/utils/utilsCookie';
+import { decodeToken } from 'react-jwt';
 // import { useJwt } from "react-jwt";
 
 const cx = classNames.bind(styles);
@@ -46,7 +47,10 @@ function Login() {
             const fetchApi = async () => {
                 const result = await loginService.login(state.email, state.password);
                 saveCookie('tokenJwt', result.data.token, result.data.expire)
+                const myDecodedToken = decodeToken(result.data.token);
+                const tokenDecoded = JSON.parse(myDecodedToken.sub)
                 if (result.success) {
+                    contextAuth.username = tokenDecoded.username
                     contextAuth.auth = true
                     if(result.data.role === 'ROLE_ADMIN'){
                         contextAuth.admin = true

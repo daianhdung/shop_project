@@ -11,6 +11,7 @@ const routes = {
     bookmark: '/bookmark',
     product: '/product',
     search: '/search/',
+    changePassword: '/profile/changePass',
     //Admin route
     adminHome: '/admin-home',
     adminProduct: '/admin-product'

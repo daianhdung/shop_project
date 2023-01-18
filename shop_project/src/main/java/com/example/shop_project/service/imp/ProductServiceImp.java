@@ -33,7 +33,7 @@ public class ProductServiceImp implements ProductService {
 
     @Autowired
     StringUtil stringUtil;
-    private int num = 9;
+    private int num = 12;
 
     @Override
     public int getTotalPage(FilterProductRequest filterProduct) {

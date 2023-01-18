@@ -13,7 +13,7 @@ function Paging({currentPage, totalPage, handleNext, handlePrev, handleSetCurren
 
     return (
         <nav aria-label="Page navigation">
-            <ul className="pagination pagination-lg" style={{userSelect: 'none'}}>
+            <ul className="pagination pagination-lg" >
                 <li className="page-item" >
                     <a className = {cx(currentPage == 1 ?"page-link disabled" :"page-link")} href="#" aria-label="Next" onClick={handlePrev}>
                         <span aria-hidden="true">&laquo;</span>

@@ -7,6 +7,7 @@ const AuthContext = createContext()
 
 
 export const AuthProvider = ({ children }) => {
+
     //decode token
     if (getCookie('tokenJwt')) {
         const token = getCookie('tokenJwt')
@@ -15,22 +16,23 @@ export const AuthProvider = ({ children }) => {
             const decodeInform = JSON.parse(myDecodedToken.sub);
             if (decodeInform.username != null) {
                 var userLogin = true;
+                var username = decodeInform.username
             }
             if (decodeInform.role === 'ROLE_ADMIN') {
                 var isAdmin = true
             }
-            console.log(decodeInform);
         }
     }
+
+    const authUser = useRef(username)
     const authAdminRef = useRef(isAdmin)
     const authRef = useRef(userLogin);
     const [isLogout, setIsLogout] = useState(authRef.current == true ? true : false)
-    
-    const cartNumber = useRef((JSON.parse(localStorage.getItem('items'))).length)
-    console.log(121313);
-    console.log(cartNumber);
 
-    
+    // const cartNumber = useRef((JSON.parse(localStorage.getItem('items'))).length)
+
+
+
 
     const login = function () {
         authRef.current = true;
@@ -48,7 +50,7 @@ export const AuthProvider = ({ children }) => {
         admin: authAdminRef.current,
         login,
         logout,
-        cartNumber: cartNumber.current
+        username: authUser.current
     }
 
     return (

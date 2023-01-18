@@ -35,7 +35,8 @@ const authRoutes = [
 ]
 const privateRoutes = [
     { path: config.routes.bookmark, component: Bookmark},
-    { path: config.routes.profile, component: Profile }
+    { path: config.routes.profile, component: Profile },
+    { path: config.routes.changePassword, component: Profile }
 ]
 const adminRoutes = [
     { path: config.routes.adminHome, component: HomeAdmin, layout: AdminLayout },

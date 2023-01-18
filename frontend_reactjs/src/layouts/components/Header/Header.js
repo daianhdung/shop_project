@@ -15,11 +15,13 @@ import { faAngleDoubleDown, faAngleDown, faCartShopping, faHeart } from '@fortaw
 import Tippy from '@tippyjs/react/headless';
 import { get5BrandSmallestAmountSold, getAllBrandName } from '~/service/brandService';
 import { getAllCategoryName } from '~/service/categoryService';
+import useCart from '~/hooks/useCart';
 
 
 const cx = classNames.bind(styles);
 
 function Header(props) {
+
 
     const context = useAuth()
 
@@ -27,12 +29,9 @@ function Header(props) {
     const [allBrand, setAllBrand] = useState()
     const [brandSmallSold, setBrandSmallSold] = useState()
 
-    const [localItems, setLocalItems] = useState(JSON.parse(localStorage.getItem('items')));
+    const cartContext = useCart()
+    const localItems = cartContext.items
 
-    const updateLocalStorage = (newItems) => {
-        localStorage.setItem('items', JSON.stringify(newItems));
-        setLocalItems(newItems);
-    }
 
     useEffect(() => {
         const fetchApiGetAllBrand = async () => {
@@ -95,12 +94,12 @@ function Header(props) {
                                         </div>
                                     </div>
                                 )}>
-                                <NavLink to="/blog" className={cx('nav_link')}>Thể loại <FontAwesomeIcon icon={faAngleDown} /></NavLink>
+                                <NavLink to={config.routes.detail} className={cx('nav_link')}>Thể loại <FontAwesomeIcon icon={faAngleDown} /></NavLink>
                             </Tippy>
-                            <NavLink to="/contact" className={cx('nav_link')}>Liên hệ</NavLink>
+                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Liên hệ</NavLink>
                             <NavLink to="/cart" className={cx('nav_link_logo')}>
                                 <FontAwesomeIcon icon={faCartShopping} />
-                                <span className={cx('logo_number')}>{context.cartNumber ? localItems.length : 0}</span>
+                                <span className={cx('logo_number')}>{localItems ? localItems.length : 0}</span>
                             </NavLink>
                             {context.auth && <NavLink to={config.routes.bookmark} className={cx('nav_link_logo')}><FontAwesomeIcon icon={faHeart} /></NavLink>}
 
@@ -109,10 +108,19 @@ function Header(props) {
                     <div className={cx('up_last_header')}>
                         <nav className="header-nav">
                             {context.auth ? (
-                                <React.Fragment>
-                                    <NavLink to={config.routes.home} onClick={context.logout} className={cx('nav_link1')}>Đăng xuất</NavLink>
-                                    <NavLink to={config.routes.profile} className={cx('nav_link1')}>Username</NavLink>
-                                </React.Fragment>
+                                <Tippy
+                                    interactive
+                                    render={(attrs) => (
+                                        <div className={cx('drop_down_wrap')}>
+                                            <div className={cx('drop_down_content')} tabIndex="-1">
+                                                <NavLink to={config.routes.profile} className={cx('block')}>Sửa thông tin</NavLink>
+                                                <NavLink to={config.routes.changePassword} className={cx('block')}>Đổi mật khẩu</NavLink>
+                                                <NavLink to={config.routes.home} onClick={context.logout} className={cx('block')}>Đăng xuất</NavLink>
+                                            </div>
+                                        </div>
+                                    )}>
+                                    <div className={cx('username')}>Hi, {context.username}<FontAwesomeIcon icon={faAngleDown} /></div>
+                                </Tippy>
                             ) : (
                                 <React.Fragment>
                                     <NavLink to={config.routes.signup} className={cx('nav_link')}>Đăng kí </NavLink>
@@ -135,7 +143,6 @@ function Header(props) {
                         <img width='20' height='20' src="https://salt.tikicdn.com/ts/upload/88/5c/9d/f5ee506836792eb7775e527ef8350a44.png" alt="header-icon-location" />
                         <h4 >Giao đến:</h4>
                         <div >Q. 1, P. Bến Nghé, Hồ Chí Minh</div></div>
-
                 </div>
             </div>
         </header >

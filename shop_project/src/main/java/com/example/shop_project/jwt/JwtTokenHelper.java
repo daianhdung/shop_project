@@ -1,6 +1,5 @@
 package com.example.shop_project.jwt;
 
-import com.example.shop_project.entity.UserEntity;
 import com.google.gson.Gson;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
