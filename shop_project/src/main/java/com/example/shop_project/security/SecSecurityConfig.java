@@ -4,6 +4,7 @@ import com.example.shop_project.jwt.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,11 +32,12 @@ public class SecSecurityConfig {
                 .and()
                 .authorizeRequests()
 
-                .antMatchers(API_LOGIN, API_SIGNUP, API_MAIL, API_IMAGE, API_FILE + "/**", API_PRODUCT + "/**",
+                .antMatchers(API_LOGIN, API_USER, API_MAIL, API_IMAGE, API_FILE + "/**", API_PRODUCT + "/**",
                         API_BRAND + "/**", API_CATEGORY + "/**" , API_SIZE + "/**").permitAll()
 
 
                 .antMatchers(API_INSERT_PRODUCT).hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, API_USER).authenticated()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

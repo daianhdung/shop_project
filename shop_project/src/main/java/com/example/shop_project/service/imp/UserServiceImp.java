@@ -1,6 +1,7 @@
 package com.example.shop_project.service.imp;
 
 
+import com.example.shop_project.dto.UserDTO;
 import com.example.shop_project.entity.RoleEntity;
 import com.example.shop_project.entity.UserEntity;
 import com.example.shop_project.jwt.JwtTokenHelper;
@@ -9,6 +10,7 @@ import com.example.shop_project.payload.request.SignUpRequest;
 import com.example.shop_project.repository.RoleRepository;
 import com.example.shop_project.repository.UserRepository;
 import com.example.shop_project.service.UserService;
+import com.example.shop_project.utils.AuthenUtil;
 import com.example.shop_project.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -37,6 +39,8 @@ public class UserServiceImp implements UserService {
     @Autowired
     private JwtTokenHelper jwtTokenHelper;
 
+    @Autowired
+    AuthenUtil authenUtil;
 
 
     @Override
@@ -89,4 +93,50 @@ public class UserServiceImp implements UserService {
     public UserEntity getUser(String email) {
         return userRepository.findByEmail(email).size() > 0 ? userRepository.findByEmail(email).get(0) : null;
     }
+
+    @Override
+    public UserDTO getUserInform(String email) {
+        UserDTO userDTO = new UserDTO();
+        UserEntity user = userRepository.findUserEntityByEmail(email);
+        userDTO.setEmail(user.getEmail());
+        userDTO.setFullname(user.getFullName());
+        userDTO.setAddress(user.getAddress());
+        userDTO.setPhone(user.getPhone());
+        return userDTO;
+    }
+
+    @Override
+    public boolean updateUser(UserDTO userDTO) {
+        UserEntity user = userRepository.findUserEntityByEmail(authenUtil.getEmail());
+        user.setAddress(userDTO.getAddress());
+        user.setPhone(userDTO.getPhone());
+        user.setFullName(userDTO.getFullname());
+        try{
+            userRepository.save(user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updatePassword(UserDTO userDTO) {
+        UserEntity user = userRepository.findUserEntityByEmail(authenUtil.getEmail());
+        try{
+            boolean isMatchPassword = passwordEncoder.matches(userDTO.getPassword(), user.getPassword());
+            System.out.println(userDTO.getPassword());
+            System.out.println(user.getPassword());
+            if(isMatchPassword){
+                user.setPassword(passwordEncoder.encode(userDTO.getNewPassword()));
+                userRepository.save(user);
+                return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+
 }
