@@ -31,5 +31,15 @@ export const getParams = async (path, options = {}) => {
     return response.data;
 };
 
+export const putParamToken = async (path, data, headers) => {
+    const response = await httpRequest.put(path, data, headers)
+    return response.data;
+}
+
+export const getToken = async (path, headers) => {
+    const response = await httpRequest.get(path, headers)
+    return response.data;
+}
+
 export default httpRequest;
 

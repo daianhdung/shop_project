@@ -8,6 +8,8 @@ import config from '~/config';
 import styles from './Cart.module.scss';
 import { formatNumber } from '~/utils/stringUtils';
 import useAuth from '~/hooks/useAuth';
+import useCart from '~/hooks/useCart';
+import CartContext from '~/context/CartProvider';
 
 const cx = classNames.bind(styles);
 
@@ -15,73 +17,9 @@ function Cart() {
 
     const navigate = useNavigate();
 
+    const cart = useCart()
 
-    const [localItems, setLocalItems] = useState(JSON.parse(localStorage.getItem('items')))
-
-    const context = useAuth()
-    useEffect(() => {
-        if (localStorage.getItem('items')) {
-            const items = (JSON.parse(localStorage.getItem('items'))).length
-            context.cartNumber = items
-        }
-    }, [localStorage.getItem('items')])
-
-    console.log(1);
-
-    if (localItems) {
-        var onReduce = (id) => {
-            const updatedItemList = localItems.map((item) => {
-                if (item.id === id && item.quantity > 0) {
-                    item.quantity--;
-                }
-                return item;
-            });
-            setLocalItems(updatedItemList);
-            localStorage.setItem("items", JSON.stringify(updatedItemList));
-        }
-        var onIncrease = (id) => {
-            const updatedItemList = localItems.map((item) => {
-                if (item.id == id) {
-                    item.quantity++
-                }
-                return item
-            })
-            setLocalItems(updatedItemList);
-            localStorage.setItem("items", JSON.stringify(updatedItemList));
-        }
-
-        var onDelete = (id) => {
-            const updatedItemList = localItems.filter((item) => item.id !== id);
-            if(updatedItemList.length === 0){
-                localStorage.removeItem('items')
-                setLocalItems(null)
-            }else{
-                setLocalItems(updatedItemList);
-                localStorage.setItem("items", JSON.stringify(updatedItemList));
-            }
-           
-        }
-        var handleChange = (e, id) => {
-            const inputValue = e.target.value;
-            const updatedItemList = localItems.map((item) => {
-                const newCount = isNaN(inputValue) ? item.quantity : Number(inputValue);
-                if (item.id == id) {
-                    item.quantity = newCount
-                }
-                return item
-            })
-            setLocalItems(updatedItemList);
-            localStorage.setItem("items", JSON.stringify(updatedItemList));
-        }
-
-        var getTotalCart = () => {
-            let total = 0
-            localItems.map((item) => {
-                total += item.price * item.quantity
-            })
-            return total
-        }
-    }
+    const localItems = cart.items
 
 
     return (<div className={cx('wrapper')}>
@@ -120,18 +58,18 @@ function Cart() {
                                     <td>{formatNumber(item.price)}</td>
                                     <td>
                                         <div className={cx('quantity_setup')}>
-                                            <button onClick={() => onReduce(item.id)} className={cx('btn-reduce', 'btn')} type="button">
+                                            <button onClick={() => cart.onReduce(item.id)} className={cx('btn-reduce', 'btn')} type="button">
                                                 -
                                             </button>
-                                            <input value={item.quantity} type="text" title="Số lượng" maxLength="2" name="quantity" onChange={(e) => handleChange(e, item.id)} />
-                                            <button onClick={() => onIncrease(item.id)} className={cx('btn-increase', 'btn')} type="button">+</button>
+                                            <input value={item.quantity} type="text" title="Số lượng" maxLength="2" name="quantity" onChange={(e) => cart.handleChange(e, item.id)} />
+                                            <button onClick={() => cart.onIncrease(item.id)} className={cx('btn-increase', 'btn')} type="button">+</button>
                                         </div>
                                     </td>
                                     <td ><div className={cx('total')}>{formatNumber(item.price * item.quantity)} VND</div></td>
-                                    <td><FontAwesomeIcon style={{cursor: 'pointer'}} onClick={() => onDelete(item.id)} icon={faTrash} /></td>
+                                    <td><FontAwesomeIcon style={{cursor: 'pointer'}} onClick={() => cart.onDelete(item.id)} icon={faTrash} /></td>
                                 </tr>
                             ))}
-                            <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: {getTotalCart &&  formatNumber(getTotalCart())} VND</td></tr>
+                            <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: {cart.getTotalCart &&  formatNumber(cart.getTotalCart())} VND</td></tr>
                         </> : <tr><td colSpan={6}><h2>Chưa có sản phẩm trong giỏ hàng</h2></td></tr>}
                 </tbody>
             </table>

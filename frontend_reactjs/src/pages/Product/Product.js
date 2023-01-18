@@ -19,7 +19,7 @@ function Product() {
     const [page, SetPage] = useState({
         currentPage: 1
     })
-    const [sort, SetSort] = useState("")
+    const [sort, SetSort] = useState("az")
     const [products, SetProducts] = useState(null)
 
     const handleSort = (e) => {

@@ -12,6 +12,7 @@ import { Link, useParams } from "react-router-dom";
 import config from '~/config';
 import { getDetailProduct } from '~/service/getProductService'
 import { formatNumber } from '~/utils/stringUtils';
+import useCart from "~/hooks/useCart";
 const cx = classNames.bind(styles);
 
 
@@ -25,6 +26,9 @@ function Detail() {
 
     const [detailProduct, setDetailProduct] = useState()
     const { id } = useParams();
+
+    const cartContext = useCart()
+    const localItems = cartContext.items
     
 
     useEffect(() => {
@@ -46,7 +50,6 @@ function Detail() {
 
 
     const onSubmit = () => {
-        const items = []
         const item = {
             id: detailProduct.id,
             name: detailProduct.name,
@@ -54,22 +57,7 @@ function Detail() {
             quantity: count,
             image: detailProduct.mainImage
         }
-        if (JSON.parse(localStorage.getItem('items') === null)) {
-            items.push(item)
-            localStorage.setItem('items', JSON.stringify(items))
-        } else {
-            const localItems = JSON.parse(localStorage.getItem('items'))
-            localItems.map((itemLocal) => {
-                if (item.id == itemLocal.id) {
-                    item.quantity = itemLocal.quantity + item.quantity
-                    
-                } else {
-                    items.push(itemLocal)
-                }
-            })
-            items.push(item)
-            localStorage.setItem('items', JSON.stringify(items))
-        }
+        cartContext.addToCart(item)
         setModalOpen(true)
     }
 

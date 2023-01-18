@@ -5,69 +5,15 @@ import React, { useState } from "react";
 import { faLongArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatNumber } from '~/utils/stringUtils';
+import useCart from '~/hooks/useCart';
 
 const cx = classNames.bind(styles);
 
 function CartModal({ closeModal }) {
 
 
-    const [localItems, setLocalItems] = useState(JSON.parse(localStorage.getItem('items')))
-
-
-    if (localItems) {
-        var onReduce = (id) => {
-            const updatedItemList = localItems.map((item) => {
-                if (item.id === id && item.quantity > 0) {
-                    item.quantity--;
-                }
-                return item;
-            });
-            setLocalItems(updatedItemList);
-            localStorage.setItem("items", JSON.stringify(updatedItemList));
-        }
-        var onIncrease = (id) => {
-            const updatedItemList = localItems.map((item) => {
-                if (item.id == id) {
-                    item.quantity++
-                }
-                return item
-            })
-            setLocalItems(updatedItemList);
-            localStorage.setItem("items", JSON.stringify(updatedItemList));
-        }
-
-        var onDelete = (id) => {
-            const updatedItemList = localItems.filter((item) => item.id !== id);
-            setLocalItems(updatedItemList);
-            if (updatedItemList.length === 0) {
-                localStorage.removeItem('items')
-                closeModal()
-            } else {
-                localStorage.setItem("items", JSON.stringify(updatedItemList));
-            }
-        }
-        var handleChange = (e, id) => {
-            const inputValue = e.target.value;
-            const updatedItemList = localItems.map((item) => {
-                const newCount = isNaN(inputValue) ? item.quantity : Number(inputValue);
-                if (item.id == id) {
-                    item.quantity = newCount
-                }
-                return item
-            })
-            setLocalItems(updatedItemList);
-            localStorage.setItem("items", JSON.stringify(updatedItemList));
-        }
-
-        var getTotalCart = () => {
-            let total = 0
-            localItems.map((item) => {
-                total += item.price * item.quantity
-            })
-            return total
-        }
-    }
-
+    const cart = useCart()
+    const localItems = cart.items
 
     return (<React.Fragment>
         <div className={cx('modal-overlay')} onClick={closeModal}>
@@ -101,24 +47,24 @@ function CartModal({ closeModal }) {
                                                     <div className={cx('descrip-product')}>
                                                         <p>{item.name}</p>
                                                         <span>- 38.5</span>
-                                                        <div onClick={() => onDelete(item.id)} className={cx('modal-close')}>&times; Xóa sản phẩm</div>
+                                                        <div onClick={() => cart.onDelete(item.id)} className={cx('modal-close')}>&times; Xóa sản phẩm</div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>{formatNumber(item.price)} VND</td>
                                             <td>
                                                 <div className={cx('quantity_setup')}>
-                                                    <button onClick={() => onReduce(item.id)} className={cx('btn-reduce', 'btn')} type="button">
+                                                    <button onClick={() => cart.onReduce(item.id)} className={cx('btn-reduce', 'btn')} type="button">
                                                         -
                                                     </button>
-                                                    <input value={item.quantity} type="text" title="Số lượng" maxLength="2" id="qty" name="quantity" onChange={(e) => handleChange(e, item.id)} />
-                                                    <button onClick={() => onIncrease(item.id)} className={cx('btn-increase', 'btn')} type="button">+</button>
+                                                    <input value={item.quantity} type="text" title="Số lượng" maxLength="2" id="qty" name="quantity" onChange={(e) => cart.handleChange(e, item.id)} />
+                                                    <button onClick={() => cart.onIncrease(item.id)} className={cx('btn-increase', 'btn')} type="button">+</button>
                                                 </div>
                                             </td>
                                             <td>{formatNumber(item.price * item.quantity)} VND</td>
                                         </tr>
                                     ))}
-                                    <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: {getTotalCart && formatNumber(getTotalCart())} VND</td></tr>
+                                    <tr><td style={{ padding: '5px' }} colSpan={6} align='right'>Tổng tiền: {cart.getTotalCart && formatNumber(cart.getTotalCart())} VND</td></tr>
                                 </> :
                                     <tr><td colSpan={6}><h2>Chưa có sản phẩm trong giỏ hàng</h2></td></tr>
                                 }

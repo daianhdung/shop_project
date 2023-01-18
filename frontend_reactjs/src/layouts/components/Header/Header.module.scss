@@ -40,7 +40,7 @@
     .nav_link_logo {
         margin-right: 20px;
         position: relative;
-        &:hover .logo_number{
+        &:hover .logo_number {
             color: var(--bs-link-hover-color);
         }
     }
@@ -62,11 +62,24 @@
 
 .up_last_header {
     position: relative;
+
     .nav_link {
         margin-left: 20px;
     }
     .nav_link1 {
         margin-left: 20px;
+        max-width: 10px;
+        white-space: nowrap;
+        overflow: visible !important;
+        text-overflow: ellipsis; // This is where the magic happens
+        color: red;
+    }
+    .username {
+        overflow: hidden;
+        max-width: 200px;
+        white-space: nowrap;
+        color: #0dcaf0;
+        cursor: default;
     }
 
     .nav_link:last-child::after {
@@ -123,8 +136,8 @@
     justify-content: space-between;
     line-height: 1.15;
 
-    h4{
-        font-weight: bold!important;
+    h4 {
+        font-weight: bold !important;
         line-height: 150%;
     }
 

@@ -20,7 +20,7 @@ function DefaultLayout({ children }) {
         <div >
             <Header />
             <div style={{ background: 'rgba(245, 245, 250, 1)' }} >
-                <div style={{ height: '2000px' }} className={cx('container')}>
+                <div className={cx('container')}>
                     <div className={cx('inner')}>
                         {(location.pathname == config.routes.product || location.pathname == config.routes.bookmark || location.pathname === '/search/' && location.search) ? <Sidebar1/> : <Sidebar/> }
                         <div className={cx('content')}>
