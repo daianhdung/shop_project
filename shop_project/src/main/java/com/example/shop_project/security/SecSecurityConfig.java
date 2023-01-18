@@ -35,9 +35,9 @@ public class SecSecurityConfig {
                 .antMatchers(API_LOGIN, API_USER, API_MAIL, API_IMAGE, API_FILE + "/**", API_PRODUCT + "/**",
                         API_BRAND + "/**", API_CATEGORY + "/**" , API_SIZE + "/**").permitAll()
 
-
-                .antMatchers(API_INSERT_PRODUCT).hasAuthority("ROLE_ADMIN")
+                .antMatchers(API_ADMIN).hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.PUT, API_USER).authenticated()
+
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
