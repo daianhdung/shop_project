@@ -30,12 +30,9 @@ public class SecSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-
                 .antMatchers(API_LOGIN, API_SIGNUP, API_MAIL, API_IMAGE, API_FILE + "/**", API_PRODUCT + "/**",
                         API_BRAND + "/**", API_CATEGORY + "/**" , API_SIZE + "/**").permitAll()
-
-
-                .antMatchers(API_INSERT_PRODUCT).hasAuthority("ROLE_ADMIN")
+                .antMatchers(API_ADMIN).hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

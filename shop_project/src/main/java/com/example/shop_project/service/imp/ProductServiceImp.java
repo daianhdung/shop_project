@@ -2,28 +2,25 @@ package com.example.shop_project.service.imp;
 
 
 import com.example.shop_project.dto.ProductDTO;
-import com.example.shop_project.entity.BrandEntity;
-import com.example.shop_project.entity.ImageProductEntity;
-import com.example.shop_project.entity.ProductEntity;
+import com.example.shop_project.dto.ProductDetailDTO;
+import com.example.shop_project.entity.*;
 import com.example.shop_project.model.ProductModel;
 import com.example.shop_project.payload.request.FilterProductRequest;
+import com.example.shop_project.payload.request.ProductRequest;
 import com.example.shop_project.repository.BrandRepository;
+import com.example.shop_project.repository.CategoryRepository;
 import com.example.shop_project.repository.ProductRepository;
 import com.example.shop_project.service.ProductService;
 import com.example.shop_project.utils.StringUtil;
-import com.example.shop_project.utils.Url;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImp implements ProductService {
@@ -31,6 +28,8 @@ public class ProductServiceImp implements ProductService {
     ProductRepository productRepository;
     @Autowired
     BrandRepository brandRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Autowired
     StringUtil stringUtil;
@@ -52,26 +51,11 @@ public class ProductServiceImp implements ProductService {
 
         return totalPage;
     }
-    @Override
-    public int getTotalPage() {
-        int size = productRepository.findAll().size();
-        int totalPage = 0;
-        if (size % num == 0) {
-            totalPage = size / num;
-        } else {
-            totalPage = size / num + 1;
-        }
-        return totalPage;
-    }
-
 
     @Override
-    public ProductDTO getProducts(int currentPage) {
+    public ProductDTO getProducts() {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Pageable pageable = PageRequest.of(currentPage, num);
-        Page<ProductEntity> productEntityPage = productRepository.findAll(pageable);
-        List<ProductEntity> productEntities = productEntityPage.getContent();
-
+        List<ProductEntity> productEntities = productRepository.findAll();
         List<ProductModel> productModels = new ArrayList<>();
         productEntities.forEach(product -> {
             ProductModel productModel = new ProductModel();
@@ -86,10 +70,7 @@ public class ProductServiceImp implements ProductService {
             productModels.add(productModel);
         });
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setTotalPage(productEntityPage.getTotalPages());
-        productDTO.setCurrentPage(currentPage);
         productDTO.setProducts(productModels);
-
         return productDTO;
     }
 
@@ -133,6 +114,87 @@ public class ProductServiceImp implements ProductService {
 
         return productDTO;
 
+    }
+
+    @Override
+    public ProductDetailDTO getProduct(int id) {
+        ProductEntity product = productRepository.findById(id);
+
+        ProductDetailDTO productDetailDTO = new ProductDetailDTO();
+        productDetailDTO.setId(product.getId());
+        productDetailDTO.setName(product.getName());
+        productDetailDTO.setImage(product.getMainImage());
+        productDetailDTO.setBrand(product.getBrand().getId());
+        productDetailDTO.setCategory(product.getCategory().getId());
+        productDetailDTO.setPrice(product.getPrice());
+        List<Integer> ids = product.getProductSizes().stream()
+                            .map(productSizeEntity -> productSizeEntity.getSize().getId())
+                            .collect(Collectors.toList());
+        productDetailDTO.setSizes(ids);
+
+
+        return productDetailDTO;
+    }
+
+    @Override
+    public boolean insertProduct(ProductRequest product) {
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setName(product.getName());
+        productEntity.setMainImage(product.getImage());
+        productEntity.setPrice(product.getPrice());
+        productEntity.setCategory(categoryRepository.findById(product.getCategory()).orElse(null));
+        productEntity.setBrand(brandRepository.findById(product.getBrand()).orElse(null));
+        try {
+            productRepository.save(productEntity);
+            Set<ProductSizeEntity> productSizeEntitySet = new HashSet<>();
+            product.getSizes().forEach(size -> {
+                ProductSizeEntity productSizeEntity = new ProductSizeEntity();
+                productSizeEntity.setSizeId(size);
+                productSizeEntity.setProductId(productEntity.getId());
+                productSizeEntitySet.add(productSizeEntity);
+            });
+            productEntity.setProductSizes(productSizeEntitySet);
+            productRepository.save(productEntity);
+            return true;
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateProduct(ProductRequest product) {
+        ProductEntity productEntity = productRepository.findById(product.getId());
+        productEntity.setName(product.getName());
+        productEntity.setMainImage(product.getImage());
+        productEntity.setPrice(product.getPrice());
+        productEntity.setCategory(categoryRepository.findById(product.getCategory()).orElse(null));
+        productEntity.setBrand(brandRepository.findById(product.getBrand()).orElse(null));
+        Set<ProductSizeEntity> productSizeEntitySet = new HashSet<>();
+        product.getSizes().forEach(size -> {
+            ProductSizeEntity productSizeEntity = new ProductSizeEntity();
+            productSizeEntity.setSizeId(size);
+            productSizeEntity.setProductId(productEntity.getId());
+            productSizeEntitySet.add(productSizeEntity);
+        });
+        productEntity.setProductSizes(productSizeEntitySet);
+        try {
+            productRepository.save(productEntity);
+            return true;
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteProduct(int id) {
+        try {
+            productRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

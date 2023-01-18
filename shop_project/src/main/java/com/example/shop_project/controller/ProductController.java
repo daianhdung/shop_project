@@ -27,10 +27,6 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @PostMapping("/insert")
-    public ResponseEntity<?> insertPrpduct() {
-        return new ResponseEntity<>("test", HttpStatus.OK);
-    }
     @GetMapping("/totalpage")
     public ResponseEntity<?> getTotalPage(@RequestBody FilterProductRequest filterProduct) {
         DataResponse dataResponse = new DataResponse();
@@ -39,16 +35,6 @@ public class ProductController {
         dataResponse.setStatus(HttpStatus.OK.value());
         dataResponse.setData(productService.getTotalPage(filterProduct));
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @GetMapping("/page/{}")
-    public ResponseEntity<?> getProductWithPage(@PathVariable(name = "current") int current) {
-        ProductDTO productDTO = productService.getProducts(current);
-        DataResponse dataResponse = new DataResponse();
-        dataResponse.setData(productDTO);
-        dataResponse.setSuccess(true);
-        dataResponse.setDesc("get product with current page");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
     @PostMapping("/filter")
     public ResponseEntity<?> getProductWithPageByFilter(@RequestBody FilterProductRequest filterProduct) {
@@ -60,7 +46,6 @@ public class ProductController {
         dataResponse.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
-
 
     @GetMapping("/top-product")
     public ResponseEntity<?> getTopProductByAmountSold(){
