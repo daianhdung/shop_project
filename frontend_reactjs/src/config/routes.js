@@ -12,6 +12,7 @@ const routes = {
     product: '/product',
     search: '/search/',
     changePassword: '/profile/changePass',
+    order: '/order',
     //Admin route
     adminHome: '/admin-home',
     adminProduct: '/admin-product'

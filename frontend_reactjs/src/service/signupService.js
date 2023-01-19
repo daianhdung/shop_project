@@ -1,14 +1,11 @@
 import * as httpRequest from '~/utils/httpRequest';
 import { errorToast, successToast } from '~/components/Popups'
 
-export const signup = async (email, password, fullname, phone, address) => {
+export const signup = async (email, password) => {
     try {
         const response = await httpRequest.post('user', {
             email: email,
-            password: password,
-            fullname :fullname,
-            phone: phone,
-            address: address
+            password: password
         })
         successToast(response.desc)
         return response

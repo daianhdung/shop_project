@@ -4,36 +4,79 @@ import { Link } from 'react-router-dom';
 import config from '~/config';
 import images from '~/assets/images';
 import styles from './Signup.module.scss';
-import { useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as signupService from '~/service/signupService';
+import { validEmail, validPassword } from '~/utils/regex';
 
 const cx = classNames.bind(styles);
 
 function Signup() {
-    const email = useRef(null);
-    const password = useRef(null);
-    const fullname = useRef(null);
-    const phone = useRef(null);
-    const address = useRef(null);
-    const [state, setState] = useState({ email: '', password: '', fullname: '', phone: '', address: '' });
+
+    const [state, setState] = useState({ email: '', password: '', rePassword: '' });
+    const [equal, setEqual] = useState(true);
+    const [errors, setErrors] = useState({});
+
+
+
+    useEffect(() => {
+        if (state.password == state.rePassword) {
+            setEqual(true)
+        } else {
+            setEqual(false)
+        }
+    }, [state.password, state.rePassword])
+
+
+    console.log(state);
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        let newErrors = { ...errors };
+        if (name === 'email') {
+            if (!value) {
+                newErrors.email = 'Email bắt buộc';
+            } else if (!validEmail.test(value)) {
+                newErrors.email = 'Email không hợp lệ';
+            } else {
+                newErrors.email = null;
+            }
+        }
+        if (name === 'password') {
+            if (!value) {
+                newErrors.password = 'Mật khẩu bắt buộc';
+            } else if (!validPassword.test(value)) {
+                newErrors.password = 'Mật khẩu không hợp lệ';
+            } else {
+                newErrors.password = null;
+            }
+        }
+        setState({
+            ...state,
+            [name]: value
+        });
+        setErrors(newErrors);
+    }
 
 
     const handleClick = () => {
-        setState({
-            email: email.current.value,
-            password: password.current.value,
-            fullname: fullname.current.value,
-            phone: phone.current.value,
-            address: address.current.value,
-        });
+        let newErrors = {};
+        if (!state.email) {
+            newErrors.email = 'Email bắt buộc';
+        }
+        if (!state.password) {
+            newErrors.password = 'Mật khẩu bắt buộc';
+        }
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length === 0) {
+            const fetchApiSignup = async () => {
+                const result = await signupService.signup(state.email, state.password);
+                return result;
+            };
+            fetchApiSignup();
+        }
     }
-    if (state.email && state.password) {
-        const fetchApiSignup = async () => {
-            const result = await signupService.signup(state.email, state.password, state.fullname, state.phone, state.address);
-            return result;
-        };
-        fetchApiSignup();
-    }
+
+
+
     return (<div className={cx('wrapper')}>
         <div className={cx('inner')}>
             <div className={cx('header')}>
@@ -56,45 +99,35 @@ function Signup() {
                                 <label >Email</label>
                             </div>
                             <div className={cx('input_wrap')}>
-                                <input placeholder="Địa chỉ email" name="email" maxLength="50" ref={email} />
+                                <input placeholder="Địa chỉ email" name="email" maxLength="50" onChange={handleChange} required
+                                />
                             </div>
                         </div>
                     </div>
                     <div className={cx('wrapper-form')}>
                         <div className={cx('wrapper_input')}>
                             <div className={cx('input_wrap')}>
-                                <input name="fullname" placeholder="Họ và tên" type="text" ref={fullname} />
+                                <input name="password" placeholder="Mật khẩu" type="password" onChange={handleChange} required />
                             </div>
                         </div>
                     </div>
                     <div className={cx('wrapper-form')}>
                         <div className={cx('wrapper_input')}>
                             <div className={cx('input_wrap')}>
-                                <input name="password" placeholder="Mật khẩu" type="password" ref={password} />
+                                <input name="rePassword" placeholder="Nhập lại mật khẩu" type="password" autoComplete="password"
+                                    onChange={handleChange} required />
                             </div>
                         </div>
                     </div>
-                    {/* <div className={cx('wrapper-form')}>
-                        <div className={cx('wrapper_input')}>
-                            <div className={cx('input_wrap')}>
-                                <input name="password" placeholder="Nhập lại mật khẩu" type="password" autoComplete="password" />
-                            </div>
-                        </div>
-                    </div> */}
-                    <div className={cx('wrapper-form')}>
-                        <div className={cx('wrapper_input')}>
-                            <div className={cx('input_wrap')}>
-                                <input name="phone" placeholder="Số điện thoại" type="text" ref={phone} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className={cx('wrapper-form')}>
-                        <div className={cx('wrapper_input')}>
-                            <div className={cx('input_wrap')}>
-                                <input name="address" placeholder="Địa chỉ" type="text" ref={address} />
-                            </div>
-                        </div>
-                    </div>
+                    <h3 style={{ textShadow: '0 5px 5px red' }} className='mt-3 text-warning'>
+                        {!equal && 'Mật khẩu không khớp'}
+                    </h3>
+                    <h3 style={{ textShadow: '0 5px 5px red' }} className='mt-3 text-warning'>
+                        {errors.email && errors.email}
+                    </h3>
+                    <h3 style={{ textShadow: '0 5px 5px red' }} className='mt-3 text-warning'>
+                        {errors.password && errors.password}
+                    </h3>
                     <button onClick={handleClick} className={cx('button_form')} type="button">
                         <div >
                             <span className={cx('wrapper_input')}>

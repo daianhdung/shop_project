@@ -118,9 +118,9 @@ INSERT INTO `shop_db`.`status` (`name`) VALUES ('Xác nhận');
 INSERT INTO `shop_db`.`status` (`name`) VALUES ('Hoàn thành');
 INSERT INTO `shop_db`.`status` (`name`) VALUES ('Đã hủy');
 
-INSERT INTO user( email, password, fullname, role_id ) VALUES ('admin', '$2a$10$IhrjhZcZiATnxdnUVZlxC.1sF5bflxtiFCxpaeCvYtMnykred/WR6', 'ADMIN', 1);
+INSERT INTO user( email, password, fullname, role_id ) VALUES ('admin@gmail.com', '$2a$10$IhrjhZcZiATnxdnUVZlxC.1sF5bflxtiFCxpaeCvYtMnykred/WR6', 'ADMIN', 1);
 INSERT INTO user( email, password, fullname, role_id )
-VALUES ('daidung', '$2a$10$IhrjhZcZiATnxdnUVZlxC.1sF5bflxtiFCxpaeCvYtMnykred/WR6', 'Dai Dung', 2);
+VALUES ('daidung@gmail.com', '$2a$10$IhrjhZcZiATnxdnUVZlxC.1sF5bflxtiFCxpaeCvYtMnykred/WR6', 'Dai Dung', 2);
 
 INSERT INTO brand(name) VALUES ("Adidas");
 INSERT INTO brand(name) VALUES ("Nike");
@@ -541,6 +541,20 @@ UPDATE `shop_db`.`product` SET `main_image` = 'puma-smash-vulc-mule-white1.webp'
 INSERT INTO `shop_db`.`bookmark_product` (`user_id`, `product_id`) VALUES ('1', '1');
 INSERT INTO `shop_db`.`bookmark_product` (`user_id`, `product_id`) VALUES ('1', '2');
 INSERT INTO `shop_db`.`bookmark_product` (`user_id`, `product_id`) VALUES ('1', '3');
+
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('12', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('13', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('14', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('14', '3');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('15', '1');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('16', '7');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('17', '6');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('18', '7');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('19', '2');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('20', '5');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('21', '10');
+INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('22', '1');
+
 
 
 

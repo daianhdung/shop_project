@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Link, useLocation, useNavigate} from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import config from '~/config';
 import images from '~/assets/images';
@@ -10,40 +10,62 @@ import useAuth from '~/hooks/useAuth';
 
 import { saveCookie } from '~/utils/utilsCookie';
 import { decodeToken } from 'react-jwt';
+import { validEmail, validPassword } from '~/utils/regex';
 // import { useJwt } from "react-jwt";
 
 const cx = classNames.bind(styles);
 
 
 function Login() {
-    
+
     const contextAuth = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || "/";
-    // console.log(contextAuth);
 
-    const email = useRef(null);
-    const password = useRef(null);
     const [state, setState] = useState({ email: '', password: '' });
+    const [errors, setErrors] = useState({});
 
-    //JWT decode 
 
-    // const { decodedToken, isExpired } = useJwt();
-    //Check if login , redirect to home
-    if (contextAuth.auth) {
-        navigate(from, { replace: true })
+    //built-in validate
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        let newErrors = { ...errors };
+        if (name === 'email') {
+            if (!value) {
+                newErrors.email = 'Email bắt buộc';
+            } else if (!validEmail.test(value)) {
+                newErrors.email = 'Email không hợp lệ';
+            } else {
+                newErrors.email = null;
+            }
+        }
+        if (name === 'password') {
+            if (!value) {
+                newErrors.password = 'Mật khẩu bắt buộc';
+            } else if (!validPassword.test(value)) {
+                newErrors.password = 'Mật khẩu không hợp lệ';
+            } else {
+                newErrors.password = null;
+            }
+        }
+        setState({
+            ...state,
+            [name]: value
+        });
+        setErrors(newErrors);
     }
 
     const handleClick = () => {
-        setState({
-            email: email.current.value,
-            password: password.current.value,
-        });
-    }
-    
-    useEffect(() => {
-        if (state.email && state.password) {
+        let newErrors = {};
+        if (!state.email) {
+            newErrors.email = 'Email bắt buộc';
+        }
+        if (!state.password) {
+            newErrors.password = 'Mật khẩu bắt buộc';
+        }
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length === 0) {
             const fetchApi = async () => {
                 const result = await loginService.login(state.email, state.password);
                 saveCookie('tokenJwt', result.data.token, result.data.expire)
@@ -52,10 +74,10 @@ function Login() {
                 if (result.success) {
                     contextAuth.username = tokenDecoded.username
                     contextAuth.auth = true
-                    if(result.data.role === 'ROLE_ADMIN'){
+                    if (result.data.role === 'ROLE_ADMIN') {
                         contextAuth.admin = true
                         navigate('/admin-home', { replace: true })
-                    }else{
+                    } else {
                         navigate(from, { replace: true })
                     }
                 }
@@ -63,9 +85,7 @@ function Login() {
             };
             fetchApi();
         }
-    }, [state])
-
-    
+    }
 
 
     return (<div className={cx('wrapper')}>
@@ -90,17 +110,23 @@ function Login() {
                                 <label >Email</label>
                             </div>
                             <div className={cx('input_wrap')}>
-                                <input placeholder="Địa chỉ email" name="email" maxLength="50" ref={email} />
+                                <input placeholder="Địa chỉ email" name="email" maxLength="50" onChange={handleChange} />
                             </div>
                         </div>
                     </div>
                     <div className={cx('wrapper-form')}>
                         <div className={cx('wrapper_input')}>
                             <div className={cx('input_wrap')}>
-                                <input name="password" placeholder="Mật khẩu" type="password" autoComplete="password" ref={password} />
+                                <input name="password" placeholder="Mật khẩu" type="password" autoComplete="password" onChange={handleChange} />
                             </div>
                         </div>
                     </div>
+                    <h3 style={{ textShadow: '0 5px 5px red' }} className='mt-3 text-warning'>
+                        {errors.email && errors.email}
+                    </h3>
+                    <h3 style={{ textShadow: '0 5px 5px red' }} className='mt-3 text-warning'>
+                        {errors.password && errors.password}
+                    </h3>
                     <button onClick={handleClick} className={cx('button_form')} type="button">
                         <div >
                             <span className={cx('wrapper_input')}>

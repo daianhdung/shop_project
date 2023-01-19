@@ -90,6 +90,10 @@
     span {
         color: #fff;
     }
+    &:hover .wrapper_input{
+        color: yellow;
+    }
+
 }
 .dont_have_acc {
     font-size: 1.6rem;

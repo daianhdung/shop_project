@@ -16,6 +16,7 @@ import Tippy from '@tippyjs/react/headless';
 import { get5BrandSmallestAmountSold, getAllBrandName } from '~/service/brandService';
 import { getAllCategoryName } from '~/service/categoryService';
 import useCart from '~/hooks/useCart';
+import useFilter from '~/hooks/useFilter';
 
 
 const cx = classNames.bind(styles);
@@ -31,6 +32,8 @@ function Header(props) {
 
     const cartContext = useCart()
     const localItems = cartContext.items
+
+    const filterContext = useFilter()
 
 
     useEffect(() => {
@@ -50,6 +53,14 @@ function Header(props) {
         fetchApiGetAllCategory()
         fetchApiGet5BrandSmallestSold()
     }, [])
+
+
+    const filterWithCategory = (idCate) => {
+        filterContext.handleFilter({categoryId : [idCate], brandId : []})
+    }
+    const filterWithBrand = (idBrand) => {
+        filterContext.handleFilter({brandId : [idBrand], categoryId : []})
+    }
 
 
     return (
@@ -77,7 +88,7 @@ function Header(props) {
                                 render={(attrs) => (
                                     <div className={cx('drop_down_wrap')}>
                                         <div className={cx('drop_down_content')} tabIndex="-1">
-                                            {allBrand && allBrand.map((item) => (<Link to={config.routes.search + '?brandId=' + item.id} key={item.id} className={cx('block')} >{item.name}</Link>
+                                            {allBrand && allBrand.map((item) => (<Link onClick={() => filterWithBrand(item.id)} to={config.routes.product} key={item.id} className={cx('block')} >{item.name}</Link>
                                             ))}
                                         </div>
                                     </div>
@@ -89,7 +100,7 @@ function Header(props) {
                                 render={(attrs) => (
                                     <div className={cx('drop_down_wrap')}>
                                         <div className={cx('drop_down_content')} tabIndex="-1">
-                                            {allCategory && allCategory.map((item) => (<Link to={config.routes.search + '?categoryId=' + item.id} key={item.id} className={cx('block')}>{item.name}</Link>
+                                            {allCategory && allCategory.map((item) => (<Link onClick={() => filterWithCategory(item.id)} to={config.routes.product} key={item.id} className={cx('block')}>{item.name}</Link>
                                             ))}
                                         </div>
                                     </div>

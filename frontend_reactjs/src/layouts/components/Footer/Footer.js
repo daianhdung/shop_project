@@ -20,7 +20,7 @@ function Footer() {
             <div className={cx('footer_top')}>
                 <div className={cx('footer_col')}>
                     <div className={cx('footer_block_long')}>
-                        <Link to={config.routes.home} className={cx('logo-link')}>
+                        <Link to={config.routes.home} className={cx('logo-link', 'f-center-align')}>
                             <img
                                 width="60"
                                 height="60"
@@ -28,25 +28,25 @@ function Footer() {
                                 src={images.logo}
                                 alt="logo"
                             />
+                            <h2 className='ms-3 text-primary'>Shoes Shop</h2>
                         </Link>
-                        <p>We know pets are like family, so we are committed to providing the highest-quality products
-                            that you can trust</p>
-                        <div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda repudiandae, quas natus placeat eligendi reprehenderit. Incidunt officia, sit distinctio minus consequuntur minima dolores ducimus voluptatum commodi nobis dolorum nam molestiae?</p>
+                        <div className='my-2'>
                             <FontAwesomeIcon icon={faPhone} />
                             <span>Hotline Order</span>
                         </div>
-                        <h2>(877) 834 1434</h2>
+                        <h2 >(877) 834 1434</h2>
                         <ul className={cx('footer_icon')}>
                             <li>
-                                <FontAwesomeIcon icon={faFacebook} />
+                                <FontAwesomeIcon style={{color: '#3e5693'}} icon={faFacebook} />
                             </li>
-                            <li><FontAwesomeIcon icon={faTwitter} /></li>
-                            <li><FontAwesomeIcon icon={faPinterest} /></li>
-                            <li><FontAwesomeIcon icon={faInstagram} /></li>
+                            <li><FontAwesomeIcon style={{color: '#009ded'}} icon={faTwitter} /></li>
+                            <li><FontAwesomeIcon style={{color: '#0071b0'}} icon={faPinterest} /></li>
+                            <li><FontAwesomeIcon style={{color: '#f01c2e'}} icon={faInstagram} /></li>
                         </ul>
                     </div>
                     <div className={cx('footer_block_short')}>
-                        <h2>USEFUL LINKS</h2>
+                        <h2>THƯƠNG HIỆU</h2>
                         <span>New Products</span>
                         <span>Best Seller</span>
                         <span>Bundle & Save</span>
@@ -55,7 +55,7 @@ function Footer() {
                         <span>Pet Store Locator</span>
                     </div>
                     <div className={cx('footer_block_short')}>
-                        <h2>USEFUL LINKS</h2>
+                        <h2>THỂ LOẠI</h2>
                         <span>New Products</span>
                         <span>Best Seller</span>
                         <span>Bundle & Save</span>
@@ -68,7 +68,7 @@ function Footer() {
                         <p>Subscrible & get <span>10%</span> discount. Get E-mail updates about our latest shop and
                             <span>special offers.</span></p>
                         <div>
-                            <div className={cx('search_form')}>
+                            <div className={cx('search_form', 'mt-3')}>
                                 <input type="text" placeholder="Nhập vào email của bạn..." />
                                 <button onMouseOver={() => setOver(true)}
                                 onMouseLeave={() => setOver(false)}
@@ -77,10 +77,10 @@ function Footer() {
                                 </button>
                             </div>
                         </div>
-                        <div>
+                        {/* <div>
                             <FontAwesomeIcon icon={faMobileScreen} />
                             <span>Download Our App</span>
-                        </div>
+                        </div> */}
                         <div>
                             <img src="./assest/Homepage/App-Store.jpg" alt="" />
                             <img src="./assest/Homepage/Google-Play.jpg" alt="" />

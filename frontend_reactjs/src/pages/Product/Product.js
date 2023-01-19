@@ -79,18 +79,18 @@ function Product() {
 
    
 
-
     return (
         <div id='wrapper'>
             <div className='row'>
                 <div className='col-md-12'>
                     <Sort sort={sort} handleSort={handleSort} />
-                    {products && <List products={products} />}
+                    {products && products.length !== 0 && <List products={products} />}
                     <div className='row d-flex justify-content-center bg-white'>
                         <div className='col-md-2'>
-                            {products && <Paging currentPage={page.currentPage} totalPage={page.totalPage} handleNext={handleNext} handlePrev={handlePrev} handleSetCurrentPage={handleSetCurrentPage} />}
+                            { products && products.length !== 0  && <Paging currentPage={page.currentPage} totalPage={page.totalPage} handleNext={handleNext} handlePrev={handlePrev} handleSetCurrentPage={handleSetCurrentPage} />}
                         </div>
                     </div>
+                    { products && products.length === 0 && <div className=' justify-content-center bg-white p-5 rounded'><h2>Sản phẩm bạn tìm kiếm hiện tại hết hàng</h2></div>}
                 </div>
             </div>
 
