@@ -13,8 +13,9 @@ import SearchProduct from "~/pages/SearchProduct/SearchProduct";
 import Bookmark from "~/pages/Bookmark/Bookmark";
 import HomeAdmin from "~/pages/Admin/HomeAdmin";
 import ProductAdmin from "~/pages/Admin/ProductAdmin";
-import { AuthenLayout, AdminLayout } from "~/layouts";
+import { AuthenLayout, AdminLayout, HeaderOnlyLayout } from "~/layouts";
 import Product from "~/pages/Product/Product";
+import Order from "~/pages/Order/Order";
 
 
 
@@ -25,7 +26,8 @@ const publicRoutes = [
     { path: config.routes.detailId, component: Detail },
     { path: config.routes.cart, component: Cart },
     { path: config.routes.product, component: Product },
-    { path: config.routes.search, component: SearchProduct }
+    { path: config.routes.search, component: SearchProduct },
+    { path: config.routes.order, component: Order , layout: HeaderOnlyLayout}
 ]
 const authRoutes = [
     { path: config.routes.login, component: Login, layout: AuthenLayout },

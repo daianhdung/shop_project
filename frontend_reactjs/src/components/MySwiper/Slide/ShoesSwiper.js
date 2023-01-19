@@ -17,7 +17,7 @@ const cx = classNames.bind(styles)
 
 
 function ShoesSwiper(children) {
-  console.log(children);
+
   
   return (
     <Swiper

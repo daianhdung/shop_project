@@ -111,9 +111,7 @@ public class ProductServiceImp implements ProductService {
         productDTO.setTotalPage(this.getTotalPage(filterProduct));
         productDTO.setCurrentPage(filterProduct.getCurrent());
         productDTO.setProducts(productModels);
-
         return productDTO;
-
     }
 
     @Override

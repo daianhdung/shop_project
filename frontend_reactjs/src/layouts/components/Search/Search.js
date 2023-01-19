@@ -55,8 +55,6 @@ function Search() {
     const handleHideResult = () => {
         setShowResult(false);
     };
-
-    console.log(searchValue);
     const [over, setOver] = useState(false);
 
     return (<div>

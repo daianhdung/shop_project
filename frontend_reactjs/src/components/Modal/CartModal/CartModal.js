@@ -6,6 +6,8 @@ import { faLongArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatNumber } from '~/utils/stringUtils';
 import useCart from '~/hooks/useCart';
+import { Link } from 'react-router-dom';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -74,7 +76,7 @@ function CartModal({ closeModal }) {
                         </table>
                     </div>
                     <div className={cx('modal-footer')}>
-                        <button className={cx('grow_spin')} type="submit">Tiến hành đặt hàng <FontAwesomeIcon icon={faLongArrowRight} /></button>
+                        <Link to={config.routes.order}><button className={cx('grow_spin')} type="submit">Tiến hành đặt hàng <FontAwesomeIcon icon={faLongArrowRight} /></button></Link>
                     </div>
                 </form>
             </div>

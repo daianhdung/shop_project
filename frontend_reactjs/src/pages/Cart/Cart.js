@@ -76,8 +76,8 @@ function Cart() {
         </div>
 
         <div className={cx('cart-footer')}>
-            <button onClick={() => navigate(-1)} style={{ background: 'var(--disabled-color)', borderColor: 'var(--disabled-color)' }} className={cx('grow_spin')} type="submit"><FontAwesomeIcon icon={faLongArrowLeft} /> Quay lại mua hàng </button>
-            <button className={cx('grow_spin')} type="submit">Tiến hành đặt hàng <FontAwesomeIcon icon={faLongArrowRight} /></button>
+            <button onClick={() => navigate('/home')} style={{ background: 'var(--disabled-color)', borderColor: 'var(--disabled-color)' }} className={cx('grow_spin')} type="submit"><FontAwesomeIcon icon={faLongArrowLeft} /> Quay lại mua hàng </button>
+            <Link to={config.routes.order}><button className={cx('grow_spin')} type="submit">Tiến hành đặt hàng <FontAwesomeIcon icon={faLongArrowRight} /></button></Link>
         </div>
     </div>);
 }
