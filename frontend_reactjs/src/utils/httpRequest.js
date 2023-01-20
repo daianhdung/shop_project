@@ -26,6 +26,11 @@ export const get = async (path = {}) => {
     return response.data;
 }
 
+export const getTokenHeader = async (path, headers) => {
+    const response = await httpRequest.get(path, headers)
+    return response.data;
+}
+
 
 export const getParams = async (path, options = {}) => {
     const response = await httpRequest.get(path, options);

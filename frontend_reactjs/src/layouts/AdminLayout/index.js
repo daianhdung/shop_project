@@ -2,6 +2,7 @@ import { faUps } from '@fortawesome/free-brands-svg-icons';
 import { faBox, faFileCircleCheck, faFileLines, faUpLong, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
+import { Children } from 'react';
 
 import styles from './Admin.module.scss';
 import HeaderAdmin from "./HeaderAdmin/HeaderAdmin";
@@ -96,7 +97,7 @@ function AdminLayout({ children }) {
                 </div>
                 <div className={cx('bot_content')}>
                     <div className={cx('wrap_children')}>
-
+                        {children}
                     </div>
                 </div>
             </div>

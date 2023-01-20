@@ -16,6 +16,8 @@ import ProductAdmin from "~/pages/Admin/ProductAdmin";
 import { AuthenLayout, AdminLayout, HeaderOnlyLayout } from "~/layouts";
 import Product from "~/pages/Product/Product";
 import Order from "~/pages/Order/Order";
+import InsertProduct from "~/pages/Admin/ProductAdmin/Insert/InsertProduct";
+import UpdateProduct from "~/pages/Admin/ProductAdmin/Update/UpdateProduct";
 
 
 
@@ -42,7 +44,9 @@ const privateRoutes = [
 ]
 const adminRoutes = [
     { path: config.routes.adminHome, component: HomeAdmin, layout: AdminLayout },
-    { path: config.routes.adminProduct, component: ProductAdmin, layout: AdminLayout }
+    { path: config.routes.adminProduct, component: ProductAdmin, layout: AdminLayout },
+    { path: config.routes.adminProductInsert, component: InsertProduct },
+    { path: config.routes.adminProductInsert, component: UpdateProduct }
 ]
 
 export { publicRoutes, privateRoutes, adminRoutes , authRoutes}
