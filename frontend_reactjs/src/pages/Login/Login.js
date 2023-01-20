@@ -68,6 +68,7 @@ function Login() {
         if (Object.keys(newErrors).length === 0) {
             const fetchApi = async () => {
                 const result = await loginService.login(state.email, state.password);
+                console.log(result);
                 saveCookie('tokenJwt', result.data.token, result.data.expire)
                 const myDecodedToken = decodeToken(result.data.token);
                 const tokenDecoded = JSON.parse(myDecodedToken.sub)

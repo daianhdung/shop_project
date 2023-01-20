@@ -2,6 +2,8 @@ import Cookies from 'js-cookie';
 
 
 export const saveCookie = function saveCookie(name, value, time) {
+    const expires = new Date();
+    expires.setMilliseconds(expires.getMilliseconds() + time);
     Cookies.set(name, value, { expires: time });
     return
 }

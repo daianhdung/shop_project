@@ -74,6 +74,5 @@ public class JwtTokenHelper {
             System.out.println("JWT claims string is empty.");
         }
         return isSuccess;
-
     }
 }

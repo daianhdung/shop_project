@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const httpRequest = axios.create({
-    baseURL: 'http://localhost:8080/api/'
+    baseURL: process.env.REACT_APP_DEFAULT_API_URL,
 });
+
 
 export const post = async (path, option = {}) => {
     const response = await httpRequest.post(path, option)
@@ -41,5 +42,6 @@ export const getToken = async (path, headers) => {
     return response.data;
 }
 
-export default httpRequest;
+
+export default httpRequest
 

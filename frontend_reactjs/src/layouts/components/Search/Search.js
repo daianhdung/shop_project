@@ -32,6 +32,7 @@ function Search() {
             setSearchResult(response)
             setLoading(false);
         }
+        
 
         fetchApiSearchProduct()
         
