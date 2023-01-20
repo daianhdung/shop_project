@@ -74,7 +74,6 @@ function Product() {
                 })
             })
 
-            console.log(customFilter);
     }, [filterContext, sort, page.currentPage])
 
    

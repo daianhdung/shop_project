@@ -37,8 +37,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     SecurityContext securityContext = SecurityContextHolder.getContext();
                     securityContext.setAuthentication(authenticationToken);
                 }
-            }else {
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             }
         }
         filterChain.doFilter(request, response);

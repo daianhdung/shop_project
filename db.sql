@@ -555,6 +555,10 @@ INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('20', '5'
 INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('21', '10');
 INSERT INTO `shop_db`.`product_size` (`product_id`, `size_id`) VALUES ('22', '1');
 
-
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA10%', '10');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA20%', '20');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA30%', '30');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA40%', '40');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA50%', '50');
 
 

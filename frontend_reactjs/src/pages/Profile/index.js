@@ -13,7 +13,6 @@ function Profile() {
         const fetchApiGetUserInform = async () => {
             const response = await getUserInform()
             setUser(response)
-            console.log(response);
         }
         fetchApiGetUserInform()
     }, [])
