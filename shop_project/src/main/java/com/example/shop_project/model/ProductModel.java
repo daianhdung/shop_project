@@ -6,8 +6,9 @@ public class ProductModel {
     private int id;
     private String name;
     private int price;
-
     private String image;
+    private String brand;
+    private List<String> sizes;
     private boolean isBookmark;
 
     public int getId() {
@@ -48,5 +49,21 @@ public class ProductModel {
 
     public void setBookmark(boolean bookmark) {
         isBookmark = bookmark;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public List<String> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(List<String> sizes) {
+        this.sizes = sizes;
     }
 }
