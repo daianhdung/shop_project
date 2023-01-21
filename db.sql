@@ -112,6 +112,9 @@ CREATE TABLE IF NOT EXISTS product_order (
 
 INSERT INTO role(id, name, description ) VALUES (1, "ROLE_ADMIN", "Admin");
 INSERT INTO role(id, name, description ) VALUES (2, "ROLE_USER", "Customer");
+INSERT INTO `shop_db`.`role` (`name`, `description`) VALUES ('ROLE_ANONYMOUS', 'Anonymous');
+
+
 INSERT INTO `shop_db`.`status` (`name`) VALUES ('Cart');
 INSERT INTO `shop_db`.`status` (`name`) VALUES ('Chưa xác nhận');
 INSERT INTO `shop_db`.`status` (`name`) VALUES ('Xác nhận');

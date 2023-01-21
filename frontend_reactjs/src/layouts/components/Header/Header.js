@@ -110,7 +110,7 @@ function Header(props) {
                             <NavLink to={config.routes.detail} className={cx('nav_link')}>Liên hệ</NavLink>
                             <NavLink to="/cart" className={cx('nav_link_logo')}>
                                 <FontAwesomeIcon icon={faCartShopping} />
-                                <span className={cx('logo_number')}>{localItems ? localItems.length : 0}</span>
+                                <span className={cx('logo_number', 'logo_number_orange')}>{localItems ? cartContext.getTotalQuantityCart() : 0}</span>
                             </NavLink>
                             {context.auth && <NavLink to={config.routes.bookmark} className={cx('nav_link_logo')}><FontAwesomeIcon icon={faHeart} /></NavLink>}
 
