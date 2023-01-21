@@ -12,6 +12,7 @@ import com.example.shop_project.repository.CategoryRepository;
 import com.example.shop_project.repository.ProductRepository;
 import com.example.shop_project.service.ProductService;
 import com.example.shop_project.utils.StringUtil;
+import com.example.shop_project.utils.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -61,12 +62,17 @@ public class ProductServiceImp implements ProductService {
             ProductModel productModel = new ProductModel();
             productModel.setId(product.getId());
             productModel.setName(product.getName());
-            productModel.setImage(product.getMainImage());
+            productModel.setImage(Url.Image.getPath() + product.getMainImage());
             productModel.setPrice(product.getPrice());
             boolean isBookMark = product.getBookmarkProducts()
                     .stream()
                     .anyMatch(bookmarkProductEntity -> bookmarkProductEntity.getUser().getEmail().equals(email));
             productModel.setBookmark(isBookMark);
+            productModel.setBrand(product.getBrand().getName());
+            productModel.setSizes(product.getProductSizes().stream()
+                    .map(productSizeEntity -> productSizeEntity.getSize().getName())
+                    .collect(Collectors.toList())
+            );
             productModels.add(productModel);
         });
         ProductDTO productDTO = new ProductDTO();
