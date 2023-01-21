@@ -16,11 +16,13 @@ public class OrderEntity {
     private int tempTotal;
     @Column(name = "total")
     private float total;
+    @Column(name = "delivery_address")
+    private String deliveryAddress;
 
     @OneToMany(mappedBy = "order")
     private Set<ProductOrderEntity> productOrders;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private UserEntity user;
     @ManyToOne
@@ -68,6 +70,14 @@ public class OrderEntity {
         this.total = total;
     }
 
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
     public Set<ProductOrderEntity> getProductOrders() {
         return productOrders;
     }
@@ -91,4 +101,6 @@ public class OrderEntity {
     public void setStatus(StatusEntity status) {
         this.status = status;
     }
+
+
 }

@@ -13,6 +13,8 @@ public class ProductDTO {
     private String mainImage;
     private String brandName;
     private List<String> images;
+
+    private int quantity;
     private int totalPage;
     private int currentPage;
     private List<ProductModel> products;
@@ -87,5 +89,13 @@ public class ProductDTO {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

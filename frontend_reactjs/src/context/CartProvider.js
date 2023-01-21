@@ -7,7 +7,9 @@ const CartContext = createContext({
     onReduce: () => { },
     onDelete: () => { },
     handleChange: () => { },
-    getTotalCart: () => { }
+    getTotalCart: () => { },
+    getTotalQuantityCart: () => { },
+    deleteAllFromCart: () => { }
 })
 
 export const CartProvider = ({ children }) => {
@@ -83,10 +85,25 @@ export const CartProvider = ({ children }) => {
 
     var getTotalCart = () => {
         let total = 0
-        cartProducts.map((item) => {
-            total += item.price * item.quantity
-        })
+        if(cartProducts != null){
+            cartProducts.map((item) => {
+                total += item.price * item.quantity
+            })
+        }
         return total
+    }
+
+    const getTotalQuantityCart = () => {
+        let totalQuantity = 0
+        cartProducts.map((item) => {
+            totalQuantity += item.quantity
+        })
+        return totalQuantity
+    }
+
+    const deleteAllFromCart = () => {
+        setCartProducts('')
+        localStorage.removeItem('items')
     }
 
 
@@ -98,6 +115,8 @@ export const CartProvider = ({ children }) => {
         onDelete,
         handleChange,
         getTotalCart,
+        getTotalQuantityCart,
+        deleteAllFromCart
     }
 
     return (

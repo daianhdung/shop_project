@@ -15,4 +15,5 @@ public class ApiConstant {
     public static final String API_SIZE = "/size";
 
     public static final String API_COUNPON = "/coupon";
+    public static final String API_ORDER = "/order";
 }

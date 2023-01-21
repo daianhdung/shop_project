@@ -1,4 +1,5 @@
 import { faAngleLeft, faXmark } from "@fortawesome/free-solid-svg-icons";
+import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,9 +7,15 @@ import { Link, useNavigate } from "react-router-dom";
 import config from '~/config';
 import useCart from '~/hooks/useCart';
 import { searchCoupon } from "~/service/couponService";
+import { CheckoutOrder } from "~/service/orderService";
 import { getProvince, searchDistrictOnCode, searchWardOnCode } from "~/service/thirdApi";
 import { getUserInform } from "~/service/userService";
 import { formatNumber } from "~/utils/stringUtils";
+import styles from './Order.module.scss';
+import { validEmail } from "~/utils/regex";
+
+
+const cx = classNames.bind(styles);
 
 const paymentMethod = [
     {
@@ -24,6 +31,7 @@ const paymentMethod = [
 function Order() {
 
     const navigate = useNavigate()
+
 
     const cart = useCart()
     const localItems = cart.items
@@ -42,46 +50,60 @@ function Order() {
 
     const [formInformUser, setFormInformUser] = useState()
     const [errors, setErrors] = useState({});
-    console.log(formInformUser);
-    console.log(errors);
-
+    // console.log(formInformUser);
+    // console.log(errors);
+    const [total, setTotal] = useState(localItems != null ? cart.getTotalCart : '')
+    const [orderSuccess, setOrderSuccess] = useState(false)
     const [costDeli, setCostDeli] = useState(0)
-    const [total, setTotal] = useState(cart.getTotalCart)
-    useEffect(() => {
-        if(checkCoupon.rate){
-            var promo = (cart.getTotalCart() * checkCoupon.rate) / 100
-        }else{
-            var promo = 0
-        }
-        const totalOrder = cart.getTotalCart() - promo - costDeli
-        setTotal(totalOrder)
-    }, [checkCoupon, costDeli])
-    
-
-    const handleChangeForm = (e) => {
-        const { name, value } = e.target
-        setFormInformUser({ ...formInformUser, [name]: value })
-    }
 
     useEffect(() => {
-        const condition = false
-        if (!localItems || localItems.length === 0) {
+        if (localItems === null) {
             navigate('/cart', { replace: true })
         }
+
         const fetchApiGetUserInform = async () => {
             const response = await getUserInform()
-            if(response.success){
-                setUser(response)
-                setFormInformUser(response)
+            if (response.success) {
+                setUser(response.data)
+                setFormInformUser(response.data)
             }
         }
         const fetchApiGetProvince = async () => {
             const response = await getProvince()
             setProvince(response)
         }
+
         fetchApiGetUserInform()
         fetchApiGetProvince()
     }, [])
+
+
+
+    useEffect(() => {
+        if (checkCoupon.rate) {
+            var promo = (cart.getTotalCart() * checkCoupon.rate) / 100
+        } else {
+            var promo = 0
+        }
+        const totalOrder = cart.getTotalCart() - promo + costDeli
+        setTotal(totalOrder)
+    }, [checkCoupon, costDeli])
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (orderSuccess == true) {
+                cart.deleteAllFromCart()
+            }
+        }, 1000)
+    }, [orderSuccess])
+
+
+    const handleChangeForm = (e) => {
+        const { name, value } = e.target
+        setFormInformUser({ ...formInformUser, [name]: value })
+    }
+
+
 
     const handleCoupon = () => {
         const fetchApiGetCoupon = async () => {
@@ -99,9 +121,9 @@ function Order() {
     //Handle when selected province then appear Dictrict of province
     const handleChangeProvince = (e) => {
         provinceCodeRef.current = e.target.value
-        if(e.target.value == 79){
+        if (e.target.value != 79) {
             setCostDeli(40000)
-        }else{
+        } else {
             setCostDeli(0)
         }
         //get text in option
@@ -159,6 +181,8 @@ function Order() {
         let newErrors = {};
         if (!formInformUser.email) {
             newErrors.email = 'Email bắt buộc';
+        } else if (!validEmail.test(formInformUser.email)) {
+            newErrors.email = 'Email không hợp lệ';
         }
         if (!formInformUser.fullname) {
             newErrors.fullname = 'Họ và tên bắt buộc';
@@ -183,30 +207,50 @@ function Order() {
         } else if (formInformUser.paymentMethod === 1) {
             newErrors.paymentMethod = 'Chuyển khoản ngân hàng hiện tại không khả dụng';
         }
-
+        if (Object.keys(newErrors).length === 0) {
+            const userDto = {
+                email: formInformUser.email, fullname: formInformUser.fullname, phone: formInformUser.phone,
+                address: formInformUser.address
+            }
+            const deliveryAddress = `${formInformUser.address} ${formInformUser.province} ${formInformUser.district} + ${formInformUser.ward}`
+            const productDTOList = localItems
+            const tempTotal = cart.getTotalCart()
+            const fetchApiNewOrder = async () => {
+                console.log(1);
+                console.log(userDto);
+                console.log(productDTOList);
+                const response = await CheckoutOrder(userDto, deliveryAddress, productDTOList, checkCoupon.rate, tempTotal, total, costDeli)
+                console.log(response);
+                if (response.success) {
+                    setOrderSuccess(true)
+                }
+                return response
+            }
+            fetchApiNewOrder()
+        }
         setErrors(newErrors)
     }
 
     return (<div className="my-5 bg-white rounded p-5">
-        <div className="row">
+        {orderSuccess == false ? <div className="row">
             <div className="mb-3 col-md-4">
                 <div className="mb-3">
                     <label className="form-label">Thông tin mua hàng</label>
-                    <input placeholder="Email" style={{ height: '45px' }} type="text" className={`form-control form-control-lg ${errors.email && 'is-invalid'}`} id="email" defaultValue={user.email} name="email" onChange={handleChangeForm} onKeyDown={checkBackspace} />
+                    <input placeholder="Email" style={{ height: '45px' }} type="text" className={`form-control form-control-lg ${errors.email && 'is-invalid'}`} id="email" defaultValue={user.email} name="email" onChange={handleChangeForm} onKeyDown={checkBackspace} disabled={user.email} />
                     {errors.email && <span className="text-danger">{errors.email}</span>}
                 </div>
                 <div className="mb-3">
-                    <input placeholder="Họ và tên" style={{ height: '45px' }} type="text" className={`form-control form-control-lg ${errors.fullname && 'is-invalid'}`} id="fullname" defaultValue={user.fullname} name="fullname" onChange={handleChangeForm} onKeyDown={checkBackspace} />
+                    <input placeholder="Họ và tên" style={{ height: '45px' }} type="text" className={`form-control form-control-lg ${errors.fullname && 'is-invalid'}`} id="fullname" defaultValue={user.fullname} name="fullname" onChange={handleChangeForm} onKeyDown={checkBackspace} disabled={user.fullname} />
                     {errors.fullname && <span className="text-danger">{errors.fullname}</span>}
                 </div>
                 <div className="mb-3">
                     <input placeholder="Số điện thoại" style={{ height: '45px', userSelect: 'none' }} type="text" className={`form-control form-control-lg ${errors.phone && 'is-invalid'}`} id="phone" defaultValue={user.phone}
-                        name="phone" onChange={handleChangeForm} onKeyDown={checkBackspace} />
+                        name="phone" onChange={handleChangeForm} onKeyDown={checkBackspace} disabled={user.phone} />
                     {errors.phone && <span className="text-danger">{errors.phone}</span>}
 
                 </div>
                 <div className="mb-3">
-                    <input placeholder="Địa chỉ" style={{ height: '45px', userSelect: 'none' }} type="text" className={`form-control form-control-lg ${errors.address && 'is-invalid'}`} id="address" defaultValue={user.address} name="address" onChange={handleChangeForm} onKeyDown={checkBackspace} />
+                    <input placeholder="Địa chỉ" style={{ height: '45px', userSelect: 'none' }} type="text" className={`form-control form-control-lg ${errors.address && 'is-invalid'}`} id="address" defaultValue={user.address} name="address" onChange={handleChangeForm} onKeyDown={checkBackspace} disabled={user.address} />
                     {errors.address && <span className="text-danger">{errors.address}</span>}
                 </div>
                 <div className="mt-3 mb-3">
@@ -259,21 +303,22 @@ function Order() {
                 </div>
             </div>
             <div className="mb-3 col-md-4 h-50">
-                <label className="form-label">Đơn hàng ({localItems && localItems.length} sản phẩm)</label>
+                <label className="form-label fw-bold ">Đơn hàng ({localItems && cart.getTotalQuantityCart()} sản phẩm)</label>
                 <hr></hr>
                 <table >
                     <tbody >
                         {localItems && localItems.map((item) => (
                             <tr key={item.id}>
-                                <td className="p-3">
+                                <td className={cx('image-number', 'p-3')}>
                                     <img width={50} height={50} src={process.env.REACT_APP_IMG_URL + item.image} />
+                                    <span className={cx('image_number_orange')}>{item.quantity}</span>
                                 </td>
                                 <td>
                                     <h4>{item.name}</h4>
                                     <span>41.5</span>
                                 </td>
                                 <td>
-                                    <span>{formatNumber(item.price)}₫</span>
+                                    <span>{formatNumber(item.price * item.quantity)}₫</span>
                                 </td>
                             </tr>
                         ))}
@@ -320,7 +365,94 @@ function Order() {
                     <button onClick={onSubmit} className="rounded bg-primary text-white fs-3" style={{ height: '65px', width: '135px' }}>Đặt hàng</button>
                 </div>
             </div>
-        </div>
+        </div> : <div className="row">
+            <div className="col-md-6">
+                <div className="row align-items-center">
+                    <div className="col-md-2 me-4">
+                        <div className="svg-container">
+                            <svg className="ft-green-tick" xmlns="http://www.w3.org/2000/svg" height="100" width="100" viewBox="0 0 48 48" aria-hidden="true">
+                                <circle className="circle" fill="#5bb543" cx="24" cy="24" r="22" />
+                                <path className="tick" fill="none" stroke="#FFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" d="M14 27l5.917 4.917L34 17" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div className="col-md-8">
+                        <h1>Đặt hàng thành công!! Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi</h1>
+                    </div>
+                </div>
+                <div className="row border border-info mt-5">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <h1>Thông tin mua hàng</h1>
+                            <br />
+                            {formInformUser && formInformUser.email}
+                            <br />
+                            {formInformUser && formInformUser.fullname}
+                            <br />
+                            {formInformUser && formInformUser.phone}
+                        </div>
+                        <div className="col-md-6">
+                            <h1>Địa chỉ nhận hàng</h1>
+                            <br />
+                            {formInformUser && formInformUser.address}
+                            <br />
+                            {formInformUser && formInformUser.deliveryAddress}
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <h1>Phương thức thanh toán</h1>
+                            <h3>Giao hàng tiền mặt (COD)</h3>
+                        </div>
+                        <div className="col-md-6"></div>
+                    </div>
+                </div>
+            </div>
+            <div className="col-md-6">
+                <div className="p-5">
+                    <table className="border border-info">
+                        <tbody >
+                            {localItems && localItems.map((item) => (
+                                <tr className="border-bottom border-dark" key={item.id}>
+                                    <td className={cx('image-number', 'p-3')}>
+                                        <img width={50} height={50} src={process.env.REACT_APP_IMG_URL + item.image} />
+                                        <span className={cx('image_number_orange')}>{item.quantity}</span>
+                                    </td>
+                                    <td className="ps-2">
+                                        <h4>{item.name}</h4>
+                                        <span>41.5</span>
+                                    </td>
+                                    <td className="p-5">
+                                        <span>{formatNumber(item.price * item.quantity)}₫</span>
+                                    </td>
+                                </tr>
+                            ))}
+                            <tr>
+                                <td className="p-5" colSpan={3}>
+                                    <div className="d-flex justify-content-between">
+                                        <div className="mt-2">
+                                            {checkCoupon && checkCoupon.isExist === true && <h3 >Giảm giá</h3>}
+                                            <h3 >Tạm tính</h3>
+                                            <h3>Phí vận chuyển</h3>
+                                        </div>
+                                        <div className="mt-2">
+                                            {checkCoupon && checkCoupon.isExist === true && <h3 align='right'>{formatNumber(priceAfterCoupon)}₫</h3>}
+                                            <h3 align='right'>{cart.getTotalCart && formatNumber(cart.getTotalCart())}₫</h3>
+                                            {costDeli > 0 ? <h3 align='right'>{formatNumber(40000)}₫</h3> : <h3 align='right'>--</h3>}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div className="d-flex justify-content-between mt-2">
+                                        <h3>Tổng cộng</h3>
+                                        <h3 className="text-info">{total && formatNumber(total)}₫</h3>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>}
     </div>);
 }
 
