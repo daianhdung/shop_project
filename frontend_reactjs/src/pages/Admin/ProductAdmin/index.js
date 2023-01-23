@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
-import * as adminProductService from '~/service/adminProduct';
+import * as adminProductService from '~/service/adminProductService';
 import { getCookie } from "~/utils/utilsCookie";
 import Table from "./Table/Table";
 function ProductAdmin() {
     const [products, SetProducts] = useState(null)
-    useEffect( () => {
+
+    const handleDelete = (id) =>{
         const token = getCookie('tokenJwt');
-        
-        adminProductService.getProduct(token)
+        adminProductService.deleteProduct(token, id)
+            .then(response => console.log(response))
+    }
+    useEffect(() => {
+        const token = getCookie('tokenJwt');
+
+        adminProductService.getProducts(token)
             .then(response => {
                 SetProducts(response.products)
             })
-    },[])
+    }, [])
 
-    return ( 
+    return (
         <div>
-           {products && <Table products={products}/>}
+            {products && <Table products={products} handleDelete={handleDelete} />}
         </div>
     )
 }
