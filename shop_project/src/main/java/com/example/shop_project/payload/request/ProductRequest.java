@@ -5,7 +5,6 @@ import java.util.List;
 public class ProductRequest {
     private int id;
     private String name;
-    private String image;
     private int price;
     private int category;
     private int brand;
@@ -17,14 +16,6 @@ public class ProductRequest {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public int getPrice() {

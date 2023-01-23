@@ -18,9 +18,9 @@ public class ProductEntity {
     @Column(name = "amount_of_sold")
     private int amountOfSold;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private Set<ImageProductEntity> imageProductEntities;
-    @OneToMany( mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private Set<ProductSizeEntity> productSizes;
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "product")
     private Set<BookmarkProductEntity> bookmarkProducts;

@@ -1,9 +1,13 @@
 import classNames from 'classnames/bind';
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import config from '~/config';
 import styles from './Table.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Table({products, handleDelete}) {
+    const navigate = useNavigate();
     return (
         <div className={cx("wrapper")} >
             <div className={cx("inner")} >
@@ -35,7 +39,7 @@ function Table({products, handleDelete}) {
                                         })} `}</td>
                                         <td>{product.price}đ</td>
                                         <td className={cx("table-action")}>
-                                            <a href='#'> <i class="bi bi-pencil-square"></i> </a>     
+                                            <a href={`${config.routes.adminProductUpdate}?id=${product.id}`}> <i class="bi bi-pencil-square"></i> </a>     
                                             <a onClick={() => handleDelete(product.id)}> <i class="bi bi-trash"></i> </a>
                                         </td>
                                     </tr>

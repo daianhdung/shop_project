@@ -1,20 +1,21 @@
 package com.example.shop_project.controller;
 
-import com.example.shop_project.dto.CategoryDTO;
-import com.example.shop_project.dto.ProductDTO;
-import com.example.shop_project.dto.ProductDetailDTO;
-import com.example.shop_project.dto.SizeDTO;
+import com.example.shop_project.dto.*;
 import com.example.shop_project.payload.request.CateSizeRequest;
 import com.example.shop_project.payload.request.ProductRequest;
 import com.example.shop_project.payload.response.DataResponse;
+import com.example.shop_project.service.BrandService;
 import com.example.shop_project.service.CategoryService;
 import com.example.shop_project.service.ProductService;
 import com.example.shop_project.service.SizeService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,6 +29,8 @@ public class AdminController {
     CategoryService categoryService;
     @Autowired
     SizeService sizeService;
+    @Autowired
+    BrandService brandService;
 
 
     @GetMapping("/product/get/{id}")
@@ -36,7 +39,7 @@ public class AdminController {
         ProductDetailDTO productDetailDTO = productService.getProduct(id);
         dataResponse.setDesc("get product");
         dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(true);
+        dataResponse.setSuccess(productDetailDTO != null);
         dataResponse.setData(productDetailDTO);
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
@@ -51,26 +54,32 @@ public class AdminController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
     @PostMapping("/product/insert")
-    public ResponseEntity<?> insertProduct(@RequestBody ProductRequest product) {
+    public ResponseEntity<?> insertProduct(@RequestParam(name = "product") String product,
+                                           @RequestParam(name = "mainImage")MultipartFile file,
+                                           @RequestParam(name = "images")MultipartFile[] multiFile) {
         DataResponse dataResponse = new DataResponse();
-        boolean isSuccess = productService.insertProduct(product);
+        Gson gson = new Gson();
+        boolean isSuccess = productService.insertProduct(gson.fromJson(product,ProductRequest.class), file, multiFile);
         dataResponse.setDesc("insert product");
         dataResponse.setStatus(HttpStatus.OK.value());
         dataResponse.setSuccess(isSuccess);
         dataResponse.setData("");
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
-    @PutMapping("/product/update")
-    public ResponseEntity<?> updateProduct(@RequestBody ProductRequest product) {
+    @PostMapping("/product/update")
+    public ResponseEntity<?> updateProduct(@RequestParam(name = "product") String product,
+                                           @RequestParam(name = "mainImage")MultipartFile file,
+                                           @RequestParam(name = "images")MultipartFile[] multiFile) {
         DataResponse dataResponse = new DataResponse();
-        boolean isSuccess = productService.updateProduct(product);
+        Gson gson = new Gson();
+        boolean isSuccess = productService.updateProduct(gson.fromJson(product,ProductRequest.class), file, multiFile);
         dataResponse.setDesc("update product");
         dataResponse.setStatus(HttpStatus.OK.value());
         dataResponse.setSuccess(isSuccess);
         dataResponse.setData("");
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
-    @DeleteMapping("/product/delete/{id}")
+    @GetMapping("/product/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable(name = "id") int id) {
         DataResponse dataResponse = new DataResponse();
         boolean isSuccess = productService.deleteProduct(id);
@@ -88,6 +97,7 @@ public class AdminController {
     public ResponseEntity<?> getCategory(@PathVariable(name = "id") int id) {
         DataResponse dataResponse = new DataResponse();
         CategoryDTO categoryDTO = categoryService.getCategory(id);
+
         dataResponse.setDesc("get category");
         dataResponse.setStatus(HttpStatus.OK.value());
         dataResponse.setSuccess(true);
@@ -185,6 +195,19 @@ public class AdminController {
         dataResponse.setStatus(HttpStatus.OK.value());
         dataResponse.setSuccess(isSuccess);
         dataResponse.setData("");
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
+
+
+    @GetMapping("/brand/all")
+    public ResponseEntity<?> getAllBrand() {
+        DataResponse dataResponse = new DataResponse();
+        List<BrandDTO> brandDTOS = brandService.getALLBrand();
+        dataResponse.setDesc("get All category");
+        dataResponse.setStatus(HttpStatus.OK.value());
+        dataResponse.setSuccess(true);
+        dataResponse.setData(brandDTOS);
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 

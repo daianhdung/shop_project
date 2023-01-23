@@ -5,11 +5,12 @@ import java.util.List;
 public class ProductDetailDTO {
     private int id;
     private String name;
-    private String image;
+    private String mainImage;
     private int price;
     private int category;
     private int brand;
     private List<Integer> sizes;
+    private List<String> images;
 
 
 
@@ -27,14 +28,6 @@ public class ProductDetailDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public int getPrice() {
@@ -67,5 +60,21 @@ public class ProductDetailDTO {
 
     public void setSizes(List<Integer> sizes) {
         this.sizes = sizes;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }
