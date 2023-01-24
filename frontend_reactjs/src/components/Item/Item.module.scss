@@ -1,13 +1,47 @@
 
 
-.link-a {
-    width: 25%;
+.card {
+    width: 220px;
+    height: 320px;
+    background: linear-gradient(to right, #4daf54, #3d8880);
+    padding: 10px 10px;
+    border-radius: 6px;
+    position: relative;
+   
+}
+.card-img {
+    height: 200px;
+    width: 200px;
+    border-radius: 6px;
+    margin: 6px auto;
+}
+.card-img img {
+    height: 100%;
+    width: 100%;
+}
+.card-action {
+    display: flex;
+    gap: 20px;
+    position:absolute;
+    top: 50%;
+    left: 35%;
+    visibility: hidden;
+}
+.card:hover .card-action {
+    visibility: visible;
 }
 
-.wrap_item {
+.card-action .card-heart, .card-action .card-cart {
+    border: solid 1px black;
+    border-radius: 5px;
+    background-color: #FAE5D3;
+    color: black;
+    cursor: grab;
+    padding: 0px 3px;
+}
+
+.card-title, .card-title {
+    font-weight: bold;
+    margin: 10px 0px;
     
-    padding: 10px;
-    &:hover{
-        box-shadow: rgba(62, 62, 69, 0.2) 0px 7px 29px 0px;
-    }
 }

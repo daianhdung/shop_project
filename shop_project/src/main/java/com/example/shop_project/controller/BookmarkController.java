@@ -16,6 +16,7 @@ public class BookmarkController {
 
     @Autowired
     BookmarkService bookmarkService;
+
     @PostMapping("")
     public ResponseEntity<?> getProductWithPageByFilter( @RequestBody FilterProductRequest filterProduct) {
         ProductDTO productDTO = bookmarkService.getProductBookMark(filterProduct);
@@ -23,6 +24,28 @@ public class BookmarkController {
         dataResponse.setData(productDTO);
         dataResponse.setSuccess(true);
         dataResponse.setDesc("get product with current page by filter");
+        dataResponse.setStatus(HttpStatus.OK.value());
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/insert/{id}")
+    public ResponseEntity<?> insertBookmark(@PathVariable(name = "id")int id ) {
+        boolean isSuccess = bookmarkService.insertBookmark(id);
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData("");
+        dataResponse.setSuccess(isSuccess);
+        dataResponse.setDesc("");
+        dataResponse.setStatus(HttpStatus.OK.value());
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteBookmark(@RequestParam(name = "id")int id ) {
+        boolean isSuccess = bookmarkService.deleteBookmark(id);
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setData("");
+        dataResponse.setSuccess(isSuccess);
+        dataResponse.setDesc("");
         dataResponse.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
