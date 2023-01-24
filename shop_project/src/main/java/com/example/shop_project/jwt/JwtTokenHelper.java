@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,12 +40,19 @@ public class JwtTokenHelper {
         Date dateExpired = new Date(now.getTime() + expiredDate);
         SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(strKey));
 
-
-
         return Jwts.builder()
                 .setSubject(data) // lữu trữ dữ liệu vào trong token kiểu String
                 .setIssuedAt(now) // thời gian tạo ra token
                 .setExpiration(dateExpired) // thời gian hết hạn token
+                .signWith(secretKey, SignatureAlgorithm.HS256) // thuật toán mã hóa và secret Key
+                .compact(); // trả về token đã được mã hóa
+    }
+
+    public String generateToken(String data) {
+        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(strKey));
+
+        return Jwts.builder()
+                .setSubject(data) // lữu trữ dữ liệu vào trong token kiểu String
                 .signWith(secretKey, SignatureAlgorithm.HS256) // thuật toán mã hóa và secret Key
                 .compact(); // trả về token đã được mã hóa
     }
@@ -59,6 +67,7 @@ public class JwtTokenHelper {
                 .getSubject();
     }
     public boolean validateToken(String token) {
+        HttpServletResponse response;
         SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(strKey));
         boolean isSuccess = false;
         try {

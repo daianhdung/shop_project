@@ -8,11 +8,13 @@ function Profile() {
     //Inform change
     const location = useLocation()
     const [user, setUser] = useState({})
+    console.log(user);
 
     useEffect(() => {
         const fetchApiGetUserInform = async () => {
             const response = await getUserInform()
-            setUser(response)
+            setUser(response.data)
+            console.log(response);
         }
         fetchApiGetUserInform()
     }, [])

@@ -3,6 +3,7 @@
     margin-right: auto;
     margin-left: auto;
     width: var(--default-layout-width);
+    
 }
 
 .inner{
@@ -16,7 +17,22 @@
 }
 
 .content{
-    width: calc(100% - 280px);
+    width: calc(100% - 270px);
     overflow-x: hidden;
 }
 
+.inner_non_sideber{
+    width: 100%;
+    display: flex;
+    padding-top: 16px;
+    -webkit-box-pack: justify;
+    justify-content: center;
+    align-items: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.content_non_sideber{
+    width: calc(100% - 100px);
+    overflow-x: hidden;
+}

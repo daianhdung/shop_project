@@ -16,15 +16,24 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @PostMapping()
-    public ResponseEntity<?> newOrder(@RequestBody OrderDTO orderDTO){
-        boolean isSuccesInsert = orderService.newOrder(orderDTO);
-
+    @GetMapping("/success/{token}")
+    public ResponseEntity<?> getOrderByToken(@PathVariable("token") String token){
+        OrderDTO orderDTO = orderService.getOrderByToken(token);
         DataResponse dataResponse = new DataResponse();
-        dataResponse.setSuccess(isSuccesInsert);
+        dataResponse.setSuccess(orderDTO != null);
         dataResponse.setData(orderDTO);
 
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
 
+
+    @PostMapping()
+    public ResponseEntity<?> newOrder(@RequestBody OrderDTO orderDTO){
+        String token = orderService.newOrder(orderDTO);
+
+        DataResponse dataResponse = new DataResponse();
+        dataResponse.setSuccess(token != null);
+        dataResponse.setData(token);
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 }

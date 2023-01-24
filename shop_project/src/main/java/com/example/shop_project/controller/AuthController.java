@@ -18,12 +18,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.Valid;
 import java.time.Duration;
+import java.util.Map;
 
 
 @RestController
@@ -38,18 +40,19 @@ public class AuthController {
     AuthenticationManager authenticationManager;
     @Autowired
     JwtTokenHelper jwtTokenHelper;
+
+    Gson gson = new Gson();
+    long expiredDate = 1 * 60 * 60 * 1000;
+    long refreshExpiredDate = 8 * 60 * 60 * 1000;
+
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@RequestBody SignInRequest request, HttpServletResponse response) {
-        Gson gson = new Gson();
-
         try{
             UsernamePasswordAuthenticationToken authRequest =
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
             Authentication auth = authenticationManager.authenticate(authRequest);
             SecurityContext securityContext = SecurityContextHolder.getContext();
             securityContext.setAuthentication(auth);
-            long expiredDate = 8 * 60 * 60 * 1000;
-            long refreshExpiredDate = 8 * 60 * 60 * 1000;
             String token = jwtTokenHelper.generateToken(request.getEmail(),"authen",securityContext.getAuthentication().getAuthorities().iterator().next().toString() , expiredDate);
             String refreshToken = jwtTokenHelper.generateToken(request.getEmail(),"refresh",securityContext.getAuthentication().getAuthorities().iterator().next().toString() ,refreshExpiredDate);
 
@@ -70,39 +73,31 @@ public class AuthController {
             return new ResponseEntity<>("Tài khoản không tồn tại" , HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody SignUpRequest request) {
-        boolean isSuccess = userService.insertUser(request);
+
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<?> refreshToken(@RequestParam("token") String token){
         DataResponse dataResponse = new DataResponse();
-        if (isSuccess) {
-            UsernamePasswordAuthenticationToken authRequest =
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
-            Authentication auth = authenticationManager.authenticate(authRequest);
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            securityContext.setAuthentication(auth);
+        if(jwtTokenHelper.validateToken(token)){
+            String json = jwtTokenHelper.decodeToken(token);
+            Map<String, Object> map = gson.fromJson(json, Map.class);
 
-            long expiredDate = 8 * 60 * 60 * 1000;
-            long refreshExpiredDate = 8 * 60 * 60 * 1000;
+            if(StringUtils.hasText((map.get("type")).toString()) && map.get("type").toString().equals("refresh")){
+                String tokenAuthen = jwtTokenHelper.generateToken(map.get("username").toString(), "authen", map.get("role").toString(), expiredDate);
+                String tokenRefresh = jwtTokenHelper.generateToken(map.get("username").toString(), "refresh", map.get("role").toString(), refreshExpiredDate);
 
-            String token = jwtTokenHelper.generateToken(request.getEmail(), "authen", securityContext.getAuthentication().getAuthorities().iterator().next().toString(), expiredDate);
-            String refreshToken = jwtTokenHelper.generateToken(request.getEmail(), "refresh", securityContext.getAuthentication().getAuthorities().iterator().next().toString(), refreshExpiredDate);
+                DataTokenResponse dataTokenResponse = new DataTokenResponse();
+                dataTokenResponse.setToken(tokenAuthen);
+                dataTokenResponse.setFreshToken(tokenRefresh);
+                dataTokenResponse.setRole(map.get("role").toString());
 
-            DataTokenResponse dataTokenResponse = new DataTokenResponse();
-            dataTokenResponse.setToken(token);
-            dataTokenResponse.setFreshToken(refreshToken);
-            dataTokenResponse.setRole(securityContext.getAuthentication().getAuthorities().iterator().next().toString());
-
-            dataResponse.setDesc("SignUp sucess");
-            dataResponse.setStatus(HttpStatus.OK.value());
-            dataResponse.setSuccess(isSuccess);
-            dataResponse.setData(dataTokenResponse);
-
-        } else {
-            dataResponse.setDesc("SignUp fail");
-            dataResponse.setStatus(HttpStatus.OK.value());
-            dataResponse.setSuccess(isSuccess);
-            dataResponse.setData("");
+                dataResponse.setSuccess(true);
+                dataResponse.setData(dataTokenResponse);
+            }else {
+                dataResponse.setSuccess(false);
+            }
         }
+
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 

@@ -21,8 +21,8 @@ function ShoesSwiper(children) {
   
   return (
     <Swiper
-      slidesPerView={3}
-      spaceBetween={10}
+      slidesPerView={4}
+      spaceBetween={0}
       slidesPerGroup={1}
       autoplay={{delay: "5000"}}
       loop={true}
@@ -38,12 +38,12 @@ function ShoesSwiper(children) {
         <SwiperSlide key={item.id}><Link className={cx('link-a')} to={config.routes.detail + '/'+ item.id}>
           <img width={250} height={250} src={process.env.REACT_APP_IMG_URL + item.mainImage} />
           <div className={cx('product-info')} >
-            <h3 className="product-name">
+            <h3 className="product-name fw-bold">
               {item.name}
             </h3>
             <div className="price-box price-loop-style res-item">
               <span className="special-price">
-                <span className="price">{formatNumber(item.price)}₫</span>
+                <span className={cx('price')}>{formatNumber(item.price)}₫</span>
               </span>
               {/* <div className={cx('old-price')}>
                 <span className={cx('price')}>

@@ -68,15 +68,20 @@ function Login() {
         if (Object.keys(newErrors).length === 0) {
             const fetchApi = async () => {
                 const result = await loginService.login(state.email, state.password);
-                console.log(result);
-                saveCookie('tokenJwt', result.data.token, result.data.expire)
+                
                 const myDecodedToken = decodeToken(result.data.token);
+                const myDecodedRefreshToken = decodeToken(result.data.freshToken);
+                const expiredToken = myDecodedToken.exp - myDecodedToken.iat
+                const expiredRefreshToken = myDecodedRefreshToken.exp - myDecodedRefreshToken.iat
                 const tokenDecoded = JSON.parse(myDecodedToken.sub)
                 if (result.success) {
-                    contextAuth.username = tokenDecoded.username
-                    contextAuth.auth = true
+                    console.log(result);
+                    saveCookie('tokenJwt', result.data.token, 5)
+                    saveCookie('tokenJwtRefresh', result.data.freshToken, expiredRefreshToken)
+                    contextAuth.authProvider.username = tokenDecoded.username
+                    contextAuth.authProvider.isLogin = true
                     if (result.data.role === 'ROLE_ADMIN') {
-                        contextAuth.admin = true
+                        contextAuth.authProvider.isAdmin = true
                         navigate('/admin-home', { replace: true })
                     } else {
                         navigate(from, { replace: true })

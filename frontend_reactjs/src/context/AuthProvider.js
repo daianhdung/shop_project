@@ -1,5 +1,6 @@
 import { isExpired, decodeToken } from "react-jwt";
-import { getCookie, removeCookie } from "~/utils/utilsCookie";
+import { apiRefreshToken } from "~/service/loginService";
+import { getCookie, removeCookie, saveCookie } from "~/utils/utilsCookie";
 
 const { createContext, useRef, useState, useEffect } = require("react");
 
@@ -8,49 +9,59 @@ const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
 
-    //decode token
-    if (getCookie('tokenJwt')) {
-        const token = getCookie('tokenJwt')
-        const myDecodedToken = decodeToken(token);
-        if (myDecodedToken) {
+    const [auth, setAuth] = useState({ isAdmin: '', username: '', isLogin: '' })
+
+    //decode token get inform user
+    useEffect(() => {
+        if (getCookie('tokenJwt')) {
+            console.log(5);
+            const token = getCookie('tokenJwt')
+            const myDecodedToken = decodeToken(token);
             const decodeInform = JSON.parse(myDecodedToken.sub);
-            if (decodeInform.username != null) {
-                var userLogin = true;
-                var username = decodeInform.username
-            }
             if (decodeInform.role === 'ROLE_ADMIN') {
-                var isAdmin = true
+                setAuth({ isAdmin: true, username: decodeInform.username, isLogin: true })
+            } else {
+                setAuth({...auth,username: decodeInform.username, isLogin: true })
             }
         }
-    }
-
-    const authUser = useRef(username)
-    const authAdminRef = useRef(isAdmin)
-    const authRef = useRef(userLogin);
-    const [isLogout, setIsLogout] = useState(authRef.current == true ? true : false)
-
-    // const cartNumber = useRef((JSON.parse(localStorage.getItem('items'))).length)
-
-
-
-
-    const login = function () {
-        authRef.current = true;
-    }
+         else {
+            if (getCookie('tokenJwtRefresh')) {
+                const token = getCookie('tokenJwtRefresh')
+                const fetchApiRefreshToken = async () => {
+                    const response = await apiRefreshToken(token)
+                    if (response.success) {
+                        const myDecodedToken = decodeToken(response.data.token);
+                        const myDecodedRefreshToken = decodeToken(response.data.freshToken);
+                        const expiredToken = myDecodedToken.exp - myDecodedToken.iat
+                        const expiredRefreshToken = myDecodedRefreshToken.exp - myDecodedRefreshToken.iat
+                        saveCookie("tokenJwt", response.data.token, 5)
+                        saveCookie("tokenJwtRefresh", response.data.freshToken, expiredRefreshToken)
+                        const tokenDecoded = JSON.parse(myDecodedToken.sub);
+                        if (tokenDecoded.role === 'ROLE_ADMIN') {
+                            setAuth({ isAdmin: true, username: tokenDecoded.username, isLogin: true })
+                        } else {
+                            setAuth({...auth,username: tokenDecoded.username, isLogin: true })
+                        }
+                    }
+                    return response
+                }
+                fetchApiRefreshToken();
+            }
+        }
+    }, [])
 
 
     const logout = function () {
         removeCookie('tokenJwt');
-        authRef.current = false
-        setIsLogout = true
+        removeCookie('tokenJwtRefresh');
+        auth.current.isLogin = ''
+        auth.current.isAdmin = ''
+        auth.current.username = ''
     }
 
     const value = {
-        auth: authRef.current,
-        admin: authAdminRef.current,
-        login,
-        logout,
-        username: authUser.current
+        authProvider: auth,
+        logout
     }
 
     return (

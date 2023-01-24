@@ -15,3 +15,14 @@ export const login = async (email, password) => {
         errorToast(error.response.data)
 }
 }
+
+export const apiRefreshToken = async (token) => {
+    try {
+        const response = await httpRequest.postParams('auth/refresh-token', {}, {
+            token: token
+        })
+        return response
+    }catch (error) {
+        errorToast(error.response.data)
+}
+}

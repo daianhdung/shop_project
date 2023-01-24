@@ -60,13 +60,15 @@ function Search() {
 
     return (<div>
         <Tippy interactive
-            visible={showResult && searchResult.length > 0}
+            visible={showResult}
             render={(attrs) => (
                 <div onClick={handleHideResult} className={cx('wrapper')}>
                     <div className={cx('search_result')} tabIndex="-1" {...attrs}>
                         {searchResult && searchResult.map((item) => (
                             <ProductItem key={item.id} data={item} />
                         ))}
+                        {!searchValue && <h2 align='center'>Nhập vào kết quả tìm kiếm</h2>}
+                        {!searchResult.length > 0 && searchValue && <h2 align='center'>Không tìm thấy kết quả tìm kiếm</h2>}
                     </div>
                     
                 </div>
