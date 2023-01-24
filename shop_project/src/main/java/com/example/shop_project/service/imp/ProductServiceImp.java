@@ -9,6 +9,7 @@ import com.example.shop_project.payload.request.FilterProductRequest;
 import com.example.shop_project.payload.request.ProductRequest;
 import com.example.shop_project.repository.BrandRepository;
 import com.example.shop_project.repository.CategoryRepository;
+import com.example.shop_project.repository.ImageRepository;
 import com.example.shop_project.repository.ProductRepository;
 import com.example.shop_project.service.ProductService;
 import com.example.shop_project.utils.StringUtil;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,6 +33,10 @@ public class ProductServiceImp implements ProductService {
     BrandRepository brandRepository;
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    FileUploadServiceImp fileUploadServiceImp;
+    @Autowired
+    ImageRepository imageRepository;
 
     @Autowired
     StringUtil stringUtil;
@@ -122,29 +128,39 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public ProductDetailDTO getProduct(int id) {
-        ProductEntity product = productRepository.findById(id);
+        Optional<ProductEntity> productOptional = Optional.ofNullable(productRepository.findById(id));
+        if (productOptional.isPresent()) {
+            ProductEntity product = productOptional.get();
+            ProductDetailDTO productDetailDTO = new ProductDetailDTO();
+            productDetailDTO.setId(product.getId());
+            productDetailDTO.setName(product.getName());
+            productDetailDTO.setMainImage(product.getMainImage());
+            productDetailDTO.setBrand(product.getBrand().getId());
+            productDetailDTO.setCategory(product.getCategory().getId());
+            productDetailDTO.setPrice(product.getPrice());
+            List<Integer> ids = product.getProductSizes().stream()
+                    .map(productSizeEntity -> productSizeEntity.getSize().getId())
+                    .collect(Collectors.toList());
+            List<String> images = product.getImageProductEntities().stream().map(image -> image.getName()).collect(Collectors.toList());
 
-        ProductDetailDTO productDetailDTO = new ProductDetailDTO();
-        productDetailDTO.setId(product.getId());
-        productDetailDTO.setName(product.getName());
-        productDetailDTO.setImage(product.getMainImage());
-        productDetailDTO.setBrand(product.getBrand().getId());
-        productDetailDTO.setCategory(product.getCategory().getId());
-        productDetailDTO.setPrice(product.getPrice());
-        List<Integer> ids = product.getProductSizes().stream()
-                            .map(productSizeEntity -> productSizeEntity.getSize().getId())
-                            .collect(Collectors.toList());
-        productDetailDTO.setSizes(ids);
-
-
-        return productDetailDTO;
+            productDetailDTO.setSizes(ids);
+            productDetailDTO.setImages(images);
+            return productDetailDTO;
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public boolean insertProduct(ProductRequest product) {
+    public boolean insertProduct(ProductRequest product, MultipartFile file, MultipartFile[] multiFile) {
         ProductEntity productEntity = new ProductEntity();
         productEntity.setName(product.getName());
-        productEntity.setMainImage(product.getImage());
+        boolean isUpload = fileUploadServiceImp.storedFile(file);
+        if (isUpload) {
+            productEntity.setMainImage(file.getOriginalFilename());
+        } else {
+            return false;
+        }
         productEntity.setPrice(product.getPrice());
         productEntity.setCategory(categoryRepository.findById(product.getCategory()).orElse(null));
         productEntity.setBrand(brandRepository.findById(product.getBrand()).orElse(null));
@@ -158,6 +174,15 @@ public class ProductServiceImp implements ProductService {
                 productSizeEntitySet.add(productSizeEntity);
             });
             productEntity.setProductSizes(productSizeEntitySet);
+            Set<ImageProductEntity> imageProductEntitySet = new HashSet<>();
+            Arrays.stream(multiFile).forEach( item -> {
+                    fileUploadServiceImp.storedFile(item);
+                    ImageProductEntity imageProduct = new ImageProductEntity();
+                    imageProduct.setName(item.getOriginalFilename());
+                    imageProduct.setProduct(productEntity);
+                    imageProductEntitySet.add(imageProduct);
+            });
+            productEntity.setImageProductEntities(imageProductEntitySet);
             productRepository.save(productEntity);
             return true;
         }catch (Exception e) {
@@ -167,22 +192,40 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public boolean updateProduct(ProductRequest product) {
+    public boolean updateProduct(ProductRequest product, MultipartFile file, MultipartFile[] multiFile) {
         ProductEntity productEntity = productRepository.findById(product.getId());
         productEntity.setName(product.getName());
-        productEntity.setMainImage(product.getImage());
+        boolean isUpload = fileUploadServiceImp.storedFile(file);
+        if (isUpload) {
+            productEntity.setMainImage(file.getOriginalFilename());
+        } else {
+            return false;
+        }
         productEntity.setPrice(product.getPrice());
         productEntity.setCategory(categoryRepository.findById(product.getCategory()).orElse(null));
         productEntity.setBrand(brandRepository.findById(product.getBrand()).orElse(null));
-        Set<ProductSizeEntity> productSizeEntitySet = new HashSet<>();
-        product.getSizes().forEach(size -> {
-            ProductSizeEntity productSizeEntity = new ProductSizeEntity();
-            productSizeEntity.setSizeId(size);
-            productSizeEntity.setProductId(productEntity.getId());
-            productSizeEntitySet.add(productSizeEntity);
-        });
-        productEntity.setProductSizes(productSizeEntitySet);
         try {
+            productRepository.save(productEntity);
+            Set<ProductSizeEntity> productSizeEntitySet = new HashSet<>();
+            product.getSizes().forEach(size -> {
+                ProductSizeEntity productSizeEntity = new ProductSizeEntity();
+                productSizeEntity.setSizeId(size);
+                productSizeEntity.setProductId(productEntity.getId());
+                productSizeEntitySet.add(productSizeEntity);
+            });
+            productEntity.setProductSizes(productSizeEntitySet);
+
+
+            Set<ImageProductEntity> imageProductEntitySet = productEntity.getImageProductEntities();
+
+            Arrays.stream(multiFile).forEach( item -> {
+                fileUploadServiceImp.storedFile(item);
+                ImageProductEntity imageProduct = new ImageProductEntity();
+                imageProduct.setName(item.getOriginalFilename());
+                imageProduct.setProduct(productEntity);
+                imageProductEntitySet.add(imageProduct);
+            });
+            productEntity.setImageProductEntities(imageProductEntitySet);
             productRepository.save(productEntity);
             return true;
         }catch (Exception e) {

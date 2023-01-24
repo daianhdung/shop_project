@@ -47,8 +47,8 @@ const privateRoutes = [
 const adminRoutes = [
     { path: config.routes.adminHome, component: HomeAdmin, layout: AdminLayout },
     { path: config.routes.adminProduct, component: ProductAdmin, layout: AdminLayout },
-    { path: config.routes.adminProductInsert, component: InsertProduct },
-    { path: config.routes.adminProductInsert, component: UpdateProduct }
+    { path: config.routes.adminProductInsert, component: InsertProduct, layout: AdminLayout },
+    { path: config.routes.adminProductUpdate, component: UpdateProduct, layout: AdminLayout }
 ]
 
 export { publicRoutes, privateRoutes, adminRoutes , authRoutes}
