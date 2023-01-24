@@ -92,13 +92,21 @@ public class BookmarkServiceImp implements BookmarkService {
         UserEntity user = userRepository.findUserEntityByEmail(email);
         ProductEntity product = productRepository.findById(productId);
         BookmarkProductEntity bookmarkProduct = new BookmarkProductEntity();
-
-
-        return false;
+        bookmarkProduct.setUserId(user.getId());
+        bookmarkProduct.setProductId(product.getId());
+        user.getBookmarkProducts().add(bookmarkProduct);
+        try {
+            userRepository.save(user);
+            return true;
+        }catch(Exception e) {
+            return false;
+        }
     }
-
     @Override
     public boolean deleteBookmark(int productId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        UserEntity user = userRepository.findUserEntityByEmail(email);
+        ProductEntity product = productRepository.findById(productId);
         return false;
     }
 }

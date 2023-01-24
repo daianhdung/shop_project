@@ -18,7 +18,7 @@ public class UserEntity {
     private String phone;
     @Column(name = "address")
     private String address;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<BookmarkProductEntity> bookmarkProducts;
     @OneToMany(mappedBy = "user")
     private Set<OrderEntity> orders;

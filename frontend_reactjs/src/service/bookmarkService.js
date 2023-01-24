@@ -12,6 +12,18 @@ export const getProductBookmark = async(data, token) => {
         console.log(error);
     }
 }
+export const insertBookmark = async(id , token) => {
+    try{
+        const response = await httpRequest.getTokenHeader(`bookmark/insert/${id}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response
+    }catch(error){
+        console.log(error);
+    }
+}
 
 
 

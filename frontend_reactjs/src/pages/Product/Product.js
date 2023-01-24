@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import * as changeService from '~/service/changeService'
 import useFilter from '~/hooks/useFilter';
 import * as productService from '~/service/productService';
+import * as bookmarkService from '~/service/bookmarkService';
 import { getCookie } from '~/utils/utilsCookie';
 import Sort from '~/components/Sort/sort';
 import Paging from '~/components/Paging/Paging';
@@ -58,7 +59,28 @@ function Product() {
             }
         })
     }
-    
+    const handleBookmark = (product) => {
+        
+        const token = getCookie('tokenJwt')
+        
+        if (token == null) {
+            // login page
+            
+        }
+        else if (!product.bookmark) {
+       
+            bookmarkService.insertBookmark(product.id, getCookie('tokenJwt'))
+                .then(response => {
+                    if (response.success) {
+                        console.log(response)
+                        product.bookmark = true
+                        SetProducts(products)                        
+                    }
+                })
+        } else {
+            product.bookmark = false
+        }
+    }
 
     useEffect(() => {
         const token = getCookie('tokenJwt')
@@ -88,7 +110,7 @@ function Product() {
             <div className='row'>
                 <div className='col-md-12'>
                     <Sort sort={sort} handleSort={handleSort} />
-                    {products && products.length !== 0 && <List products={products} />}
+                    {products && products.length !== 0 && <List handleBookmark={handleBookmark} products={products} />}
                     <div className='row d-flex justify-content-center bg-white'>
                         <div className='col-md-2'>
                             { products && products.length !== 0  && <Paging currentPage={page.currentPage} totalPage={page.totalPage} handleNext={handleNext} handlePrev={handlePrev} handleSetCurrentPage={handleSetCurrentPage} />}
