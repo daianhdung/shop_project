@@ -39,8 +39,8 @@ public class BookmarkController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<?> deleteBookmark(@RequestParam(name = "id")int id ) {
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<?> deleteBookmark(@PathVariable(name = "id")int id ) {
         boolean isSuccess = bookmarkService.deleteBookmark(id);
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData("");

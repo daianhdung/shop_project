@@ -72,8 +72,9 @@ function Product() {
             bookmarkService.insertBookmark(product.id, getCookie('tokenJwt'))
                 .then(response => {
                     if (response.success) {
+                        console.log(response)
                         product.bookmark = true
-                        
+                        SetProducts(products)                        
                     }
                 })
         } else {
