@@ -21,13 +21,18 @@ function DefaultLayout({ children }) {
             <Header />
             <div style={{ background: 'rgba(245, 245, 250, 1)' }} >
                 <div className={cx('container')}>
-                    <div className={cx('inner')}>
-                        {(location.pathname == config.routes.product || location.pathname == config.routes.bookmark || location.pathname === '/search/' && location.search) ? <Sidebar1/> : <Sidebar/> }
+                    {(location.pathname == config.routes.product || location.pathname == config.routes.bookmark || location.pathname === '/search/' && location.search) ? <div className={cx('inner')}>
+                        <Sidebar1 />
                         <div className={cx('content')}>
                             {children}
                             <Footer />
                         </div>
-                    </div>
+                    </div> : <div className={cx('inner_non_sideber')}>
+                        <div className={cx('content_non_sideber')}>
+                            {children}
+                            <Footer />
+                        </div>
+                    </div>}
                 </div>
             </div>
         </div>

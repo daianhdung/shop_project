@@ -1,4 +1,4 @@
-.separate{
+.separate {
     margin-bottom: 20px;
     padding: 12px 10px;
     background-color: rgb(255, 255, 255);
@@ -8,15 +8,25 @@
     text-align: center;
 }
 
-.top_branch_slide{
-    width: 1000px;
+.top_branch_slide {
+    width: 1280px;
     height: 450px;
     background-color: #fff;
     padding: 20px;
 }
 
-.wrap_swiper{
+.wrap_swiper {
     display: flex;
     justify-content: center;
 }
 
+.title {
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #5b5b5b;
+    transition: .3s ease;
+    &:hover {
+        color: #2ac37d;
+        transform: scale(1.15);
+    }
+}

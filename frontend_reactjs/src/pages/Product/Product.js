@@ -25,6 +25,11 @@ function Product() {
     const handleSort = (e) => {
         SetSort(e.target.value)
     }
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
     const handleNext = () => {
         if (page.currentPage < page.totalPage) {
             SetPage(prev => {

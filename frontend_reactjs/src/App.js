@@ -9,6 +9,7 @@ import RequireAuthUser from './components/RequiredAuth/RequireAuthUser';
 import RequireNotLogin from './components/RequiredAuth/RequireNotLogin';
 import { FilterProvider } from './context/FilterProvider';
 import { CartProvider } from './context/CartProvider';
+import PageNotFound from './pages/PageNotFound/PageNotFound';
 
 
 
@@ -111,7 +112,7 @@ function App() {
                                         );
                                     })}
                                 </Route>
-
+                                <Route path="*" element={<PageNotFound />} />
                             </Routes>
                         </div>
                     </AuthProvider>

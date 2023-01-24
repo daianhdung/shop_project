@@ -28,29 +28,3 @@ export const searchWardOnCode = async (code, depth = 2) => {
         console.error(err);
     }
 };
-
-// const searchDistrictOnTyping = async () => {
-//     try {
-//         const res = await provinceOpen.getParams(`/district`, {
-//             params: {
-//                 name: debouncedDistrictSearch,
-//             },
-//         });
-//         return res.data
-//     } catch (err) {
-//         console.error(err);
-//     }
-// };
-
-// const searchWardOnTyping = async () => {
-//     try {
-//         const res = await provinceOpen.get(`/ward`, {
-//             params: {
-//                 name: debouncedWardSearch,
-//             },
-//         });
-//         return res.data
-//     } catch (err) {
-//         console.error(err);
-//     }
-// };

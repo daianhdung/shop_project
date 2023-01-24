@@ -4,5 +4,7 @@ import com.example.shop_project.dto.OrderDTO;
 
 public interface OrderService {
 
-    boolean newOrder(OrderDTO orderDTO);
+    String newOrder(OrderDTO orderDTO);
+
+    OrderDTO getOrderByToken(String token);
 }

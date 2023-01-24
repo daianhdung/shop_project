@@ -18,6 +18,7 @@ import Product from "~/pages/Product/Product";
 import Order from "~/pages/Order/Order";
 import InsertProduct from "~/pages/Admin/ProductAdmin/Insert/InsertProduct";
 import UpdateProduct from "~/pages/Admin/ProductAdmin/Update/UpdateProduct";
+import OrderSuccess from "~/pages/Order/OrderSuccess";
 
 
 
@@ -29,7 +30,8 @@ const publicRoutes = [
     { path: config.routes.cart, component: Cart },
     { path: config.routes.product, component: Product },
     { path: config.routes.search, component: SearchProduct },
-    { path: config.routes.order, component: Order , layout: HeaderOnlyLayout}
+    { path: config.routes.order, component: Order , layout: HeaderOnlyLayout},
+    { path: config.routes.orderSuccess, component: OrderSuccess , layout: HeaderOnlyLayout}
 ]
 const authRoutes = [
     { path: config.routes.login, component: Login, layout: AuthenLayout },

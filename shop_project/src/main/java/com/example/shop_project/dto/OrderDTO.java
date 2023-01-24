@@ -22,7 +22,17 @@ public class OrderDTO {
 
     private int statusId;
 
+    private String orderToken;
 
+    public String getOrderToken() {
+        return orderToken;
+    }
+
+    public void setOrderToken(String orderToken) {
+        this.orderToken = orderToken;
+    }
+
+    private List<ProductOrderDTO> productOrderDTOList;
 
     public String getDeliveryAddress() {
         return deliveryAddress;
@@ -95,5 +105,13 @@ public class OrderDTO {
 
     public void setStatusId(int statusId) {
         this.statusId = statusId;
+    }
+
+    public List<ProductOrderDTO> getProductOrderDTOList() {
+        return productOrderDTOList;
+    }
+
+    public void setProductOrderDTOList(List<ProductOrderDTO> productOrderDTOList) {
+        this.productOrderDTOList = productOrderDTOList;
     }
 }

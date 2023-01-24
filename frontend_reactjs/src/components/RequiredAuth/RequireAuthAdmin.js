@@ -8,7 +8,7 @@ const RequireAuthAdmin = () => {
     const location = useLocation()
 
     return (
-        context.auth && context.admin
+        context.authProvider.isLogin && context.authProvider.isAdmin
             ? <Outlet/>
             : <Navigate to="/login" state={{ from: location }} replace />
     )

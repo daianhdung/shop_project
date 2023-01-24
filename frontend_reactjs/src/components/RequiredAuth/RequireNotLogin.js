@@ -1,18 +1,15 @@
 import React from "react";
-import { useLocation, Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "~/hooks/useAuth";
 
 
 const RequireNotLogin = () => {
     const context = useAuth()
-    const location = useLocation()
+    const authProvider = context.authProvider
 
-    // context.auth
-    //     ? <Outlet/>
-    //     : <Navigate to="/login" state={{ from: location }} replace />
-    if (context.auth && !context.admin) {
+    if (authProvider.isLogin && !authProvider.isAdmin) {
         return <Navigate to="/home" replace />
-    } else if(context.auth && context.admin) {
+    } else if(authProvider.isLogin && authProvider.isAdmin) {
         return <Navigate to="/admin-home" replace />
     }else{
         return <Outlet/>

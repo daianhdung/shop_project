@@ -32,11 +32,11 @@ public class SecSecurityConfig {
                 .and()
                 .authorizeRequests()
 
-                .antMatchers(API_LOGIN, API_USER, API_MAIL, API_IMAGE, API_FILE + "/**", API_PRODUCT + "/**",
-                        API_BRAND + "/**", API_CATEGORY + "/**" , API_SIZE + "/**", API_COUNPON + "/**", API_ORDER + "/**").permitAll()
+                .antMatchers(API_LOGIN, API_MAIL, API_IMAGE, API_FILE + "/**", API_PRODUCT + "/**",
+                        API_BRAND + "/**", API_CATEGORY + "/**" , API_SIZE + "/**", API_COUNPON + "/**", API_ORDER + "/**",
+                        API_REFRESH_TOKEN).permitAll()
 
                 .antMatchers(API_ADMIN).hasAuthority("ROLE_ADMIN")
-                .antMatchers(HttpMethod.PUT, API_USER).authenticated()
 
                 .anyRequest().authenticated();
 

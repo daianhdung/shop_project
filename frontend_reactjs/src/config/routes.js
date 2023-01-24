@@ -3,6 +3,7 @@ const routes = {
     profile: '/profile',
     detail : '/detail',
     detailId: '/detail/:id',
+    contact: '/contact',
     login: '/login',
     signup: '/signup',
     forgot: '/forgot',
@@ -13,6 +14,7 @@ const routes = {
     search: '/search/',
     changePassword: '/profile/changePass',
     order: '/order',
+    orderSuccess: '/order/success/:token',
     //Admin route
     adminHome: '/admin-home',
     adminProduct: '/admin-product',

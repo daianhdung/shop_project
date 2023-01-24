@@ -17,7 +17,7 @@ export const CartProvider = ({ children }) => {
 
     var addToCart = (item) => {
         const items = []
-        if(cartProducts === null){
+        if(localStorage.getItem('items') == null){
             items.push(item)
             localStorage.setItem('items', JSON.stringify(items))
             setCartProducts(items)

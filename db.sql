@@ -564,4 +564,4 @@ INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA30%', '30');
 INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA40%', '40');
 INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA50%', '50');
 
-
+ALTER TABLE p_order ADD column order_token varchar(255) after total;

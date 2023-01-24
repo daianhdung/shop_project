@@ -16,6 +16,8 @@ public class OrderEntity {
     private int tempTotal;
     @Column(name = "total")
     private float total;
+    @Column(name = "order_token")
+    private String orderToken;
     @Column(name = "delivery_address")
     private String deliveryAddress;
 
@@ -72,6 +74,14 @@ public class OrderEntity {
 
     public String getDeliveryAddress() {
         return deliveryAddress;
+    }
+
+    public String getOrderToken() {
+        return orderToken;
+    }
+
+    public void setOrderToken(String orderToken) {
+        this.orderToken = orderToken;
     }
 
     public void setDeliveryAddress(String deliveryAddress) {

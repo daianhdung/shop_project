@@ -19,3 +19,12 @@ export const CheckoutOrder = async(userDto, deliveryAddress,
         errorToast(error.response.data.desc)
     }
 }
+
+export const getOrderDetail = async (token) => {
+    try {
+        const res = await httpRequest.get(`order/success/${token}`);
+        return res
+    } catch (err) {
+        console.error(err);
+    }
+};

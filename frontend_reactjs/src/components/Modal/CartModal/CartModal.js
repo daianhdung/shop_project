@@ -30,7 +30,7 @@ function CartModal({ closeModal }) {
                         <span className={cx('modal-close')} onClick={closeModal}>&times;</span>
                     </div>
                     <div className={cx('modal-body')}>
-                        <table border={1}>
+                        <table className='table-bordered'>
                             <thead>
                                 <tr>
                                     <th>SẢN PHẨM</th>

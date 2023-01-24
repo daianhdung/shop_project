@@ -9,8 +9,6 @@ const cx = classNames.bind(styles);
 
 function ProductItem({ data }) {
 
-
-
     return (<Link to={config.routes.detail + '/'+ data.id}>
         <div className={cx('wrapper')}>
             <img src={process.env.REACT_APP_IMG_URL + data.mainImage} className={cx('image')} alt="Product" />

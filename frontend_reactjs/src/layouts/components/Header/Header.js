@@ -23,8 +23,8 @@ const cx = classNames.bind(styles);
 
 function Header(props) {
 
-
     const context = useAuth()
+
 
     const [allCategory, setAllCategory] = useState()
     const [allBrand, setAllBrand] = useState()
@@ -88,7 +88,7 @@ function Header(props) {
                                 render={(attrs) => (
                                     <div className={cx('drop_down_wrap')}>
                                         <div className={cx('drop_down_content')} tabIndex="-1">
-                                            {allBrand && allBrand.map((item) => (<Link onClick={() => filterWithBrand(item.id)} to={config.routes.product} key={item.id} className={cx('block')} >{item.name}</Link>
+                                            {allBrand && allBrand.map((item) => (<Link onClick={() => filterWithBrand(item.id)} to={config.routes.product} key={item.id} className={cx('block', 'border-bottom')} >{item.name}</Link>
                                             ))}
                                         </div>
                                     </div>
@@ -100,25 +100,25 @@ function Header(props) {
                                 render={(attrs) => (
                                     <div className={cx('drop_down_wrap')}>
                                         <div className={cx('drop_down_content')} tabIndex="-1">
-                                            {allCategory && allCategory.map((item) => (<Link onClick={() => filterWithCategory(item.id)} to={config.routes.product} key={item.id} className={cx('block')}>{item.name}</Link>
+                                            {allCategory && allCategory.map((item) => (<Link onClick={() => filterWithCategory(item.id)} to={config.routes.product} key={item.id} className={cx('block', 'border-bottom')}>{item.name}</Link>
                                             ))}
                                         </div>
                                     </div>
                                 )}>
                                 <NavLink to={config.routes.detail} className={cx('nav_link')}>Thể loại <FontAwesomeIcon icon={faAngleDown} /></NavLink>
                             </Tippy>
-                            <NavLink to={config.routes.detail} className={cx('nav_link')}>Liên hệ</NavLink>
+                            <NavLink to={config.routes.contact} className={cx('nav_link')}>Liên hệ</NavLink>
                             <NavLink to="/cart" className={cx('nav_link_logo')}>
                                 <FontAwesomeIcon icon={faCartShopping} />
                                 <span className={cx('logo_number', 'logo_number_orange')}>{localItems ? cartContext.getTotalQuantityCart() : 0}</span>
                             </NavLink>
-                            {context.auth && <NavLink to={config.routes.bookmark} className={cx('nav_link_logo')}><FontAwesomeIcon icon={faHeart} /></NavLink>}
+                            {context.authProvider.isLogin && <NavLink to={config.routes.bookmark} className={cx('nav_link_logo')}><FontAwesomeIcon icon={faHeart} /></NavLink>}
 
                         </nav>
                     </div>
                     <div className={cx('up_last_header')}>
                         <nav className="header-nav">
-                            {context.auth ? (
+                            {context.authProvider.isLogin ? (
                                 <Tippy
                                     interactive
                                     render={(attrs) => (
@@ -130,7 +130,7 @@ function Header(props) {
                                             </div>
                                         </div>
                                     )}>
-                                    <div className={cx('username')}>Hi, {context.username}<FontAwesomeIcon icon={faAngleDown} /></div>
+                                    <div className={cx('username')}>Hi, {context.authProvider.username}<FontAwesomeIcon icon={faAngleDown} /></div>
                                 </Tippy>
                             ) : (
                                 <React.Fragment>

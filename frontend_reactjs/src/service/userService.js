@@ -1,19 +1,20 @@
-import { successToast, errorToast} from '~/components/Popups'
+import { successToast, errorToast } from '~/components/Popups'
 
 
 import * as httpRequest from '~/utils/httpRequest';
+import * as privateRequest from '~/utils/privateRequest';
 import { getCookie } from '~/utils/utilsCookie';
 
-export const getUserInform= async() => {
-    try{
-        const response = await httpRequest.getToken('user', {
+export const getUserInform = async () => {
+    try {
+        const response = await privateRequest.getToken('user', {
             headers: {
                 Authorization: `Bearer ${getCookie('tokenJwt')}`
             }
         })
-        
+
         return response
-    }catch(error){
+    } catch (error) {
         console.log(error);
     }
 }
@@ -21,7 +22,7 @@ export const getUserInform= async() => {
 
 export const updateProfile = async (inform) => {
     try {
-        const response = await httpRequest.putParamToken('user', {
+        const response = await privateRequest.putParamToken('user', {
             fullname: inform.fullname,
             phone: inform.phone,
             address: inform.address
@@ -33,13 +34,13 @@ export const updateProfile = async (inform) => {
         successToast(response.desc)
         return response
     }catch (error) {
-        errorToast(error.response.data)
+        errorToast(error)
 }
 }
 
 export const updatePassword = async (oldPassword, newPassword) => {
     try {
-        const response = await httpRequest.putParamToken('user/change-password', {
+        const response = await privateRequest.putParamToken('user/change-password', {
             password: oldPassword,
             newPassword: newPassword,
         }, {
@@ -47,13 +48,13 @@ export const updatePassword = async (oldPassword, newPassword) => {
                 Authorization: `Bearer ${getCookie('tokenJwt')}`
             }
         })
-        if(response.success){
+        if (response.success) {
             successToast(response.desc)
-        }else{
+        } else {
             errorToast(response.desc)
         }
         return response
-    }catch (error) {
+    } catch (error) {
         errorToast(error.response.data)
-}
+    }
 }
