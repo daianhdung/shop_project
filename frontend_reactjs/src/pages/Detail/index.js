@@ -13,13 +13,14 @@ import config from '~/config';
 import { getDetailProduct } from '~/service/getProductService'
 import { formatNumber } from '~/utils/stringUtils';
 import useCart from "~/hooks/useCart";
+import { getAmountProduct } from "~/service/sizeService";
 const cx = classNames.bind(styles);
 
 
 
 function Detail() {
 
-    
+
 
     const [count, setCount] = useState(1)
     const [modalOpen, setModalOpen] = useState(false);
@@ -29,23 +30,30 @@ function Detail() {
 
     const cartContext = useCart()
     const localItems = cartContext.items
-    
+
+    const [checkedSize, setCheckedSize] = useState({ productId: "", sizeId: "" })
+    const [amount, setAmount] = useState()
+
 
     useEffect(() => {
         const fetchApiDetailProduct = async () => {
             const response = await getDetailProduct(id)
             setDetailProduct(response)
+            setCheckedSize({ ...checkedSize, productId: response.id })
+            console.log(response);
         }
         fetchApiDetailProduct()
     }, [id])
 
     const onReduce = () => {
-        if (count > 0) {
+        if (count > 1) {
             setCount(count - 1)
         }
     }
     const onIncrease = () => {
-        setCount(count + 1)
+        if(count < amount){
+            setCount(count + 1)
+        }
     }
 
 
@@ -55,7 +63,10 @@ function Detail() {
             name: detailProduct.name,
             price: detailProduct.price,
             quantity: count,
-            image: detailProduct.mainImage
+            image: detailProduct.mainImage,
+            sizeId: checkedSize.sizeId,
+            maxOrder: amount,
+            size: checkedSize.size
         }
         cartContext.addToCart(item)
         setModalOpen(true)
@@ -65,6 +76,11 @@ function Detail() {
         const inputValue = e.target.value;
         const newCount = isNaN(inputValue) ? count : Number(inputValue);
         setCount(newCount);
+    }
+
+    const handleInput = (e) => {
+        const inputValue = e.target.value;
+        if(inputValue > amount) e.target.value = amount;
     }
 
     useEffect(() => {
@@ -78,6 +94,21 @@ function Detail() {
             document.removeEventListener("keydown", handleKeyDown);
         };
     }, [modalOpen]);
+
+    useEffect(() => {
+        const fetchApiGetAmountProduct = async () => {
+            const response = await getAmountProduct(checkedSize.productId, checkedSize.sizeId)
+            setAmount(response)
+        }
+        if (checkedSize.sizeId) {
+            fetchApiGetAmountProduct()
+        }
+    }, [checkedSize.sizeId])
+
+    const onChecked = (e) => {
+        setCheckedSize({ ...checkedSize, sizeId: e.target.id, size: e.target.value })
+        setCount(1)
+    }
 
     return <div className={cx('wrapper')}>
         <div className={cx('header-detail')}>
@@ -93,16 +124,19 @@ function Detail() {
             </div>
             <div className={cx('right-detail')}>
                 <div className={cx('description')}>
-                    <h1>{detailProduct.name}</h1>
-                    <div className={cx('span-yellow')}>
+                    <h1 className="fw-bold">{detailProduct.name}</h1>
+                    {amount && amount > 0 && <div className={cx('span-yellow')}>
+                        Số lượng: {amount}
+                    </div>}
+                    {amount && amount == 0 && <div className={cx('span-yellow')}>
                         Hết hàng
-                    </div>
+                    </div>}
                     <div className={cx('description_detail')}>
-                        <h3>Thương hiệu: <span>{detailProduct.brandName}</span></h3>
+                        <h3 className="my-4">Thương hiệu: <span>{detailProduct.brandName}</span></h3>
 
-                        <h3 className={cx('price')}>Giá: <span>{formatNumber(detailProduct.price)} VND</span></h3>
-                        <h3>Loại: <span>Flea & Tick, Food</span></h3>
-                        <h3>Tags: <span>Food Pet, Puppy</span></h3>
+                        <h3 className={cx('price', 'my-4')}>Giá: <span>{formatNumber(detailProduct.price)} VND</span></h3>
+                        <h3 className="my-4">Loại: <span>{detailProduct.categoryName}</span></h3>
+                        {/* <h3 className="my-4">Tags: <span>Food Pet, Puppy</span></h3> */}
                     </div>
                 </div>
                 <div className={cx('product_size')}>
@@ -110,15 +144,17 @@ function Detail() {
                         Size
                     </label>
                     <div>
-                        <div data-value="36.5">
-                            <input id="swatch-0-36-5" type="radio" name="option-0" value="36.5" />
-                            <label htmlFor="swatch-0-36-5">
-                                36.5
-                            </label>
-                        </div>
+                        {detailProduct.listSizeDTO.map((item) => (
+                            <span style={{ display: 'inline-block' }} className="form-check" key={item.id}>
+                                <input onChange={onChecked} id={item.id} type="radio" name="form-check-input" value={item.name} />
+                                <label className="form-check-label" htmlFor={item.id}>
+                                    {item.name}
+                                </label>
+                            </span>
+                        ))}
                     </div>
                 </div>
-                <div className={cx('product_action')}>
+                {amount && amount > 0 ? <div className={cx('product_action')}>
                     <div className={cx('quantity_setup')}>
                         <label>
                             Số lượng
@@ -126,7 +162,7 @@ function Detail() {
                         <button onClick={onReduce} className={cx('btn-reduce', 'btn')} type="button">
                             -
                         </button>
-                        <input value={count} type="text" title="Số lượng" maxLength="3" id="qty" name="quantity" onChange={handleChange} />
+                        <input value={count} type="text" title="Số lượng" maxLength="3" id="qty" name="quantity"  onInput={handleInput} onChange={handleChange} />
                         <button onClick={onIncrease} className={cx('btn-increase', 'btn')} type="button">+</button>
                     </div>
                     <div className={cx('button_action')}>
@@ -134,7 +170,7 @@ function Detail() {
                             <span><FontAwesomeIcon icon={faShoppingBag} /> MUA NGAY</span>
                         </button>
                     </div>
-                </div>
+                </div> : <h1 className="text-danger fw-bold">Vui lòng chọn size</h1>}
             </div>
         </div>}
         {modalOpen && <CartModal closeModal={() => setModalOpen(false)} />}
@@ -142,3 +178,6 @@ function Detail() {
 }
 
 export default Detail;
+
+
+

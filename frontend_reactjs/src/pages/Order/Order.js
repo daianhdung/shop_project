@@ -316,7 +316,7 @@ function Order() {
                                 </td>
                                 <td>
                                     <h4>{item.name}</h4>
-                                    <span>41.5</span>
+                                    <span>Size: {item.size}</span>
                                 </td>
                                 <td>
                                     <span>{formatNumber(item.price * item.quantity)}₫</span>

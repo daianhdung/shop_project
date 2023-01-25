@@ -76,7 +76,7 @@ function Login() {
                 const tokenDecoded = JSON.parse(myDecodedToken.sub)
                 if (result.success) {
                     console.log(result);
-                    saveCookie('tokenJwt', result.data.token, 5)
+                    saveCookie('tokenJwt', result.data.token, expiredToken)
                     saveCookie('tokenJwtRefresh', result.data.freshToken, expiredRefreshToken)
                     contextAuth.authProvider.username = tokenDecoded.username
                     contextAuth.authProvider.isLogin = true

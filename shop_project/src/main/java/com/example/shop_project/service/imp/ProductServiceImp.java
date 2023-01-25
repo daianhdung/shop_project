@@ -3,14 +3,12 @@ package com.example.shop_project.service.imp;
 
 import com.example.shop_project.dto.ProductDTO;
 import com.example.shop_project.dto.ProductDetailDTO;
+import com.example.shop_project.dto.SizeDTO;
 import com.example.shop_project.entity.*;
 import com.example.shop_project.model.ProductModel;
 import com.example.shop_project.payload.request.FilterProductRequest;
 import com.example.shop_project.payload.request.ProductRequest;
-import com.example.shop_project.repository.BrandRepository;
-import com.example.shop_project.repository.CategoryRepository;
-import com.example.shop_project.repository.ImageRepository;
-import com.example.shop_project.repository.ProductRepository;
+import com.example.shop_project.repository.*;
 import com.example.shop_project.service.ProductService;
 import com.example.shop_project.utils.StringUtil;
 import com.example.shop_project.utils.Url;
@@ -37,6 +35,8 @@ public class ProductServiceImp implements ProductService {
     FileUploadServiceImp fileUploadServiceImp;
     @Autowired
     ImageRepository imageRepository;
+    @Autowired
+    SizeRepository sizeRepository;
 
     @Autowired
     StringUtil stringUtil;
@@ -282,6 +282,10 @@ public class ProductServiceImp implements ProductService {
         productDTO.setId(productEntity.getId());
         productDTO.setPrice(productEntity.getPrice());
         productDTO.setMainImage(productEntity.getMainImage());
+        Optional<CategoryEntity> cate = categoryRepository.findById(productEntity.getCategory().getId());
+        if(cate.isPresent()){
+            productDTO.setCategoryName(cate.get().getName());
+        }
         Optional<BrandEntity> brand = brandRepository.findById(productEntity.getBrand().getId());
         if(brand.isPresent()){
             productDTO.setBrandName(brand.get().getName());
@@ -293,6 +297,15 @@ public class ProductServiceImp implements ProductService {
             images.add(data.getName());
         }
         productDTO.setImages(images);
+
+        List<SizeDTO> sizeDTOList = new ArrayList<>();
+        sizeRepository.findSizeEntitiesByProductID(productEntity.getId()).forEach(sizeEntity -> {
+            SizeDTO sizeDTO = new SizeDTO();
+            sizeDTO.setId(sizeEntity.getId());
+            sizeDTO.setName(sizeEntity.getName());
+            sizeDTOList.add(sizeDTO);
+        });
+        productDTO.setListSizeDTO(sizeDTOList);
 
         return productDTO;
     }

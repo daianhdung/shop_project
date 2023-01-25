@@ -7,6 +7,8 @@ import com.example.shop_project.entity.*;
 import com.example.shop_project.jwt.JwtTokenHelper;
 import com.example.shop_project.repository.*;
 import com.example.shop_project.service.OrderService;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.Encoders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,8 @@ public class OrderServiceImp implements OrderService {
     RoleRepository roleRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    SizeRepository sizeRepository;
 
     @Override
     public String newOrder(OrderDTO orderDTO) {
@@ -44,7 +48,7 @@ public class OrderServiceImp implements OrderService {
           order.setTempTotal(orderDTO.getTempTotal());
           order.setDeliveryAddress(orderDTO.getDeliveryAddress());
           order.setTotal(orderDTO.getTotal());
-          String token = passwordEncoder.encode(orderDTO.getUserDTO().getEmail());
+          String token = Encoders.BASE64.encode(orderDTO.getUserDTO().getEmail().getBytes());
           order.setOrderToken(token);
 
           //If email order not found in DB so the customer not logged in, set new user anonymous in db
@@ -76,7 +80,7 @@ public class OrderServiceImp implements OrderService {
               productOrderEntity.setProductId(productEntityOrder.getId());
               productOrderEntity.setAmount(productDTO.getQuantity());
               productOrderEntity.setPrice(productDTO.getQuantity() * productEntityOrder.getPrice());
-              productOrderEntity.setSize("40");
+              productOrderEntity.setSize(String.valueOf(productDTO.getSize()));
               productOrderRepository.save(productOrderEntity);
           });
           return token;

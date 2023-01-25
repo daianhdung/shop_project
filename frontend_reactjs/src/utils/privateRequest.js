@@ -47,7 +47,7 @@ privateRequest.interceptors.response.use(
                 const expiredToken = myDecodedToken.exp - myDecodedToken.iat
                 const expiredRefreshToken = myDecodedRefreshToken.exp - myDecodedRefreshToken.iat
                 console.log(response);
-                saveCookie("tokenJwt", response.data.token, 5)
+                saveCookie("tokenJwt", response.data.token, expiredToken)
                 saveCookie("tokenJwtRefresh", response.data.freshToken, expiredRefreshToken)
                 privateRequest.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
                 error.config.headers.Authorization = `Bearer ${response.data.token}`;

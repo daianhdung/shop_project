@@ -48,8 +48,8 @@ function CartModal({ closeModal }) {
                                                     <img width={140} height={140} src={process.env.REACT_APP_IMG_URL + item.image} />
                                                     <div className={cx('descrip-product')}>
                                                         <p>{item.name}</p>
-                                                        <span>- 38.5</span>
-                                                        <div onClick={() => cart.onDelete(item.id)} className={cx('modal-close')}>&times; Xóa sản phẩm</div>
+                                                        <span>Size: {item.size}</span>
+                                                        <div onClick={() => cart.onDelete(item.id)} className={cx('modal-close', 'text-danger')}>&times; Xóa sản phẩm</div>
                                                     </div>
                                                 </div>
                                             </td>

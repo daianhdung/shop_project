@@ -7,6 +7,7 @@
 
 .header-detail {
     padding: 10px 0;
+    font-size: 2rem;
 
     .link-header {
         color: var(--disabled-color);
@@ -21,20 +22,18 @@
     display: flex;
     justify-content: space-between;
     padding: 20px 10px;
-    margin: 20px 0;
+    margin-bottom: 20px;
 
 
     .left-detail {
         border-radius: 5px;
-        width: 500px;
-        background-color: rgb(233, 233, 233);
-        height: 60%;
+        width: 600px;
+        background-color: rgb(125, 201, 201);
     }
 
     .right-detail {
         border-radius: 5px;
-        width: 500px;
-        height: 100%;
+        width: 600px;
     }
 }
 
@@ -66,9 +65,10 @@
 }
 
 .product_size {
+    max-width: 500px;
     margin: 15px 0;
     display: flex;
-    justify-content: space-between;
+    
     label{
         font-size: 2rem;
     }

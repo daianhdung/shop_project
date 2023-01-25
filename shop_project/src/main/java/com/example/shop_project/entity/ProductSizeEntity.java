@@ -11,6 +11,8 @@ public class ProductSizeEntity {
     private int productId;
     @Id
     private int sizeId;
+
+    private int amount;
     @ManyToOne
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private ProductEntity product;
@@ -50,4 +52,11 @@ public class ProductSizeEntity {
         this.size = size;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 }

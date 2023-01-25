@@ -83,7 +83,7 @@ function OrderSuccess() {
                                     </td>
                                     <td style={{ maxWidth: '250px', padding: '10px' }} className="ps-2">
                                         <h4>{item.name}</h4>
-                                        <span>41.5</span>
+                                        <span>Size: {item.size}</span>
                                     </td>
                                     <td className="p-5">
                                         <span>{formatNumber(item.price)}₫</span>
