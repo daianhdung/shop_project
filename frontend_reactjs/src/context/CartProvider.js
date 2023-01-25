@@ -1,16 +1,8 @@
+import { errorToast } from "~/components/Popups";
+
 const { createContext, useState } = require("react");
 
-const CartContext = createContext({
-    items: [],
-    addToCart: () => { },
-    onIncrease: () => { },
-    onReduce: () => { },
-    onDelete: () => { },
-    handleChange: () => { },
-    getTotalCart: () => { },
-    getTotalQuantityCart: () => { },
-    deleteAllFromCart: () => { }
-})
+const CartContext = createContext()
 
 export const CartProvider = ({ children }) => {
     const [cartProducts, setCartProducts] = useState(JSON.parse(localStorage.getItem('items')));
@@ -25,8 +17,11 @@ export const CartProvider = ({ children }) => {
             const localItems = cartProducts
             localItems.map((itemLocal) => {
                 if (item.id == itemLocal.id) {
-                    item.quantity = itemLocal.quantity + item.quantity
-                    
+                    if(item.maxOrder - (item.quantity + itemLocal.quantity) > 0){
+                        item.quantity = item.quantity + itemLocal.quantity
+                    }else if(item.maxOrder - (item.quantity + itemLocal.quantity) == 0){
+                        item.quantity = item.maxOrder
+                    }
                 } else {
                     items.push(itemLocal)
                 }
@@ -39,7 +34,7 @@ export const CartProvider = ({ children }) => {
 
     var onReduce = (id) => {
         const updatedItemList = cartProducts.map((item) => {
-            if (item.id === id && item.quantity > 0) {
+            if (item.id === id && item.quantity > 1) {
                 item.quantity--;
             }
             return item;
@@ -51,7 +46,11 @@ export const CartProvider = ({ children }) => {
     var onIncrease = (id) => {
         const updatedItemList = cartProducts.map((item) => {
             if (item.id == id) {
-                item.quantity++
+                if(item.quantity < item.maxOrder){
+                    item.quantity++
+                }else{
+                    errorToast("Vượt giới hạn order")
+                }
             }
             return item
         })

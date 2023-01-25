@@ -51,7 +51,7 @@ function Cart() {
                                         <div className={cx('wrap_td')}>
                                             <div className={cx('descrip-product')}>
                                                 <p>{item.name}</p>
-                                                <span>Size - 38.5</span>
+                                                <span>Size - {item.size}</span>
                                             </div>
                                         </div>
                                     </td>

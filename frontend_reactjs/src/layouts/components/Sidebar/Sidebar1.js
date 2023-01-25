@@ -12,58 +12,12 @@ import useFilter from '~/hooks/useFilter';
 const cx = classNames.bind(styles);
 
 function Sidebar1() {
+    const filterContext = useFilter()
     const [allCategory, setAllCategory] = useState()
     const [allBrand, setAllBrand] = useState()
     const [allSize, setAllSize] = useState()
+    
 
-    const [checkSize, setCheckSize] = useState([])
-    const [checkCategory, setCheckCategory] = useState([])
-    const [checkBrand, setCheckBrand] = useState([])
-    const [filter, setFilter] = useState({})
-
-    const filterContext = useFilter()
-
-    const handleCheckSize = (id) => {
-        setCheckSize(prev => {
-            const isChecked = checkSize.includes(id)
-            if (isChecked) {
-                return checkSize.filter(item => item !== id)
-            } else {
-                return [...prev, id]
-            }
-        })
-    }
-    const handleCheckCategory = (id) => {
-        setCheckCategory(prev => {
-            const isChecked = checkCategory.includes(id)
-            if (isChecked) {
-                return checkCategory.filter(item => item !== id)
-            } else {
-                return [...prev, id]
-            }
-        })
-    }
-    const handleCheckBrand = (id) => {
-        setCheckBrand(prev => {
-            const isChecked = checkBrand.includes(id)
-            if (isChecked) {
-                return checkBrand.filter(item => item !== id)
-            } else {
-                return [...prev, id]
-            }
-        })
-    }
-    useEffect( () => {
-        setFilter( {
-            ...filter,
-            brandId:checkBrand,
-            sizeId:checkSize,
-            categoryId:checkCategory
-        })
-    }, [checkBrand, checkSize, checkCategory])
-    useEffect( () => {
-        filterContext.handleFilter(filter)
-    }, [filter])
     useEffect(() => {
         const fetchApiGetAllBrand = async () => {
             const response = await getAllBrandName()
@@ -82,7 +36,6 @@ function Sidebar1() {
         fetchApiGetAllSize()
     }, [])
 
-    const location = useLocation()
 
     return (<div className={cx('wrapper')}>
 
@@ -92,8 +45,8 @@ function Sidebar1() {
                     {allSize && allSize.map(item => (
                     <div key={item.id}>
                         <input type="checkbox" id={`${item.id}-size`}
-                            checked={checkSize.includes(item.id)}
-                            onChange={() => handleCheckSize(item.id)}
+                            checked={filterContext.filter.sizeId.includes(item.id)}
+                            onChange={() => filterContext.handleCheckSize(item.id)}
                             className='btn-check'
                             
                         />
@@ -109,8 +62,8 @@ function Sidebar1() {
                     {allCategory && allCategory.map(item => (
                         <div key={item.id}>
                             <input type="checkbox" id={`${item.id}-brand`}
-                                checked={checkCategory.includes(item.id)}
-                                onChange={() => handleCheckCategory(item.id)}
+                                checked={filterContext.filter.categoryId.includes(item.id)}
+                                onChange={() => filterContext.handleCheckCategory(item.id)}
                                 className='btn-check'
                                 
                             />
@@ -127,8 +80,8 @@ function Sidebar1() {
                     {allBrand && allBrand.map(item => (
                         <div key={item.id}>
                             <input type="checkbox" id={`${item.id}-category`}
-                                checked={checkBrand.includes(item.id)}
-                                onChange={() => handleCheckBrand(item.id)}
+                                checked={filterContext.filter.brandId.includes(item.id)}
+                                onChange={() => filterContext.handleCheckBrand(item.id)}
                                 className='btn-check'
                             />
                             <label className="btn btn-light fs-4 my-2 mx-2" htmlFor={`${item.id}-category`} >{item.name}</label>

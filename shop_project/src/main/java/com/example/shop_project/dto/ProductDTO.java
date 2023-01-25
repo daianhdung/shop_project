@@ -12,12 +12,31 @@ public class ProductDTO {
     private int price;
     private String mainImage;
     private String brandName;
+    private String categoryName;
     private List<String> images;
 
+    private List<SizeDTO> listSizeDTO;
+    private int size;
     private int quantity;
     private int totalPage;
     private int currentPage;
     private List<ProductModel> products;
+
+    public List<SizeDTO> getListSizeDTO() {
+        return listSizeDTO;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void setListSizeDTO(List<SizeDTO> listSizeDTO) {
+        this.listSizeDTO = listSizeDTO;
+    }
 
     public int getTotalPage() {
         return totalPage;
@@ -53,6 +72,14 @@ public class ProductDTO {
 
     public String getBrandName() {
         return brandName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public void setBrandName(String brandName) {

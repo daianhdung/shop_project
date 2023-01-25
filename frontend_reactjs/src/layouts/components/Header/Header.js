@@ -55,14 +55,6 @@ function Header(props) {
     }, [])
 
 
-    const filterWithCategory = (idCate) => {
-        filterContext.handleFilter({categoryId : [idCate], brandId : []})
-    }
-    const filterWithBrand = (idBrand) => {
-        filterContext.handleFilter({brandId : [idBrand], categoryId : []})
-    }
-
-
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -88,7 +80,7 @@ function Header(props) {
                                 render={(attrs) => (
                                     <div className={cx('drop_down_wrap')}>
                                         <div className={cx('drop_down_content')} tabIndex="-1">
-                                            {allBrand && allBrand.map((item) => (<Link onClick={() => filterWithBrand(item.id)} to={config.routes.product} key={item.id} className={cx('block', 'border-bottom')} >{item.name}</Link>
+                                            {allBrand && allBrand.map((item) => (<Link onClick={() => filterContext.handleClickBrand(item.id)} to={config.routes.product} key={item.id} className={cx('block', 'border-bottom')} >{item.name}</Link>
                                             ))}
                                         </div>
                                     </div>
@@ -100,7 +92,7 @@ function Header(props) {
                                 render={(attrs) => (
                                     <div className={cx('drop_down_wrap')}>
                                         <div className={cx('drop_down_content')} tabIndex="-1">
-                                            {allCategory && allCategory.map((item) => (<Link onClick={() => filterWithCategory(item.id)} to={config.routes.product} key={item.id} className={cx('block', 'border-bottom')}>{item.name}</Link>
+                                            {allCategory && allCategory.map((item) => (<Link onClick={() => filterContext.handleClickCate(item.id)} to={config.routes.product} key={item.id} className={cx('block', 'border-bottom')}>{item.name}</Link>
                                             ))}
                                         </div>
                                     </div>

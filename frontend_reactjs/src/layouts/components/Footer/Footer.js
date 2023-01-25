@@ -37,13 +37,6 @@ function Footer() {
 
     }, [])
 
-    const filterWithCategory = (idCate) => {
-        filterContext.handleFilter({ categoryId: [idCate], brandId: [] })
-    }
-    const filterWithBrand = (idBrand) => {
-        filterContext.handleFilter({ brandId: [idBrand], categoryId: [] })
-    }
-
 
     return (<footer>
         <div className={cx('wrapper')}>
@@ -77,14 +70,14 @@ function Footer() {
                     </div>
                     <div className={cx('footer_block_short')}>
                         <h2 className='fw-bold'>THƯƠNG HIỆU</h2>
-                        {allBrand && allBrand.map((item) => (<Link className='my-3 fs-3 ' onClick={() => filterWithBrand(item.id)} to={config.routes.product} key={item.id}>
+                        {allBrand && allBrand.map((item) => (<Link className='my-3 fs-3 ' onClick={() => filterContext.handleClickBrand(item.id)} to={config.routes.product} key={item.id}>
                             <span>{item.name}</span>
                         </Link>
                         ))}
                     </div>
                     <div className={cx('footer_block_short')}>
                         <h2 className='fw-bold'>THỂ LOẠI</h2>
-                        {allCategory && allCategory.map((item) => (<Link className='my-3 fs-3 ' onClick={() => filterWithBrand(item.id)} to={config.routes.product} key={item.id}>
+                        {allCategory && allCategory.map((item) => (<Link className='my-3 fs-3 ' onClick={() => filterContext.handleClickCate(item.id)} to={config.routes.product} key={item.id}>
                             <span>{item.name}</span>
                         </Link>
                         ))}

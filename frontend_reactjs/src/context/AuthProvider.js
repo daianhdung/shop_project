@@ -14,7 +14,6 @@ export const AuthProvider = ({ children }) => {
     //decode token get inform user
     useEffect(() => {
         if (getCookie('tokenJwt')) {
-            console.log(5);
             const token = getCookie('tokenJwt')
             const myDecodedToken = decodeToken(token);
             const decodeInform = JSON.parse(myDecodedToken.sub);
@@ -34,7 +33,7 @@ export const AuthProvider = ({ children }) => {
                         const myDecodedRefreshToken = decodeToken(response.data.freshToken);
                         const expiredToken = myDecodedToken.exp - myDecodedToken.iat
                         const expiredRefreshToken = myDecodedRefreshToken.exp - myDecodedRefreshToken.iat
-                        saveCookie("tokenJwt", response.data.token, 5)
+                        saveCookie("tokenJwt", response.data.token, expiredToken)
                         saveCookie("tokenJwtRefresh", response.data.freshToken, expiredRefreshToken)
                         const tokenDecoded = JSON.parse(myDecodedToken.sub);
                         if (tokenDecoded.role === 'ROLE_ADMIN') {
