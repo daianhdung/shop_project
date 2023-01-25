@@ -8,6 +8,7 @@ import styles from './Item.module.scss';
 const cx = classNames.bind(styles);
 
 function Item({product, handleBookmark}) {
+    console.log(product);
     return (
         <div className={cx('card')}>
             <Link key={product.id} to={config.routes.detail + '/' + product.id}>

@@ -6,7 +6,7 @@ import useAuth from "~/hooks/useAuth";
 const RequireAuthUser = () => {
     const context = useAuth()
     const location = useLocation()
-
+    
     return (
         context.authProvider.isLogin
             ? <Outlet/>
