@@ -104,7 +104,7 @@ function Header(props) {
                                 <FontAwesomeIcon icon={faCartShopping} />
                                 <span className={cx('logo_number', 'logo_number_orange')}>{localItems ? cartContext.getTotalQuantityCart() : 0}</span>
                             </NavLink>
-                            {context.authProvider.isLogin && <NavLink to={config.routes.bookmark} className={cx('nav_link_logo')}><FontAwesomeIcon icon={faHeart} /></NavLink>}
+                            <NavLink to={config.routes.bookmark} className={cx('nav_link_logo')}><FontAwesomeIcon icon={faHeart} /></NavLink>
 
                         </nav>
                     </div>

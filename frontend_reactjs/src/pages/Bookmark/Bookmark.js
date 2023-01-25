@@ -15,7 +15,7 @@ import Paging from '~/components/Paging/Paging';
 
 
 function Bookmark() {
-  
+
     const filterContext = useFilter()
     const [page, SetPage] = useState({
         currentPage: 1
@@ -29,7 +29,7 @@ function Bookmark() {
     const handleNext = () => {
         if (page.currentPage < page.totalPage) {
             SetPage(prev => {
-                return { 
+                return {
                     ...prev,
                     currentPage: prev.currentPage + 1
                 }
@@ -39,7 +39,7 @@ function Bookmark() {
     const handlePrev = () => {
         if (page.currentPage > 1) {
             SetPage(prev => {
-                return { 
+                return {
                     ...prev,
                     currentPage: prev.currentPage - 1
                 }
@@ -48,14 +48,14 @@ function Bookmark() {
     }
     const handleSetCurrentPage = (num) => {
         SetPage(prev => {
-            return { 
+            return {
                 ...prev,
                 currentPage: num
             }
         })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         const token = getCookie('tokenJwt')
         var custtom = {
             current: page.currentPage,
@@ -74,26 +74,24 @@ function Bookmark() {
                 })
             })
     }, [filterContext, sort, page.currentPage])
- 
+
 
 
 
     return (
         <div id='wrapper'>
-            <div>
-                <Sort sort={sort} handleSort={handleSort} />
-            </div>
             <div className='row'>
-                <div>
-                    {products && <List products={products}/>}
+                <div className='col-md-12'>
+                    <Sort sort={sort} handleSort={handleSort} />
+                    {products && products.length > 0 && <List products={products} />}
+                    {products && products.length === 0 && <div className='justify-content-center bg-white p-5 rounded'><h2>Không có sản phẩm trong danh sách yêu thích</h2></div>}
+                    <div className='row d-flex justify-content-center bg-white'>
+                        <div className='col-md-2'>
+                            {products && products.length !== 0 && <Paging currentPage={page.currentPage} totalPage={page.totalPage} handleNext={handleNext} handlePrev={handlePrev} handleSetCurrentPage={handleSetCurrentPage} />}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className='row d-flex justify-content-center'>
-                <div>
-                    {products && <Paging currentPage={page.currentPage} totalPage={page.totalPage} handleNext={handleNext} handlePrev={handlePrev} handleSetCurrentPage={handleSetCurrentPage} />}
-                </div>
-            </div>
-
         </div>
     )
 }

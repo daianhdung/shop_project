@@ -8,13 +8,11 @@ function Profile() {
     //Inform change
     const location = useLocation()
     const [user, setUser] = useState({})
-    console.log(user);
 
     useEffect(() => {
         const fetchApiGetUserInform = async () => {
             const response = await getUserInform()
             setUser(response.data)
-            console.log(response);
         }
         fetchApiGetUserInform()
     }, [])
@@ -22,7 +20,6 @@ function Profile() {
     const submit = () => {
         const fetchApiUpdateUser = async () => {
             const response = await updateProfile(user)
-            console.log(response);
         }
         fetchApiUpdateUser()
     }
@@ -33,8 +30,6 @@ function Profile() {
     const [repeatPassword, setRepeatPassword] = useState({newPassword: "" , reNewPassword: ''})
     const [equal, setEqual] = useState(true);
     const reDebounceValue = useDebounce(repeatPassword.reNewPassword, 300)
-
-    console.log(oldPassword);
 
     useEffect(() => {
         if(repeatPassword.newPassword === repeatPassword.reNewPassword){
@@ -49,7 +44,6 @@ function Profile() {
         if(equal){
             const fetchApiUpdatePassword = async () => {
                 const response = await updatePassword(oldPassword, repeatPassword.newPassword)
-                console.log(response);
             }
             fetchApiUpdatePassword()
         }

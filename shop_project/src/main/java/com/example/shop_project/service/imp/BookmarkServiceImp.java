@@ -71,7 +71,7 @@ public class BookmarkServiceImp implements BookmarkService {
             ProductModel productModel = new ProductModel();
             productModel.setId(product.getId());
             productModel.setName(product.getName());
-            productModel.setImage(Url.Image.getPath() + product.getMainImage());
+            productModel.setImage(product.getMainImage());
             productModel.setPrice(product.getPrice());
             boolean isBookMark = product.getBookmarkProducts()
                     .stream()
