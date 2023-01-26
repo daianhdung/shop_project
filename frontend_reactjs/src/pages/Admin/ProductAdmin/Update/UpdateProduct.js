@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import FormProduct from "~/components/FormProduct/FormProduct"
 import { getCookie } from "~/utils/utilsCookie"
-import * as updateProductService from "~/service/adminProductService"
+import * as updateProductService from "~/service/admin/adminProductService"
 import config from "~/config"
 import { useNavigate } from "react-router-dom"
 
@@ -15,7 +15,7 @@ function UpdateProduct() {
     const navigate = useNavigate();
 
 
-    const handleUpdate = (id,name, price, brand, category, checkSize, mainImage, images) => {
+    const handleUpdate = (id, name, price, brand, category, checkSize, mainImage, images) => {
 
         const token = getCookie('tokenJwt')
         const formData = new FormData();
@@ -34,10 +34,10 @@ function UpdateProduct() {
         for (let i = 0; i < images.length; i++) {
             formData.append('images', images[i])
         }
-    
+
         updateProductService.updateProduct(token, formData)
             .then(response => {
-                if (response.success) {    
+                if (response.success) {
                     navigate(config.routes.adminProduct)
                 }
             })
@@ -52,7 +52,7 @@ function UpdateProduct() {
         updateProductService.getllSize(token)
             .then(response => SetSize(response))
         updateProductService.getAllCategory(token)
-            .then(response => SetCategory(response))    
+            .then(response => SetCategory(response))
         updateProductService.getProduct(token, id)
             .then(response => SetProduct(response.success ? response.data : null))
     }, [])
@@ -62,12 +62,12 @@ function UpdateProduct() {
     return (
         <div>
             {
-                product?
-                <FormProduct product={product} brands={brands} categories={categories} sizes={sizes} handleUpdate={handleUpdate}/>
-                :
-                <div>Không tìm thấy sản phẩm để cập nhật </div>
+                product ?
+                    <FormProduct product={product} brands={brands} categories={categories} sizes={sizes} handleUpdate={handleUpdate} />
+                    :
+                    <div>Không tìm thấy sản phẩm để cập nhật </div>
             }
-            
+
         </div>
     )
 }

@@ -1,7 +1,9 @@
 package com.example.shop_project.dto;
 
-public class UserDTO {
+import com.example.shop_project.entity.RoleEntity;
 
+public class UserDTO {
+    private int id;
     private String email;
     private String fullname;
 
@@ -13,12 +15,40 @@ public class UserDTO {
 
     private String newPassword;
 
+    private String roleName;
+
+    private RoleEntity role;
+
+    public RoleEntity getRole() {
+        return role;
+    }
+
+    public void setRole(RoleEntity role) {
+        this.role = role;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFullname() {
