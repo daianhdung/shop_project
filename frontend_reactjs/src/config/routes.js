@@ -19,7 +19,11 @@ const routes = {
     adminHome: '/admin-home',
     adminProduct: '/admin-product',
     adminProductInsert: '/admin-product-insert',
-    adminProductUpdate: '/admin-product-update'
+    adminProductUpdate: '/admin-product-update',
+    //Admin User
+    adminUser: '/admin-user',
+    adminUserInsert: '/admin-user-insert',
+    adminUserUpdate: '/admin-user-update'
 
 };
 
