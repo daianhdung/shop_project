@@ -4,10 +4,7 @@ import com.example.shop_project.dto.*;
 import com.example.shop_project.payload.request.CateSizeRequest;
 import com.example.shop_project.payload.request.ProductRequest;
 import com.example.shop_project.payload.response.DataResponse;
-import com.example.shop_project.service.BrandService;
-import com.example.shop_project.service.CategoryService;
-import com.example.shop_project.service.ProductService;
-import com.example.shop_project.service.SizeService;
+import com.example.shop_project.service.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -31,6 +28,8 @@ public class AdminController {
     SizeService sizeService;
     @Autowired
     BrandService brandService;
+    @Autowired
+    OrderService orderService;
 
 
     @GetMapping("/product/get/{id}")
@@ -211,4 +210,34 @@ public class AdminController {
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/order/get/{id}")
+    public ResponseEntity<?> getOrder(@PathVariable(name = "id") int id) {
+        DataResponse dataResponse = new DataResponse();
+        OrderDTO orderDTO = orderService.getOrder(id);
+        dataResponse.setDesc("get order");
+        dataResponse.setStatus(HttpStatus.OK.value());
+        dataResponse.setSuccess(orderDTO != null);
+        dataResponse.setData(orderDTO);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+    @GetMapping("/order/all")
+    public ResponseEntity<?> getAllOrder() {
+        DataResponse dataResponse = new DataResponse();
+        List<OrderDTO> orderDTOS = orderService.getAllOrder();
+        dataResponse.setDesc("getAllOrder");
+        dataResponse.setStatus(HttpStatus.OK.value());
+        dataResponse.setSuccess(true);
+        dataResponse.setData(orderDTOS);
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+    @PostMapping("/order/updatestatus")
+    public ResponseEntity<?> updateStatusOrder(@RequestParam(name = "id") int id, @RequestParam(name = "status") int status) {
+        DataResponse dataResponse = new DataResponse();
+        boolean isSuccess = orderService.updateStatusOrder(id, status);
+        dataResponse.setDesc("updateStatusOrder");
+        dataResponse.setStatus(HttpStatus.OK.value());
+        dataResponse.setSuccess(isSuccess);
+        dataResponse.setData("");
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
 }
