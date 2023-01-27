@@ -1,4 +1,4 @@
-package com.example.shop_project.controller;
+package com.example.shop_project.controller.Admin;
 
 import com.example.shop_project.dto.*;
 import com.example.shop_project.payload.request.CateSizeRequest;
@@ -7,10 +7,8 @@ import com.example.shop_project.payload.response.DataResponse;
 import com.example.shop_project.service.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin
-public class AdminController {
+public class AdminProductController {
     @Autowired
     ProductService productService;
     @Autowired

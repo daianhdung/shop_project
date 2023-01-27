@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -136,6 +138,40 @@ public class UserServiceImp implements UserService {
         }catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public List<UserDTO> getAllUser() {
+        List<UserDTO> userDTOList = new ArrayList<>();
+        List<UserEntity> getAllUser = userRepository.findAll();
+        getAllUser.forEach(userEntity -> {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(userEntity.getId());
+            userDTO.setEmail(userEntity.getEmail());
+            userDTO.setPhone(userEntity.getPhone());
+            userDTO.setAddress(userEntity.getAddress());
+            userDTO.setFullname(userEntity.getFullName());
+            userDTO.setRoleName(userEntity.getRole().getName());
+            userDTOList.add(userDTO);
+        });
+        return userDTOList;
+    }
+
+    @Override
+    public UserDTO getUserById(int id) {
+        Optional<UserEntity> user = userRepository.findById(id);
+        if(user.isPresent()){
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.get().getId());
+            userDTO.setEmail(user.get().getEmail());
+            userDTO.setPhone(user.get().getPhone());
+            userDTO.setAddress(user.get().getAddress());
+            userDTO.setFullname(user.get().getFullName());
+            userDTO.setRoleName(user.get().getRole().getName());
+            return userDTO;
+        }
+
+        return null;
     }
 
 
