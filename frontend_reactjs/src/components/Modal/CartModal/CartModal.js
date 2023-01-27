@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 
 import styles from './CartModal.module.scss';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { faLongArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatNumber } from '~/utils/stringUtils';
@@ -25,7 +25,7 @@ function CartModal({ closeModal }) {
                         <img src='//bizweb.dktcdn.net/100/347/064/themes/717243/assets/add_to_cart.svg?1671644724927' />
                         <div>
                             <h3>Bạn đã thêm sản phẩm ... vào giỏ hàng</h3>
-                            <h4>Giỏ hàng của bạn ({localItems.length} sản phẩm )</h4>
+                            <h4>Giỏ hàng của bạn ({localItems && localItems.length} sản phẩm )</h4>
                         </div>
                         <span className={cx('modal-close')} onClick={closeModal}>&times;</span>
                     </div>

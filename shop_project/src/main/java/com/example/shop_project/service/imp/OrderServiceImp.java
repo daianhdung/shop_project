@@ -2,9 +2,11 @@ package com.example.shop_project.service.imp;
 
 import com.example.shop_project.dto.OrderDTO;
 import com.example.shop_project.dto.ProductOrderDTO;
+import com.example.shop_project.dto.StatusDTO;
 import com.example.shop_project.dto.UserDTO;
 import com.example.shop_project.entity.*;
 import com.example.shop_project.jwt.JwtTokenHelper;
+import com.example.shop_project.model.ProductModel;
 import com.example.shop_project.repository.*;
 import com.example.shop_project.service.OrderService;
 import io.jsonwebtoken.io.Decoders;
@@ -13,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class OrderServiceImp implements OrderService {
@@ -142,6 +142,20 @@ public class OrderServiceImp implements OrderService {
             orderDTO.setStatusId(orderEntity.getStatus().getId());
             orderDTO.setTempTotal(orderEntity.getTempTotal());
             orderDTO.setTotal((int) orderEntity.getTotal());
+            UserDTO userDTO = new UserDTO();
+            userDTO.setFullname(orderEntity.getUser().getFullName());
+            userDTO.setAddress(orderEntity.getDeliveryAddress());
+            orderDTO.setUserDTO(userDTO);
+            orderDTO.setStatus(orderEntity.getStatus().getName());
+            List<Map<String,String>> products = new ArrayList<>();
+            orderEntity.getProductOrders().forEach(productOrderEntity -> {
+                Map<String, String> map = new HashMap<>();
+                map.put("name", productOrderEntity.getProduct().getName());
+                map.put("size", productOrderEntity.getSize());
+                map.put("amount", String.valueOf(productOrderEntity.getAmount()));
+                products.add(map);
+            });
+            orderDTO.setProducts(products);
             orderDTOS.add(orderDTO);
         });
         return orderDTOS;
@@ -153,13 +167,7 @@ public class OrderServiceImp implements OrderService {
         if (orderEntityOptional.isPresent()) {
             OrderDTO orderDTO = new OrderDTO();
             OrderEntity orderEntity = orderEntityOptional.get();
-            orderDTO.setId(orderEntity.getId());
-            orderDTO.setCoupon(orderEntity.getCoupon());
-            orderDTO.setFeeShip(orderEntity.getFeeShip());
-            orderDTO.setDeliveryAddress(orderEntity.getDeliveryAddress());
             orderDTO.setStatusId(orderEntity.getStatus().getId());
-            orderDTO.setTempTotal(orderEntity.getTempTotal());
-            orderDTO.setTotal((int) orderEntity.getTotal());
             return orderDTO;
         }
         return null;
@@ -180,5 +188,18 @@ public class OrderServiceImp implements OrderService {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<StatusDTO> getAllStatus() {
+        List<StatusEntity> statusEntities = statusRepository.findAll();
+        List<StatusDTO> statusDTOS = new ArrayList<>();
+        statusEntities.forEach(statusEntity -> {
+            StatusDTO statusDTO = new StatusDTO();
+            statusDTO.setId(statusEntity.getId());
+            statusDTO.setName(statusEntity.getName());
+            statusDTOS.add(statusDTO);
+        });
+        return statusDTOS;
     }
 }

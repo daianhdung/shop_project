@@ -22,6 +22,8 @@ import OrderSuccess from "~/pages/Order/OrderSuccess";
 import UserAdmin from "~/pages/Admin/UsersAdmin";
 import UpdateUser from "~/pages/Admin/UsersAdmin/Update/UpdateUser";
 import InsertUser from "~/pages/Admin/UsersAdmin/Insert/InsertUser";
+import OrderAdmin from "~/pages/Admin/OrderAdmin";
+import UpdateOrder from "~/pages/Admin/OrderAdmin/Update/UpdateOrder";
 
 
 
@@ -49,10 +51,15 @@ const privateRoutes = [
 ]
 const adminRoutes = [
     { path: config.routes.adminHome, component: HomeAdmin, layout: AdminLayout },
+    { path: config.routes.adminProfile, component: Profile, layout: AdminLayout },
+    { path: config.routes.adminChangePassword, component: Profile, layout: AdminLayout },
     //Admin Product
     { path: config.routes.adminProduct, component: ProductAdmin, layout: AdminLayout },
     { path: config.routes.adminProductInsert, component: InsertProduct, layout: AdminLayout },
     { path: config.routes.adminProductUpdate, component: UpdateProduct, layout: AdminLayout },
+    //Admin Order
+    { path: config.routes.adminOrder, component: OrderAdmin, layout: AdminLayout },
+    { path: config.routes.adminOrderUpdate, component: UpdateOrder, layout: AdminLayout },
     //Admin User
     { path: config.routes.adminUser, component: UserAdmin, layout: AdminLayout },
     { path: config.routes.adminUserInsert, component: InsertUser, layout: AdminLayout },

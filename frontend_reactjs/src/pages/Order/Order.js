@@ -68,9 +68,11 @@ function Order() {
 
         const fetchApiGetUserInform = async () => {
             const response = await getUserInform()
+            console.log(response);
             if (response.success) {
                 setUser(response.data)
                 setFormInformUser(response.data)
+                console.log(response);
             }
         }
         const fetchApiGetProvince = async () => {
@@ -78,7 +80,7 @@ function Order() {
             setProvince(response)
         }
 
-        if(contextAuth.isLogin){
+        if(contextAuth.authProvider.isLogin){
             fetchApiGetUserInform()
         }
         fetchApiGetProvince()

@@ -5,11 +5,7 @@ import Table from "./Table/Table";
 function ProductAdmin() {
     const [products, SetProducts] = useState(null)
 
-    const handleDelete = (id) => {
-        const token = getCookie('tokenJwt');
-        adminProductService.deleteProduct(token, id)
-            .then(response => console.log(response))
-    }
+
     useEffect(() => {
         const token = getCookie('tokenJwt');
 
@@ -21,7 +17,7 @@ function ProductAdmin() {
 
     return (
         <div>
-            {products && <Table products={products} handleDelete={handleDelete} />}
+            {products && <Table products={products}  />}
         </div>
     )
 }

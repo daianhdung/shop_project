@@ -57,8 +57,7 @@ export const deleteProduct = async(token, id) => {
     try{
         const response = await httpRequest.getTokenHeader(`admin/product/delete/${id}`, {
             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "multipart/form-data"
+                Authorization: `Bearer ${token}`
             }
         })
         return response
