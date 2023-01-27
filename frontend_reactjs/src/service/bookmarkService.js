@@ -24,6 +24,18 @@ export const insertBookmark = async(id , token) => {
         console.log(error);
     }
 }
+export const deleteBookmark = async(id , token) => {
+    try{
+        const response = await httpRequest.getTokenHeader(`bookmark/delete/${id}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response
+    }catch(error){
+        console.log(error);
+    }
+}
 
 
 
