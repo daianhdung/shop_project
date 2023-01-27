@@ -129,5 +129,56 @@ public class OrderServiceImp implements OrderService {
         return orderDTO;
     }
 
+    @Override
+    public List<OrderDTO> getAllOrder() {
+        List<OrderEntity> orderEntities = orderRepository.findAll();
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+        orderEntities.forEach(orderEntity -> {
+            OrderDTO orderDTO = new OrderDTO();
+            orderDTO.setId(orderEntity.getId());
+            orderDTO.setCoupon(orderEntity.getCoupon());
+            orderDTO.setFeeShip(orderEntity.getFeeShip());
+            orderDTO.setDeliveryAddress(orderEntity.getDeliveryAddress());
+            orderDTO.setStatusId(orderEntity.getStatus().getId());
+            orderDTO.setTempTotal(orderEntity.getTempTotal());
+            orderDTO.setTotal((int) orderEntity.getTotal());
+            orderDTOS.add(orderDTO);
+        });
+        return orderDTOS;
+    }
 
+    @Override
+    public OrderDTO getOrder(int id) {
+        Optional<OrderEntity> orderEntityOptional = orderRepository.findById(id);
+        if (orderEntityOptional.isPresent()) {
+            OrderDTO orderDTO = new OrderDTO();
+            OrderEntity orderEntity = orderEntityOptional.get();
+            orderDTO.setId(orderEntity.getId());
+            orderDTO.setCoupon(orderEntity.getCoupon());
+            orderDTO.setFeeShip(orderEntity.getFeeShip());
+            orderDTO.setDeliveryAddress(orderEntity.getDeliveryAddress());
+            orderDTO.setStatusId(orderEntity.getStatus().getId());
+            orderDTO.setTempTotal(orderEntity.getTempTotal());
+            orderDTO.setTotal((int) orderEntity.getTotal());
+            return orderDTO;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean updateStatusOrder(int id, int statusId) {
+        Optional<OrderEntity> orderEntityOptional = orderRepository.findById(id);
+        if (orderEntityOptional.isPresent()) {
+            OrderEntity orderEntity = orderEntityOptional.get();
+            Optional<StatusEntity> statusEntity = statusRepository.findById(statusId);
+            orderEntity.setStatus(statusEntity.get());
+            try {
+                orderRepository.save(orderEntity);
+                return true;
+            }catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
 }

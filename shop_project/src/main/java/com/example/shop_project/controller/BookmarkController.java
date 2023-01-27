@@ -44,7 +44,7 @@ public class BookmarkController {
         boolean isSuccess = bookmarkService.deleteBookmark(id);
         DataResponse dataResponse = new DataResponse();
         dataResponse.setData("");
-        dataResponse.setSuccess(isSuccess);
+        dataResponse.setSuccess(false);
         dataResponse.setDesc("");
         dataResponse.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
