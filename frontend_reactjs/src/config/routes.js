@@ -17,14 +17,18 @@ const routes = {
     orderSuccess: '/order/success/:token',
     //Admin route
     adminHome: '/admin-home',
+    //Admin Product
     adminProduct: '/admin-product',
     adminProductInsert: '/admin-product-insert',
     adminProductUpdate: '/admin-product-update',
+    //Admin Order
+    adminOrder: '/admin-order',
+    adminOrderUpdate: '/admin-order-update',
     //Admin User
     adminUser: '/admin-user',
     adminUserInsert: '/admin-user-insert',
     adminUserUpdate: '/admin-user-update'
-
+    
 };
 
 export default routes;
