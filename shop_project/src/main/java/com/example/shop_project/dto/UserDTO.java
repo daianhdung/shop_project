@@ -17,15 +17,7 @@ public class UserDTO {
 
     private String roleName;
 
-    private RoleEntity role;
-
-    public RoleEntity getRole() {
-        return role;
-    }
-
-    public void setRole(RoleEntity role) {
-        this.role = role;
-    }
+    private RoleDTO role;
 
     public String getRoleName() {
         return roleName;
@@ -33,6 +25,14 @@ public class UserDTO {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public RoleDTO getRole() {
+        return role;
+    }
+
+    public void setRole(RoleDTO role) {
+        this.role = role;
     }
 
     public String getEmail() {
