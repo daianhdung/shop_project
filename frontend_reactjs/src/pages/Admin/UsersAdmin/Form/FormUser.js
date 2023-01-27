@@ -8,7 +8,7 @@ function FormUser({ user }) {
     }, [])
 
     return (<div>
-        {user ?
+        {/* {user ?
             <div className="form-update row p-5 fs-2">
                 <div className="row justify-content-center mb-3">
                     <div className="col-md-4 fw-bold">
@@ -136,7 +136,7 @@ function FormUser({ user }) {
             //     </div>
             // </div> 
             <></>
-        }
+        } */}
 
     </div>);
 }

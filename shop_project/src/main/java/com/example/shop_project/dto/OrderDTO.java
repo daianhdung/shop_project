@@ -4,12 +4,14 @@ import com.example.shop_project.entity.ProductEntity;
 import com.example.shop_project.entity.UserEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public class OrderDTO {
 
     private UserDTO userDTO;
 
     private List<ProductDTO> productDTOList;
+    private List<Map<String,String>> products;
 
     private float coupon;
 
@@ -21,6 +23,7 @@ public class OrderDTO {
     private int feeShip;
 
     private int statusId;
+    private String status;
 
     private String orderToken;
 
@@ -113,5 +116,21 @@ public class OrderDTO {
 
     public void setProductOrderDTOList(List<ProductOrderDTO> productOrderDTOList) {
         this.productOrderDTOList = productOrderDTOList;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<Map<String, String>> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Map<String, String>> products) {
+        this.products = products;
     }
 }
