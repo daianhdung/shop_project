@@ -30,6 +30,7 @@ public class AdminProductController {
     OrderService orderService;
 
 
+
     @GetMapping("/product/get/{id}")
     public ResponseEntity<?> getProduct(@PathVariable(name = "id") int id) {
         DataResponse dataResponse = new DataResponse();
@@ -80,14 +81,12 @@ public class AdminProductController {
     public ResponseEntity<?> deleteProduct(@PathVariable(name = "id") int id) {
         DataResponse dataResponse = new DataResponse();
         boolean isSuccess = productService.deleteProduct(id);
-        dataResponse.setDesc("delete product");
+        dataResponse.setDesc("delete product " + id);
         dataResponse.setStatus(HttpStatus.OK.value());
         dataResponse.setSuccess(isSuccess);
         dataResponse.setData("");
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
-
-
 
 
     @GetMapping("/category/get/{id}")
@@ -228,14 +227,24 @@ public class AdminProductController {
         dataResponse.setData(orderDTOS);
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
-    @PostMapping("/order/updatestatus")
-    public ResponseEntity<?> updateStatusOrder(@RequestParam(name = "id") int id, @RequestParam(name = "status") int status) {
+    @GetMapping("/order/updatestatus/{id}/{status}")
+    public ResponseEntity<?> updateStatusOrder(@PathVariable(name = "id") int id, @PathVariable(name = "status") int status) {
         DataResponse dataResponse = new DataResponse();
         boolean isSuccess = orderService.updateStatusOrder(id, status);
         dataResponse.setDesc("updateStatusOrder");
         dataResponse.setStatus(HttpStatus.OK.value());
         dataResponse.setSuccess(isSuccess);
         dataResponse.setData("");
+        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
+    }
+    @GetMapping("/status/all")
+    public ResponseEntity<?> getAllStatus() {
+        DataResponse dataResponse = new DataResponse();
+        List<StatusDTO> statusDTOS = orderService.getAllStatus();
+        dataResponse.setDesc("getAllStatus");
+        dataResponse.setStatus(HttpStatus.OK.value());
+        dataResponse.setSuccess(true);
+        dataResponse.setData(statusDTOS);
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 }

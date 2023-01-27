@@ -40,6 +40,8 @@ function InsertProduct() {
             formData.append('images', images[i])
         }
 
+
+        
         insertProductService.insertProduct(token, formData)
             .then(response => {
                 if (response.success) {

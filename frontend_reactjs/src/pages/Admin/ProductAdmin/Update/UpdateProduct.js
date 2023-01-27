@@ -57,8 +57,6 @@ function UpdateProduct() {
             .then(response => SetProduct(response.success ? response.data : null))
     }, [])
 
-
-
     return (
         <div>
             {
