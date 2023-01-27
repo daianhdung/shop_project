@@ -69,6 +69,7 @@ function Signup() {
         if (Object.keys(newErrors).length === 0) {
             const fetchApiSignup = async () => {
                 const result = await signupService.signup(state.email, state.password);
+                console.log(result);
                 return result;
             };
             fetchApiSignup();

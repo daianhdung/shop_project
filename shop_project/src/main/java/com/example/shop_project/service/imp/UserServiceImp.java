@@ -1,6 +1,7 @@
 package com.example.shop_project.service.imp;
 
 
+import com.example.shop_project.dto.RoleDTO;
 import com.example.shop_project.dto.UserDTO;
 import com.example.shop_project.entity.RoleEntity;
 import com.example.shop_project.entity.UserEntity;
@@ -167,12 +168,48 @@ public class UserServiceImp implements UserService {
             userDTO.setPhone(user.get().getPhone());
             userDTO.setAddress(user.get().getAddress());
             userDTO.setFullname(user.get().getFullName());
-            userDTO.setRoleName(user.get().getRole().getName());
+
+            RoleDTO roleDTO = new RoleDTO();
+            roleDTO.setId(user.get().getRole().getId());
+            roleDTO.setName(user.get().getRole().getName());
+            userDTO.setRole(roleDTO);
             return userDTO;
         }
 
         return null;
     }
 
+    @Override
+    public boolean updateUserById(UserDTO userDTO) {
+        Optional<UserEntity> user = userRepository.findById(userDTO.getId());
 
+        RoleEntity role = roleRepository.findByName(userDTO.getRoleName());
+        if(user.isPresent()){
+            user.get().setRole(role);
+        }
+        try {
+            userRepository.save(user.get());
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean insertUserByAdmin(UserDTO userDTO) {
+        UserEntity user = new UserEntity();
+        user.setEmail(stringUtil.parseEmail(userDTO.getEmail()));
+        user.setAddress(userDTO.getAddress());
+        user.setPassword(passwordEncoder.encode(stringUtil.removeWhiteSpaceBeginAndEnd(userDTO.getPassword())));
+        user.setPhone(userDTO.getPhone());
+        user.setFullName(userDTO.getFullname());
+        RoleEntity role = roleRepository.findByName(userDTO.getRoleName());
+        user.setRole(role);
+        try {
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

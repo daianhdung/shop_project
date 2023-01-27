@@ -23,4 +23,8 @@ public interface UserService {
     List<UserDTO> getAllUser();
 
     UserDTO getUserById(int id);
+
+    boolean updateUserById(UserDTO userDTO);
+
+    boolean insertUserByAdmin(UserDTO userDTO);
 }

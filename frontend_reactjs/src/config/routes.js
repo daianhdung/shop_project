@@ -17,10 +17,12 @@ const routes = {
     orderSuccess: '/order/success/:token',
     //Admin route
     adminHome: '/admin-home',
+    adminProfile: '/admin-profile',
     //Admin Product
     adminProduct: '/admin-product',
     adminProductInsert: '/admin-product-insert',
     adminProductUpdate: '/admin-product-update',
+    adminChangePassword: '/admin-profile/changePass',
     //Admin Order
     adminOrder: '/admin-order',
     adminOrderUpdate: '/admin-order-update',

@@ -21,11 +21,11 @@ const SidebarData = [
         subNav: [
             {
                 title: 'List',
-                path: '/admin-order-list',
+                path: config.routes.adminOrder,
                 icon: <FontAwesomeIcon icon={faList} />
             }, {
                 title: 'Form',
-                path: '/admin-order-form',
+                path: config.routes.adminOrderUpdate,
                 icon: <FontAwesomeIcon icon={faKeyboard} />
             }
         ]
@@ -105,7 +105,7 @@ function SidebarAdmin(props) {
             <hr></hr>
             <div className={cx('auth_wrap')}>
                 <ul>
-                    <Link>
+                    <Link to={config.routes.adminProfile}>
                         <li>
                             <FontAwesomeIcon className={cx('redirect_icon', 'text-muted')} icon={faUser} /><span>Tài khoản</span>
 

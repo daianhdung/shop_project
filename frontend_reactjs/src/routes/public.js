@@ -51,6 +51,8 @@ const privateRoutes = [
 ]
 const adminRoutes = [
     { path: config.routes.adminHome, component: HomeAdmin, layout: AdminLayout },
+    { path: config.routes.adminProfile, component: Profile, layout: AdminLayout },
+    { path: config.routes.adminChangePassword, component: Profile, layout: AdminLayout },
     //Admin Product
     { path: config.routes.adminProduct, component: ProductAdmin, layout: AdminLayout },
     { path: config.routes.adminProductInsert, component: InsertProduct, layout: AdminLayout },

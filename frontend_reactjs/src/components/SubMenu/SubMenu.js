@@ -14,7 +14,7 @@ function SubMenu({ item }) {
 
     return (<>
         <Link onClick={item.subNav && showSubnav}>
-            <li className={cx(location.pathname.startsWith(item.path) ? 'redirect' : '')}>
+            <li className={cx(location.pathname.startsWith(item.path) ? 'redirect' : '', 'sub-li')}>
                 {item.icon}
                 <span>{item.title}</span>
                 {item.subNav && subnav
