@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS user(
     fullname varchar(100),
     phone varchar(100),
     address varchar(100),
+    date date default now(),
     role_id INT,
     primary key(id),
     foreign key(role_id) references role(id)
@@ -110,7 +111,8 @@ CREATE TABLE IF NOT EXISTS product_order (
 
 ALTER TABLE p_order ADD column order_token varchar(255) after total;
 ALTER TABLE product_size ADD column amount int DEFAULT 0;
-
+ALTER TABLE user add column date datetime DEFAULT now();
+ALTER TABLE p_order add column date datetime DEFAULT now();
 
 
 INSERT INTO role(id, name, description ) VALUES (1, "ROLE_ADMIN", "Admin");
@@ -567,6 +569,13 @@ INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA40%', '40');
 INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA50%', '50');
 
 
+select count(*) as amount
+from user
+where month(date) = month(now())
+
+select count(*) as amount
+from user
+where month(date) = month(now()) - 1
 
 
 

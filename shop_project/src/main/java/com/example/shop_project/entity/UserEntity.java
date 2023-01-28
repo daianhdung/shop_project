@@ -18,6 +18,8 @@ public class UserEntity {
     private String phone;
     @Column(name = "address")
     private String address;
+    @Column(name = "date")
+    private String date;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<BookmarkProductEntity> bookmarkProducts;
     @OneToMany(mappedBy = "user")
@@ -96,5 +98,13 @@ public class UserEntity {
 
     public void setOrders(Set<OrderEntity> orders) {
         this.orders = orders;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

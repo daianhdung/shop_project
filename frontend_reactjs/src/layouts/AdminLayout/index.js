@@ -1,19 +1,27 @@
 import { faUps } from '@fortawesome/free-brands-svg-icons';
-import { faBox, faFileCircleCheck, faFileLines, faUpLong, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBox, faFileCircleCheck, faFileLines, faUpLong, faDownLong, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { Children } from 'react';
+import { Children, useEffect, useState } from 'react';
 
 import styles from './Admin.module.scss';
 import HeaderAdmin from "./HeaderAdmin/HeaderAdmin";
 import SidebarAdmin from "./SidebarAdmin/SidebarAdmin";
+import * as AdminHomeService from "~/service/admin/adminHomeService"
+import { getCookie } from '~/utils/utilsCookie';
 
 const cx = classNames.bind(styles)
 
 function AdminLayout({ children }) {
-
+    const [data, SetData] = useState({})
     
-
+    useEffect( () => {
+        const token = getCookie('tokenJwt')
+        AdminHomeService.getStat(token)
+            .then(response => {
+                SetData(response)
+            })
+    }, [])
 
     return (
         <div className={cx('wrapper')}>
@@ -34,15 +42,15 @@ function AdminLayout({ children }) {
                                 <div className={cx('data_separate', 'f-spaceb')}>
                                     <div>
                                         <h4 className={cx('color-disabled')}>Hóa đơn đặt hàng</h4>
-                                        <span className={cx('number_card')}>958</span>
+                                        <span className={cx('number_card')}>{data.billOrdered}</span>
                                     </div>
                                     <div className={cx('logo', 'f-center-align', 'color1')}>
                                         <FontAwesomeIcon icon={faFileLines} />
                                     </div>
                                 </div>
                                 <div className={cx('data_separate')}>
-                                    <span><FontAwesomeIcon icon={faUpLong} /></span>
-                                    <span>3.94%</span>
+                                    {data.diffBillOrdered >= 0 ? <span><FontAwesomeIcon icon={faUpLong} /></span> : <span><FontAwesomeIcon icon={faDownLong} /></span>}
+                                    <span>{Math.abs(data.diffBillOrdered)}%</span>
                                     <span>Since last month</span>
                                 </div>
                             </div>
@@ -50,15 +58,15 @@ function AdminLayout({ children }) {
                                 <div className={cx('data_separate', 'f-spaceb')}>
                                     <div>
                                         <h4 className={cx('color-disabled')}>Khách hàng mới</h4>
-                                        <span className={cx('number_card')}>958</span>
+                                        <span className={cx('number_card')}>{data.newCustomer}</span>
                                     </div>
                                     <div className={cx('logo', 'f-center-align', 'color2')}>
                                         <FontAwesomeIcon icon={faUsers} />
                                     </div>
                                 </div>
                                 <div className={cx('data_separate')}>
-                                    <span><FontAwesomeIcon icon={faUpLong} /></span>
-                                    <span>3.94%</span>
+                                    {data.diffNewCustomer >= 0 ? <span><FontAwesomeIcon icon={faUpLong} /></span> : <span><FontAwesomeIcon icon={faDownLong} /></span>}
+                                    <span>{Math.abs(data.diffNewCustomer)}%</span>
                                     <span>Since last month</span>
                                 </div>
                             </div>
@@ -66,15 +74,15 @@ function AdminLayout({ children }) {
                                 <div className={cx('data_separate', 'f-spaceb')}>
                                     <div>
                                         <h4 className={cx('color-disabled')}>Đon đã bán</h4>
-                                        <span className={cx('number_card')}>958</span>
+                                        <span className={cx('number_card')}>{data.billSold}</span>
                                     </div>
                                     <div className={cx('logo', 'f-center-align', 'color3')}>
                                         <FontAwesomeIcon icon={faFileCircleCheck} />
                                     </div>
                                 </div>
                                 <div className={cx('data_separate')}>
-                                    <span><FontAwesomeIcon icon={faUpLong} /></span>
-                                    <span>3.94%</span>
+                                {data.diffBillSold >= 0 ? <span><FontAwesomeIcon icon={faUpLong} /></span> : <span><FontAwesomeIcon icon={faDownLong} /></span>}
+                                    <span>{Math.abs(data.diffBillSold)}%</span>
                                     <span>Since last month</span>
                                 </div>
                             </div>
@@ -82,17 +90,17 @@ function AdminLayout({ children }) {
                                 <div className={cx('data_separate', 'f-spaceb')}>
                                     <div>
                                         <h4 className={cx('color-disabled')}>Hàng tồn kho</h4>
-                                        <span className={cx('number_card')}>958</span>
+                                        <span className={cx('number_card')}>{data.remainProduct}</span>
                                     </div>
                                     <div className={cx('logo', 'f-center-align', 'color4')}>
                                         <FontAwesomeIcon icon={faBox} />
                                     </div>
                                 </div>
-                                <div className={cx('data_separate')}>
+                                {/* <div className={cx('data_separate')}>
                                     <span><FontAwesomeIcon icon={faUpLong} /></span>
                                     <span>3.94%</span>
                                     <span>Since last month</span>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

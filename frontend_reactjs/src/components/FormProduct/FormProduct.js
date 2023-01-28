@@ -1,4 +1,10 @@
+import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
+import { Navigation, Thumbs } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import styles from './FormProduct.module.scss'
+
+const cx = classNames.bind(styles);
 
 const { useEffect, useState } = require("react");
 
@@ -30,7 +36,20 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
             }
         })
     }
-
+    const validateInsert = () => {
+        if (!name || !price || checkSize.length == 0 || !mainImage || !images)  {
+            console.log("err")
+            return 
+        }
+        handleInsert(name, price, brand, category, checkSize, mainImage, images)
+    }
+    const validateUpdate = () => {
+        if (!name || !price || checkSize.length == 0 || !mainImage || !images)  {
+            console.log("err")
+             
+        }
+        handleUpdate(product.id, name, price, brand, category, checkSize, mainImage, images)
+    }
 
     //UPDATE PRODUCT
     return (
@@ -99,23 +118,52 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
                     <div className="row mt-2">
                         <div className="form-group">
                             <label htmlFor="main-image">Ảnh Chính </label>
-                            <p> {product && mainImage == null && ` Đã có ảnh ${product.mainImage} `} </p>
+                            <div className={cx("product-main-image-wrapper")}>
+                            
+                                {mainImage ?<img src={URL.createObjectURL(mainImage)}/> :<img src={product.mainImage}/> }
+                            </div>
                             <input type="file" className="form-control-file" id="main-image" onChange={(e) => SetMainImage(e.target.files[0])}
                             />
                         </div>
                     </div>
                     <div className="row mt-2">
                         <div className="form-group">
-                            <label htmlFor="images">Ảnh Phụ </label>
-                            <p> {product && images == null && ` Đã có ${product.images.length} ảnh ${product.images.map(image => `${image} `)} `} </p>
-
+                            <label htmlFor="images">Ảnh Phụ </label> 
+                            <div className={cx("product-images-thumb")}>
+                                <Swiper loop={false} spaceBetween={10} slidesPerView={3} modules={[Navigation, Thumbs]} navigation={true}>
+                                    {
+                                        images ?
+                                        [...images].map((image, index) => (
+                                            <SwiperSlide key={index}>
+                                                <div className={cx("product-image-wrapper")}>
+                    
+                                                    {<img className={cx("product-image")}  src={URL.createObjectURL(image)}/>}
+                                                </div>
+                                            </SwiperSlide>
+                                            
+                                        ))
+                                        :
+                                        product.images.map( (image, index) => (
+                                        
+                                            <SwiperSlide key={index}>
+                                                <div className={cx("product-image-wrapper")}>
+                                                    {<img className={cx("product-image")}  src={image}/>}
+                                                </div>
+                                            </SwiperSlide>
+                                            
+                                        ))
+                                           
+                                    }
+                                </Swiper>
+                             
+                            </div>
                             <input type="file" className="form-control-file" id="images" multiple onChange={(e) => SetImages(e.target.files)}
                             />
                         </div>
                     </div>
 
                     <div className="mt-5">
-                        <button style={{ width: '100px' }} className="me-4 btn btn-outline-info mb-2 btn-lg p-3" onClick={() => { handleUpdate(product.id, name, price, brand, category, checkSize, mainImage, images) }}>Xác nhận</button>
+                        <button style={{ width: '100px' }} className="me-4 btn btn-outline-info mb-2 btn-lg p-3" onClick={() => validateUpdate()}>Xác nhận</button>
                         <button style={{ width: '100px' }} className="btn btn-outline-danger mb-2 btn-lg p-3" onClick={() => navigate(-1)}>Quay lại</button>
                     </div>
                 </div>
@@ -183,18 +231,36 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
                     <div className="row mt-3">
                         <div className="form-group col-md-6 row">
                             <label htmlFor="main-image">Ảnh Chính: </label>
+                            {mainImage&&<div className={cx("product-main-image-wrapper")}>
+                                {<img src={URL.createObjectURL(mainImage)}/>}
+                            </div>}
                             <input type="file" className="form-control-file " id="main-image" onChange={(e) => SetMainImage(e.target.files[0])} />
                         </div>
                     </div>
                     <div className="row mt-3">
                         <div className="form-group col-md-6 row">
                             <label htmlFor="images">Ảnh Phụ: </label>
+                            {images && <div className={cx("product-images-thumb")}>
+                                <Swiper loop={false} spaceBetween={10} slidesPerView={3} modules={[Navigation, Thumbs]} navigation={true}>
+                                    {
+                                        [...images].map((image, index) => (
+                                            <SwiperSlide key={index}>
+                                                <div className={cx("product-image-wrapper")}>
+                
+                                                    {<img className={cx("product-image")}  src={URL.createObjectURL(image)}/>}
+                                                </div>
+                                            </SwiperSlide>
+                                            
+                                        ))   
+                                    }
+                                </Swiper>
+                            </div>}
                             <input type="file" className="form-control-file " id="images" multiple onChange={(e) => SetImages(e.target.files)} />
                         </div>
                     </div>
 
                     <div className="mt-5">
-                        <button style={{ width: '100px' }} className="me-4 btn btn-outline-info mb-2 btn-lg p-3" onClick={() => { handleInsert(name, price, brand, category, checkSize, mainImage, images) }}>Xác nhận</button>
+                        <button style={{ width: '100px' }} className="me-4 btn btn-outline-info mb-2 btn-lg p-3" onClick={() => validateInsert()}>Xác nhận </button>
                         <button style={{ width: '100px' }} className="btn btn-outline-danger mb-2 btn-lg p-3" onClick={() => navigate(-1)}>Quay lại</button>
                     </div>
                 </div>

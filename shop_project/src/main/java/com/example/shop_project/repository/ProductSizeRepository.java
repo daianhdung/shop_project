@@ -14,4 +14,7 @@ public interface ProductSizeRepository extends JpaRepository<ProductSizeEntity, 
     @Query(value = "select amount from product_size WHERE product_id = ?1 AND size_id = ?2", nativeQuery = true)
     Integer findAmountByProductIdAndSizeId(int productId, int sizeId);
 
+    @Query(value = "select sum(ps.amount) from product_size ps")
+    int sumProductAmount();
+
 }
