@@ -20,6 +20,8 @@ public class OrderEntity {
     private String orderToken;
     @Column(name = "delivery_address")
     private String deliveryAddress;
+    @Column(name = "date")
+    private String date;
 
     @OneToMany(mappedBy = "order")
     private Set<ProductOrderEntity> productOrders;
@@ -112,5 +114,11 @@ public class OrderEntity {
         this.status = status;
     }
 
+    public String getDate() {
+        return date;
+    }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

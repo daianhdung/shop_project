@@ -134,14 +134,14 @@ public class ProductServiceImp implements ProductService {
             ProductDetailDTO productDetailDTO = new ProductDetailDTO();
             productDetailDTO.setId(product.getId());
             productDetailDTO.setName(product.getName());
-            productDetailDTO.setMainImage(product.getMainImage());
+            productDetailDTO.setMainImage(Url.Image.getPath() + product.getMainImage());
             productDetailDTO.setBrand(product.getBrand().getId());
             productDetailDTO.setCategory(product.getCategory().getId());
             productDetailDTO.setPrice(product.getPrice());
             List<Integer> ids = product.getProductSizes().stream()
                     .map(productSizeEntity -> productSizeEntity.getSize().getId())
                     .collect(Collectors.toList());
-            List<String> images = product.getImageProductEntities().stream().map(image -> image.getName()).collect(Collectors.toList());
+            List<String> images = product.getImageProductEntities().stream().map(image ->Url.Image.getPath() + image.getName()).collect(Collectors.toList());
 
             productDetailDTO.setSizes(ids);
             productDetailDTO.setImages(images);

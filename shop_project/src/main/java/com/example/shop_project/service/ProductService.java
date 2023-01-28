@@ -26,4 +26,5 @@ public interface ProductService {
     List<ProductDTO> searchProduct(String name);
     List<ProductDTO> searchProductByBrandId(int brandId);
     List<ProductDTO> searchProductByCategoryId(int categoryId);
+    
 }

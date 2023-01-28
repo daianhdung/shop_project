@@ -18,6 +18,7 @@ function UpdateProduct() {
     const handleUpdate = (id, name, price, brand, category, checkSize, mainImage, images) => {
 
         const token = getCookie('tokenJwt')
+        console.log(name)
         const formData = new FormData();
         const product = {
             id,
