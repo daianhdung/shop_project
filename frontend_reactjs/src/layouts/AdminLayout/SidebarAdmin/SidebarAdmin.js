@@ -21,11 +21,11 @@ const SidebarData = [
         subNav: [
             {
                 title: 'List',
-                path: '/admin-order-list',
+                path: '/admin-order',
                 icon: <FontAwesomeIcon icon={faList} />
             }, {
                 title: 'Form',
-                path: '/admin-order-form',
+                path: '/admin-order-update',
                 icon: <FontAwesomeIcon icon={faKeyboard} />
             }
         ]
