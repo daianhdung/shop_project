@@ -20,6 +20,16 @@ export const putParamToken = async (path, data, headers) => {
     return response.data;
 }
 
+export const postBodyToken = async (path, json = {}, headers) => {
+    const response = await privateRequest.post(path, json, headers)
+    return response.data;
+}
+
+export const putBodyToken = async (path, json = {}, headers) => {
+    const response = await privateRequest.put(path, json, headers)
+    return response.data;
+}
+
 export const getToken = async (path, headers) => {
     const response = await privateRequest.get(path, headers)
     return response.data;

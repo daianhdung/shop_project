@@ -25,6 +25,7 @@ export const AuthProvider = ({ children }) => {
 
     const [auth, setAuth] = useState({ isAdmin: isAdmin ? isAdmin : '', username: username ? username : '', isLogin: isLogin ? isLogin : '' })
 
+
     //decode token get inform user
     useEffect(() => {
         if (getCookie('tokenJwtRefresh')) {
