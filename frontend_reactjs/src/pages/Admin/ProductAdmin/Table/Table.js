@@ -64,8 +64,6 @@ function Table({products}) {
 
         }
         SetPageProducts(products.slice((current - 1) * 10, current * 10))
-
-
     } 
     const handleDelete = (id) => {
         const token = getCookie('tokenJwt');

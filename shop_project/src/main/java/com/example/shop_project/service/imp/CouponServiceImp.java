@@ -2,6 +2,7 @@ package com.example.shop_project.service.imp;
 
 import com.example.shop_project.dto.CouponDTO;
 import com.example.shop_project.entity.CouponEntity;
+import com.example.shop_project.payload.request.CouponRequest;
 import com.example.shop_project.repository.CouponRepository;
 import com.example.shop_project.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,24 +56,49 @@ public class CouponServiceImp implements CouponService {
 
         return couponDTOS;
     }
-
     @Override
-    public CouponDTO getCoupon() {
-        return null;
+    public CouponDTO getCoupon(int id) {
+        CouponEntity couponEntity = couponRepository.findById(id);
+        CouponDTO couponDTO = new CouponDTO();
+        couponDTO.setId(couponEntity.getId());
+        couponDTO.setName(couponEntity.getName());
+        couponDTO.setRate(couponEntity.getRate());
+        return couponDTO;
+    }
+    @Override
+    public boolean insertCoupon(CouponRequest couponRequest) {
+        CouponEntity couponEntity = new CouponEntity();
+
+        couponEntity.setName(couponRequest.getName());
+        couponEntity.setRate((couponRequest.getRate()));
+        try {
+            couponRepository.save(couponEntity);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
-    public boolean insertCoupon() {
-        return false;
+    public boolean updateCoupon(CouponRequest couponRequest) {
+        CouponEntity couponEntity = couponRepository.findById(couponRequest.getId());
+        couponEntity.setName(couponRequest.getName());
+        couponEntity.setRate((couponRequest.getRate()));
+        try {
+            couponRepository.save(couponEntity);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
-    public boolean updateCoupoN(CouponDTO couponDTO) {
-        return false;
-    }
-
-    @Override
-    public boolean deleteCoupon() {
-        return false;
+    public boolean deleteCoupon(int id) {
+        try {
+            couponRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

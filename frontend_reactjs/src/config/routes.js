@@ -26,6 +26,10 @@ const routes = {
     //Admin Order
     adminOrder: '/admin-order',
     adminOrderUpdate: '/admin-order-update',
+    //Admin Coupon
+    adminCoupon: '/admin-coupon',
+    adminCouponUpdate: '/admin-coupon-update',
+    adminCouponInsert: '/admin-coupon-insert',
     //Admin User
     adminUser: '/admin-user',
     adminUserInsert: '/admin-user-insert',

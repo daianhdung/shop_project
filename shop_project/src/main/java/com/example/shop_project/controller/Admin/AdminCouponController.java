@@ -25,7 +25,11 @@ public class AdminCouponController {
     @GetMapping("/coupon/get/{id}")
     public ResponseEntity<?> getCoupon(@PathVariable(name = "id") int id) {
         DataResponse dataResponse = new DataResponse();
-
+        CouponDTO couponDTO = couponService.getCoupon(id);
+        dataResponse.setStatus(HttpStatus.OK.value());
+        dataResponse.setData(couponDTO);
+        dataResponse.setSuccess(true);
+        dataResponse.setDesc("getCoupon");
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
     @GetMapping("/coupon/all")
@@ -42,20 +46,29 @@ public class AdminCouponController {
     @PostMapping("/coupon/insert")
     public ResponseEntity<?> insertCoupon(@RequestBody CouponRequest couponRequest) {
         DataResponse dataResponse = new DataResponse();
-
+        boolean isSuccess = couponService.insertCoupon(couponRequest);
+        dataResponse.setDesc("insertCoupon");
+        dataResponse.setSuccess(isSuccess);
+        dataResponse.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 
     @PostMapping("/coupon/update")
     public ResponseEntity<?> updateCoupon(@RequestBody CouponRequest couponRequest) {
         DataResponse dataResponse = new DataResponse();
-
+        boolean isSuccess = couponService.updateCoupon(couponRequest);
+        dataResponse.setDesc("updateCoupon");
+        dataResponse.setSuccess(isSuccess);
+        dataResponse.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
     @GetMapping("/coupon/delete/{id}")
     public ResponseEntity<?> deleteCoupon(@PathVariable(name = "id") int id) {
         DataResponse dataResponse = new DataResponse();
-
+        boolean isSuccess = couponService.deleteCoupon(id);
+        dataResponse.setDesc("deleteCoupon  ");
+        dataResponse.setSuccess(isSuccess);
+        dataResponse.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
 

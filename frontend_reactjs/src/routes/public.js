@@ -24,6 +24,9 @@ import UpdateUser from "~/pages/Admin/UsersAdmin/Update/UpdateUser";
 import InsertUser from "~/pages/Admin/UsersAdmin/Insert/InsertUser";
 import OrderAdmin from "~/pages/Admin/OrderAdmin";
 import UpdateOrder from "~/pages/Admin/OrderAdmin/Update/UpdateOrder";
+import CouponAdmin from "~/pages/Admin/CouponAdmin";
+import InsertCoupon from "~/pages/Admin/CouponAdmin/Insert/InsertCoupon";
+import UpdateCoupon from "~/pages/Admin/CouponAdmin/Update/UpdateCoupon";
 
 
 
@@ -60,6 +63,10 @@ const adminRoutes = [
     //Admin Order
     { path: config.routes.adminOrder, component: OrderAdmin, layout: AdminLayout },
     { path: config.routes.adminOrderUpdate, component: UpdateOrder, layout: AdminLayout },
+    //Admin Coupon
+    { path: config.routes.adminCoupon, component: CouponAdmin, layout: AdminLayout },
+    { path: config.routes.adminCouponUpdate, component: UpdateCoupon, layout: AdminLayout },
+    { path: config.routes.adminCouponInsert, component: InsertCoupon, layout: AdminLayout },
     //Admin User
     { path: config.routes.adminUser, component: UserAdmin, layout: AdminLayout },
     { path: config.routes.adminUserInsert, component: InsertUser, layout: AdminLayout },

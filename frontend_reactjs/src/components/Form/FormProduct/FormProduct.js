@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
 import { Navigation, Thumbs } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { validInt } from "~/utils/regex";
 import styles from './FormProduct.module.scss'
 
 const cx = classNames.bind(styles);
@@ -25,6 +26,7 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
     const [checkSize, setCheckSize] = useState(product ? product.sizes : [])
     const [mainImage, SetMainImage] = useState()
     const [images, SetImages] = useState()
+    const [msg, SetMsg] = useState({})
 
     const handleCheckSize = (id) => {
         setCheckSize(prev => {
@@ -37,20 +39,46 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
         })
     }
     const validateInsert = () => {
-        if (!name || !price || checkSize.length == 0 || !mainImage || !images)  {
-            console.log("err")
+        let message = {}
+        if (!name  )  {
+            message.name = "Nhập tên"
+        }   
+        if (!validInt.test(price) || !price){
+            message.price = "Nhập giá phù hợp"
+        } 
+        if (checkSize.length == 0 ) {
+            message.size = "Nhập size"
+        } 
+        if (!mainImage) {
+            message.mainImage = "Thêm ảnh chính"
+        } 
+        if (!images) {
+            message.images = "Thêm ảnh phụ"
+        }
+    
+        if (JSON.stringify(message) !== JSON.stringify({}) ) {
+            SetMsg(message)
             return 
         }
         handleInsert(name, price, brand, category, checkSize, mainImage, images)
     }
     const validateUpdate = () => {
-        if (!name || !price || checkSize.length == 0 || !mainImage || !images)  {
-            console.log("err")
-             
+        let message = {}
+        if (!name  )  {
+            message.name = "Nhập tên"
+        }  else if (!validInt.test(price)){
+            message.price = "Nhập giá phù hợp"
+        } else if (checkSize.length == 0 ) {
+            message.size = "Nhập size"
+        } 
+    
+        if (JSON.stringify(message) !== JSON.stringify({}) ) {
+            SetMsg(message)
+            return 
         }
         handleUpdate(product.id, name, price, brand, category, checkSize, mainImage, images)
     }
-
+    
     //UPDATE PRODUCT
     return (
         <div>
@@ -62,8 +90,9 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
                     </div>
                     <div className="row">
                         <div className="form-group col-md-5">
-                            <label htmlFor="name">Tên sản phẩm</label>
+                            <label htmlFor="name">Tên sản phẩm</label> {msg.name && <span className="text-danger">{msg.name}</span>}
                             <input style={{ height: '40px' }} type="text" className="form-control form-control-lg" id="name" placeholder="Tên sản phẩm" value={name} onChange={(e) => SetName(e.target.value)} />
+                           
                         </div>
 
                         <div className="form-group col-md-5">
@@ -87,7 +116,7 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
                             </select>
                         </div>
                         <div className="form-group col-md-5">
-                            <label htmlFor="price">Giá sản phẩm</label>
+                            <label htmlFor="price">Giá sản phẩm</label> {msg.price && <span className="text-danger">{msg.price}</span>}
                             <input style={{ height: '40px' }} type="text" className="form-control form-control-lg" id="price" placeholder="Giá Sản phẩm" value={price} onChange={(e) => SetPrice(e.target.value)} />
                         </div>
                     </div>
@@ -117,7 +146,7 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
 
                     <div className="row mt-2">
                         <div className="form-group">
-                            <label htmlFor="main-image">Ảnh Chính </label>
+                            <label htmlFor="main-image">Ảnh Chính </label> {msg.mainImage && <span className="text-danger">{msg.mainImage}</span>}
                             <div className={cx("product-main-image-wrapper")}>
                             
                                 {mainImage ?<img src={URL.createObjectURL(mainImage)}/> :<img src={product.mainImage}/> }
@@ -128,7 +157,7 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
                     </div>
                     <div className="row mt-2">
                         <div className="form-group">
-                            <label htmlFor="images">Ảnh Phụ </label> 
+                            <label htmlFor="images">Ảnh Phụ </label>  {msg.images && <span className="text-danger">{msg.images}</span>}
                             <div className={cx("product-images-thumb")}>
                                 <Swiper loop={false} spaceBetween={10} slidesPerView={3} modules={[Navigation, Thumbs]} navigation={true}>
                                     {
@@ -177,7 +206,7 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
                     </div>
                     <div className="row">
                         <div className="form-group col-md-5">
-                            <label htmlFor="name">Tên sản phẩm</label>
+                            <label htmlFor="name">Tên sản phẩm</label> {msg.name && <span className="text-danger">{msg.name}</span>}
                             <input style={{ height: '40px' }} type="text" className="form-control form-control-lg my -1" id="name" placeholder="Tên sản phẩm" value={name} onChange={(e) => SetName(e.target.value)} />
                         </div>
 
@@ -202,14 +231,14 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
                         </div>
 
                         <div className="form-group col-md-5">
-                            <label htmlFor="price">Giá sản phẩm</label>
+                            <label htmlFor="price">Giá sản phẩm</label> {msg.price && <span className="text-danger">{msg.price}</span>}
                             <input style={{ height: '40px' }} type="text" className="form-control form-control-lg" id="price" placeholder="Giá Sản phẩm" value={price} onChange={(e) => SetPrice(e.target.value)} />
                         </div>
                     </div>
 
                     <div className="row mt-2">
                         <div className="form-group col-md-6">
-                            <label>Kích thước</label>
+                            <label>Kích thước</label> {msg.size && <span className="text-danger">{msg.size}</span>}
                             <div className='d-flex align-content-start flex-wrap'>
                                 {
                                     sizes.map(item => (
@@ -230,7 +259,7 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
 
                     <div className="row mt-3">
                         <div className="form-group col-md-6 row">
-                            <label htmlFor="main-image">Ảnh Chính: </label>
+                            <label htmlFor="main-image">Ảnh Chính: </label> {msg.mainImage && <span className="text-danger">{msg.mainImage}</span>}
                             {mainImage&&<div className={cx("product-main-image-wrapper")}>
                                 {<img src={URL.createObjectURL(mainImage)}/>}
                             </div>}
@@ -239,7 +268,7 @@ function FormProduct({ product, categories, sizes, brands, handleInsert, handleU
                     </div>
                     <div className="row mt-3">
                         <div className="form-group col-md-6 row">
-                            <label htmlFor="images">Ảnh Phụ: </label>
+                            <label htmlFor="images">Ảnh Phụ: </label> {msg.images && <span className="text-danger">{msg.images}</span>}
                             {images && <div className={cx("product-images-thumb")}>
                                 <Swiper loop={false} spaceBetween={10} slidesPerView={3} modules={[Navigation, Thumbs]} navigation={true}>
                                     {
