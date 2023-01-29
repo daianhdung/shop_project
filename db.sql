@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS bookmark_product(
 
 CREATE TABLE IF NOT EXISTS coupon (
     id INT AUTO_INCREMENT,
-    name VARCHAR(50) not null,
+    name VARCHAR(50) unique not null,
     rate float not null,
     PRIMARY KEY (id)
 );
@@ -113,6 +113,7 @@ ALTER TABLE p_order ADD column order_token varchar(255) after total;
 ALTER TABLE product_size ADD column amount int DEFAULT 0;
 ALTER TABLE user add column date datetime DEFAULT now();
 ALTER TABLE p_order add column date datetime DEFAULT now();
+
 
 
 INSERT INTO role(id, name, description ) VALUES (1, "ROLE_ADMIN", "Admin");
@@ -556,6 +557,65 @@ UPDATE `shop_db`.`product` SET `main_image` = 'puma-bari-mule-black1.webp' WHERE
 UPDATE `shop_db`.`product` SET `main_image` = 'puma-smash-vulc-mule-black1.webp' WHERE (`id` = '21');
 UPDATE `shop_db`.`product` SET `main_image` = 'puma-smash-vulc-mule-white1.webp' WHERE (`id` = '22');
 
+
+
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '3', 'hcm');
+
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+INSERT INTO `shop_db`.`p_order` (`fee_ship`, `coupon`, `temp_total`, `total`, `user_id`, `status_id`, `delivery_address`) VALUES ('40000', '40000', '1000000', '15000000', '1', '2', 'hcm');
+
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('ASVAS1', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('ASVAS2', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('ASVAS3', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('ASVAS4', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('ASVAS5', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('ASV2AS3', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('AV2AS3', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('AS2AS4', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('AS3AS5', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('ASVAS6', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('SV3AS8', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('ASVAS8', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('AV3AS4', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('ASV3Sd', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('AS4AS12', '5');
+INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('ASVASa', '5');
+
+
+
+
 INSERT INTO `shop_db`.`bookmark_product` (`user_id`, `product_id`) VALUES ('1', '1');
 INSERT INTO `shop_db`.`bookmark_product` (`user_id`, `product_id`) VALUES ('1', '2');
 INSERT INTO `shop_db`.`bookmark_product` (`user_id`, `product_id`) VALUES ('1', '3');
@@ -569,13 +629,9 @@ INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA40%', '40');
 INSERT INTO `shop_db`.`coupon` (`name`, `rate`) VALUES ('GIAMGIA50%', '50');
 
 
-select count(*) as amount
-from user
-where month(date) = month(now())
+select sum(amount)
+from product_size
 
-select count(*) as amount
-from user
-where month(date) = month(now()) - 1
 
 
 

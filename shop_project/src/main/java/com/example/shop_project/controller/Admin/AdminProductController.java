@@ -55,6 +55,8 @@ public class AdminProductController {
     public ResponseEntity<?> insertProduct(@RequestParam(name = "product") String product,
                                            @RequestParam(name = "mainImage")MultipartFile file,
                                            @RequestParam(name = "images")MultipartFile[] multiFile) {
+        System.out.println(file);
+        System.out.println(multiFile);
         DataResponse dataResponse = new DataResponse();
         Gson gson = new Gson();
         boolean isSuccess = productService.insertProduct(gson.fromJson(product,ProductRequest.class), file, multiFile);
@@ -66,8 +68,9 @@ public class AdminProductController {
     }
     @PostMapping("/product/update")
     public ResponseEntity<?> updateProduct(@RequestParam(name = "product") String product,
-                                           @RequestParam(name = "mainImage")MultipartFile file,
-                                           @RequestParam(name = "images")MultipartFile[] multiFile) {
+                                           @RequestParam(name = "mainImage", required = false)MultipartFile file,
+                                           @RequestParam(name = "images", required = false)MultipartFile[] multiFile) {
+
         DataResponse dataResponse = new DataResponse();
         Gson gson = new Gson();
         boolean isSuccess = productService.updateProduct(gson.fromJson(product,ProductRequest.class), file, multiFile);
@@ -87,164 +90,5 @@ public class AdminProductController {
         dataResponse.setData("");
         return new ResponseEntity<>(dataResponse, HttpStatus.OK);
     }
-
-
-    @GetMapping("/category/get/{id}")
-    public ResponseEntity<?> getCategory(@PathVariable(name = "id") int id) {
-        DataResponse dataResponse = new DataResponse();
-        CategoryDTO categoryDTO = categoryService.getCategory(id);
-
-        dataResponse.setDesc("get category");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(true);
-        dataResponse.setData(categoryDTO);
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @GetMapping("/category/all")
-    public ResponseEntity<?> getAllCategory() {
-        DataResponse dataResponse = new DataResponse();
-        List<CategoryDTO> categoryDTOS = categoryService.getAllCategory();
-        dataResponse.setDesc("get All category");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(true);
-        dataResponse.setData(categoryDTOS);
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @PostMapping("/category/insert")
-    public ResponseEntity<?> insertCategory(@RequestBody CateSizeRequest category) {
-        DataResponse dataResponse = new DataResponse();
-        boolean isSuccess = categoryService.insertCategory(category);
-        dataResponse.setDesc("insert category");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(isSuccess);
-        dataResponse.setData("");
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @PutMapping("/category/update")
-    public ResponseEntity<?> updateCategory(@RequestBody CateSizeRequest category) {
-        DataResponse dataResponse = new DataResponse();
-        boolean isSuccess = categoryService.updateCategory(category);
-        dataResponse.setDesc("update category");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(isSuccess);
-        dataResponse.setData("");
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @DeleteMapping("/category/delete/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable(name = "id") int id) {
-        DataResponse dataResponse = new DataResponse();
-        boolean isSuccess = categoryService.deleteCategory(id);
-        dataResponse.setDesc("delete category");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(isSuccess);
-        dataResponse.setData("");
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-
-
-
-    @GetMapping("/size/get/{id}")
-    public ResponseEntity<?> getSize(@PathVariable(name = "id") int id) {
-        DataResponse dataResponse = new DataResponse();
-        SizeDTO sizeDTO = sizeService.getSize(id);
-        dataResponse.setDesc("get size");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(true);
-        dataResponse.setData(sizeDTO);
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @GetMapping("/size/all")
-    public ResponseEntity<?> getAllSize() {
-        DataResponse dataResponse = new DataResponse();
-        List<SizeDTO> sizeDTOS = sizeService.getAllSize();
-        dataResponse.setDesc("get All size");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(true);
-        dataResponse.setData(sizeDTOS);
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @PostMapping("/size/insert")
-    public ResponseEntity<?> insertSize(@RequestBody CateSizeRequest size) {
-        DataResponse dataResponse = new DataResponse();
-        boolean isSuccess = sizeService.insertSize(size);
-        dataResponse.setDesc("insert size");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(isSuccess);
-        dataResponse.setData("");
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @PutMapping("/size/update")
-    public ResponseEntity<?> updateSize(@RequestBody CateSizeRequest size) {
-        DataResponse dataResponse = new DataResponse();
-        boolean isSuccess = sizeService.updateSize(size);
-        dataResponse.setDesc("update size");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(isSuccess);
-        dataResponse.setData("");
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @DeleteMapping("/size/delete/{id}")
-    public ResponseEntity<?> deleteSize(@PathVariable(name = "id") int id) {
-        DataResponse dataResponse = new DataResponse();
-        boolean isSuccess = sizeService.deleteSize(id);
-        dataResponse.setDesc("delete category");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(isSuccess);
-        dataResponse.setData("");
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-
-
-
-    @GetMapping("/brand/all")
-    public ResponseEntity<?> getAllBrand() {
-        DataResponse dataResponse = new DataResponse();
-        List<BrandDTO> brandDTOS = brandService.getALLBrand();
-        dataResponse.setDesc("get All category");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(true);
-        dataResponse.setData(brandDTOS);
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/order/get/{id}")
-    public ResponseEntity<?> getOrder(@PathVariable(name = "id") int id) {
-        DataResponse dataResponse = new DataResponse();
-        OrderDTO orderDTO = orderService.getOrder(id);
-        dataResponse.setDesc("get order");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(orderDTO != null);
-        dataResponse.setData(orderDTO);
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @GetMapping("/order/all")
-    public ResponseEntity<?> getAllOrder() {
-        DataResponse dataResponse = new DataResponse();
-        List<OrderDTO> orderDTOS = orderService.getAllOrder();
-        dataResponse.setDesc("getAllOrder");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(true);
-        dataResponse.setData(orderDTOS);
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @GetMapping("/order/updatestatus/{id}/{status}")
-    public ResponseEntity<?> updateStatusOrder(@PathVariable(name = "id") int id, @PathVariable(name = "status") int status) {
-        DataResponse dataResponse = new DataResponse();
-        boolean isSuccess = orderService.updateStatusOrder(id, status);
-        dataResponse.setDesc("updateStatusOrder");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(isSuccess);
-        dataResponse.setData("");
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
-    @GetMapping("/status/all")
-    public ResponseEntity<?> getAllStatus() {
-        DataResponse dataResponse = new DataResponse();
-        List<StatusDTO> statusDTOS = orderService.getAllStatus();
-        dataResponse.setDesc("getAllStatus");
-        dataResponse.setStatus(HttpStatus.OK.value());
-        dataResponse.setSuccess(true);
-        dataResponse.setData(statusDTOS);
-        return new ResponseEntity<>(dataResponse, HttpStatus.OK);
-    }
+    
 }

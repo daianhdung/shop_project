@@ -194,13 +194,18 @@ public class ProductServiceImp implements ProductService {
     @Override
     public boolean updateProduct(ProductRequest product, MultipartFile file, MultipartFile[] multiFile) {
         ProductEntity productEntity = productRepository.findById(product.getId());
+
         productEntity.setName(product.getName());
-        boolean isUpload = fileUploadServiceImp.storedFile(file);
-        if (isUpload) {
-            productEntity.setMainImage(file.getOriginalFilename());
-        } else {
-            return false;
+
+        if (file != null) {
+            boolean isUpload = fileUploadServiceImp.storedFile(file);
+            if (isUpload) {
+                productEntity.setMainImage(file.getOriginalFilename());
+            } else {
+                return false;
+            }
         }
+
         productEntity.setPrice(product.getPrice());
         productEntity.setCategory(categoryRepository.findById(product.getCategory()).orElse(null));
         productEntity.setBrand(brandRepository.findById(product.getBrand()).orElse(null));
@@ -215,17 +220,18 @@ public class ProductServiceImp implements ProductService {
             });
             productEntity.setProductSizes(productSizeEntitySet);
 
+            if (multiFile != null) {
+                Set<ImageProductEntity> imageProductEntitySet = productEntity.getImageProductEntities();
+                Arrays.stream(multiFile).forEach( item -> {
+                    fileUploadServiceImp.storedFile(item);
+                    ImageProductEntity imageProduct = new ImageProductEntity();
+                    imageProduct.setName(item.getOriginalFilename());
+                    imageProduct.setProduct(productEntity);
+                    imageProductEntitySet.add(imageProduct);
+                });
+                productEntity.setImageProductEntities(imageProductEntitySet);
+            }
 
-            Set<ImageProductEntity> imageProductEntitySet = productEntity.getImageProductEntities();
-
-            Arrays.stream(multiFile).forEach( item -> {
-                fileUploadServiceImp.storedFile(item);
-                ImageProductEntity imageProduct = new ImageProductEntity();
-                imageProduct.setName(item.getOriginalFilename());
-                imageProduct.setProduct(productEntity);
-                imageProductEntitySet.add(imageProduct);
-            });
-            productEntity.setImageProductEntities(imageProductEntitySet);
             productRepository.save(productEntity);
             return true;
         }catch (Exception e) {
