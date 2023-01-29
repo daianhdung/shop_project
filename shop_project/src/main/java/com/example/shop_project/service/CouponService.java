@@ -1,6 +1,7 @@
 package com.example.shop_project.service;
 
 import com.example.shop_project.dto.CouponDTO;
+import com.example.shop_project.payload.request.CouponRequest;
 
 import java.util.List;
 
@@ -12,11 +13,11 @@ public interface CouponService {
 
     List<CouponDTO> getAllCoupon();
 
-    CouponDTO getCoupon();
+    CouponDTO getCoupon(int id);
 
-    boolean insertCoupon();
+    boolean insertCoupon(CouponRequest couponRequest);
 
-    boolean updateCoupoN(CouponDTO couponDTO);
+    boolean updateCoupon(CouponRequest couponRequest);
 
-    boolean deleteCoupon();
+    boolean deleteCoupon(int id);
 }

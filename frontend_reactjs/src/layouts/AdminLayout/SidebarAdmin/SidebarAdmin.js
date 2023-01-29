@@ -1,4 +1,4 @@
-import { faAngleDown, faAngleUp, faBagShopping, faBox, faFileCircleCheck, faHome, faKeyboard, faList, faRightFromBracket, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp, faBagShopping, faBox, faFileCircleCheck, faHome, faKeyboard, faList, faRightFromBracket, faUser, faUsers, faTicket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { Link, useLocation } from 'react-router-dom';
@@ -23,10 +23,6 @@ const SidebarData = [
                 title: 'List',
                 path: config.routes.adminOrder,
                 icon: <FontAwesomeIcon icon={faList} />
-            }, {
-                title: 'Form',
-                path: config.routes.adminOrderUpdate,
-                icon: <FontAwesomeIcon icon={faKeyboard} />
             }
         ]
     },
@@ -49,7 +45,6 @@ const SidebarData = [
     },
     {
         title: 'Sản phẩm',
-        path: '/admin-product',
         icon: <FontAwesomeIcon className={cx('redirect_icon', 'text-info')} icon={faBagShopping} />,
         iconClosed: <FontAwesomeIcon style={{ float: 'right' }} icon={faAngleDown} />,
         iconOpened: <FontAwesomeIcon style={{ float: 'right' }} icon={faAngleUp} />,
@@ -61,6 +56,23 @@ const SidebarData = [
             }, {
                 title: 'Form',
                 path: config.routes.adminProductInsert,
+                icon: <FontAwesomeIcon icon={faKeyboard} />
+            }
+        ]
+    },
+    {
+        title: 'Coupon',
+        icon: <FontAwesomeIcon className={cx('redirect_icon', 'text-info')} icon={faTicket} />,
+        iconClosed: <FontAwesomeIcon style={{ float: 'right' }} icon={faAngleDown} />,
+        iconOpened: <FontAwesomeIcon style={{ float: 'right' }} icon={faAngleUp} />,
+        subNav: [
+            {
+                title: 'List',
+                path: config.routes.adminCoupon,
+                icon: <FontAwesomeIcon icon={faList} />
+            }, {
+                title: 'Form',
+                path: config.routes.adminCouponInsert,
                 icon: <FontAwesomeIcon icon={faKeyboard} />
             }
         ]

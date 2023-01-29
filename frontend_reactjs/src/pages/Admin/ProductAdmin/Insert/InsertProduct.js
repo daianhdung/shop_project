@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import FormProduct from "~/components/FormProduct/FormProduct"
+import FormProduct from "~/components/Form/FormProduct/FormProduct"
+
+
 import config from "~/config"
 import * as insertProductService from "~/service/admin/adminProductService"
 import { getCookie } from "~/utils/utilsCookie"
@@ -41,7 +43,7 @@ function InsertProduct() {
         }
 
 
-        
+
         insertProductService.insertProduct(token, formData)
             .then(response => {
                 if (response.success) {
@@ -50,7 +52,6 @@ function InsertProduct() {
             })
 
     }
-
     return (
         <div>
             <FormProduct categories={categories} brands={brands} sizes={sizes} handleInsert={handleInsert} />

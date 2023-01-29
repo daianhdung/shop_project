@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
-import FormProduct from "~/components/FormProduct/FormProduct"
+
 import { getCookie } from "~/utils/utilsCookie"
 import * as updateProductService from "~/service/admin/adminProductService"
 import config from "~/config"
 import { useNavigate } from "react-router-dom"
+import FormProduct from "~/components/Form/FormProduct/FormProduct"
+
 
 function UpdateProduct() {
 
@@ -30,11 +32,16 @@ function UpdateProduct() {
         }
 
         formData.append('product', JSON.stringify(product))
-        formData.append('mainImage', mainImage, mainImage.name)
-
-        for (let i = 0; i < images.length; i++) {
-            formData.append('images', images[i])
+        if (mainImage) {
+            formData.append('mainImage', mainImage, mainImage.name)
         }
+        
+        if (images) {
+            for (let i = 0; i < images.length; i++) {
+                formData.append('images', images[i])
+            }
+        }
+
 
         updateProductService.updateProduct(token, formData)
             .then(response => {
