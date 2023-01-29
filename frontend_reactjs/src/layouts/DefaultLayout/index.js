@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import styles from './DefaultLayout.module.scss';
 import Header from '~/layouts/components/Header/Header';
@@ -8,34 +8,39 @@ import Footer from '~/layouts/components/Footer/Footer';
 import config from '~/config';
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../components/Sidebar/Sidebar';
+import LoaderModal from '~/components/Modal/LoaderModal/LoaderModal';
 
 
 const cx = classNames.bind(styles)
 
 
 function DefaultLayout({ children }) {
-
+    const [isLoading, setIsLoading] = useState(false)
     const location = useLocation()
+    console.log("isLoading:", isLoading);
     return (
-        <div >
-            <Header />
-            <div style={{ background: 'rgba(245, 245, 250, 1)' }} >
-                <div className={cx('container')}>
-                    {(location.pathname == config.routes.product || location.pathname == config.routes.bookmark || location.pathname === '/search/' && location.search) ? <div className={cx('inner')}>
-                        <Sidebar1 />
-                        <div className={cx('content')}>
-                            {children}
-                            <Footer />
-                        </div>
-                    </div> : <div className={cx('inner_non_sideber')}>
-                        <div className={cx('content_non_sideber')}>
-                            {children}
-                            <Footer />
-                        </div>
-                    </div>}
+        <>
+            {isLoading && <LoaderModal isLoading={isLoading} />}
+            <div >
+                <Header />
+                <div style={{ background: 'rgba(245, 245, 250, 1)' }} >
+                    <div className={cx('container')}>
+                        {(location.pathname == config.routes.product || location.pathname == config.routes.bookmark || location.pathname === '/search/' && location.search) ? <div className={cx('inner')}>
+                            <Sidebar1 />
+                            <div className={cx('content')}>
+                                {React.cloneElement(children, { setIsLoading: setIsLoading })}
+                                <Footer />
+                            </div>
+                        </div> : <div className={cx('inner_non_sideber')}>
+                            <div className={cx('content_non_sideber')}>
+                                {React.cloneElement(children, { setIsLoading: setIsLoading })}
+                                <Footer />
+                            </div>
+                        </div>}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 

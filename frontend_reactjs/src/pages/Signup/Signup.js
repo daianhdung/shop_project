@@ -10,7 +10,7 @@ import { validEmail, validPassword } from '~/utils/regex';
 
 const cx = classNames.bind(styles);
 
-function Signup() {
+function Signup({ setIsLoading }) {
 
     const [state, setState] = useState({ email: '', password: '', rePassword: '' });
     const [equal, setEqual] = useState(true);
@@ -68,8 +68,9 @@ function Signup() {
         setErrors(newErrors);
         if (Object.keys(newErrors).length === 0) {
             const fetchApiSignup = async () => {
+                setIsLoading(true)
                 const result = await signupService.signup(state.email, state.password);
-                console.log(result);
+                setIsLoading(false)
                 return result;
             };
             fetchApiSignup();
