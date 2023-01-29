@@ -1,4 +1,6 @@
 import classNames from 'classnames/bind';
+import React, { useState } from 'react';
+import LoaderModal from '~/components/Modal/LoaderModal/LoaderModal';
 
 import styles from './Authen.module.scss';
 
@@ -6,11 +8,16 @@ import styles from './Authen.module.scss';
 
 const cx = classNames.bind(styles)
 
-function AuthenLayout({children}) {
+function AuthenLayout({ children }) {
+
+    const [isLoading, setIsLoading] = useState(false)
     return (
-        <div className={cx('wrapper')}>
-            {children}
-        </div>
+        <>
+            {isLoading && <LoaderModal isLoading={isLoading} />}
+            <div className={cx('wrapper')}>
+                {React.cloneElement(children, { setIsLoading: setIsLoading })}
+            </div>
+        </>
     );
 }
 

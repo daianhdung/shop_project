@@ -29,7 +29,7 @@ const paymentMethod = [
     }
 ]
 
-function Order() {
+function Order({ setIsLoading }) {
 
     const navigate = useNavigate()
 
@@ -67,6 +67,7 @@ function Order() {
         }
 
         const fetchApiGetUserInform = async () => {
+            setIsLoading(true)
             const response = await getUserInform()
             console.log(response);
             if (response.success) {
@@ -74,10 +75,13 @@ function Order() {
                 setFormInformUser(response.data)
                 console.log(response);
             }
+            setIsLoading(false)
         }
         const fetchApiGetProvince = async () => {
+            setIsLoading(true)
             const response = await getProvince()
             setProvince(response)
+            setIsLoading(false)
         }
 
         if(contextAuth.authProvider.isLogin){
@@ -109,12 +113,14 @@ function Order() {
 
     const handleCoupon = () => {
         const fetchApiGetCoupon = async () => {
+            setIsLoading(true)
             const response = await searchCoupon(coupon)
             if (response.success) {
                 setCheckCoupon({ isExist: true, rate: response.data.rate })
             } else {
                 setCheckCoupon({ isExist: false })
             }
+            setIsLoading(false)
             return response.data
         }
         fetchApiGetCoupon()
@@ -122,6 +128,7 @@ function Order() {
 
     //Handle when selected province then appear Dictrict of province
     const handleChangeProvince = (e) => {
+        
         provinceCodeRef.current = e.target.value
         if (e.target.value != 79) {
             setCostDeli(40000)
@@ -218,15 +225,14 @@ function Order() {
             const productDTOList = localItems
             const tempTotal = cart.getTotalCart()
             const fetchApiNewOrder = async () => {
-                console.log(1);
-                console.log(userDto);
-                console.log(productDTOList);
+                setIsLoading(true)
                 const response = await CheckoutOrder(userDto, deliveryAddress, productDTOList, checkCoupon.rate, tempTotal, total, costDeli)
                 console.log(response);
                 if (response.success) {
                     cart.deleteAllFromCart()
                     navigate(`/order/success/${response.data}`)
                 }
+                setIsLoading(false)
                 return response
             }
             fetchApiNewOrder()

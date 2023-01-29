@@ -12,7 +12,7 @@ import List from '../Bookmark/List';
 
 
 
-function Product() {
+function Product({ setIsLoading }) {
 
     const filterContext = useFilter()
     const [page, SetPage] = useState({
@@ -58,8 +58,9 @@ function Product() {
         })
     }
 
-   
+
     useEffect(() => {
+        setIsLoading(true)
         const token = getCookie('tokenJwt')
         var custtom = {
             current: page.currentPage,
@@ -70,17 +71,22 @@ function Product() {
             ...custtom
         }
         productService.getProduct(customFilter, token)
+        
             .then(response => {
                 SetProducts(response.products)
                 SetPage({
                     currentPage: response.currentPage,
                     totalPage: response.totalPage
                 })
+                
+            })
+            .finally(() => {
+                setIsLoading(false);
             })
 
     }, [filterContext, sort, page.currentPage])
 
-   
+
 
     return (
         <div id='wrapper'>
@@ -90,10 +96,10 @@ function Product() {
                     {products && products.length !== 0 && <List products={products} />}
                     <div className='row d-flex justify-content-center bg-white'>
                         <div className='col-md-2'>
-                            { products && products.length !== 0  && <Paging currentPage={page.currentPage} totalPage={page.totalPage} handleNext={handleNext} handlePrev={handlePrev} handleSetCurrentPage={handleSetCurrentPage} />}
+                            {products && products.length !== 0 && <Paging currentPage={page.currentPage} totalPage={page.totalPage} handleNext={handleNext} handlePrev={handlePrev} handleSetCurrentPage={handleSetCurrentPage} />}
                         </div>
                     </div>
-                    { products && products.length === 0 && <div className=' justify-content-center bg-white p-5 rounded'><h2>Sản phẩm bạn tìm kiếm hiện tại hết hàng</h2></div>}
+                    {products && products.length === 0 && <div className=' justify-content-center bg-white p-5 rounded'><h2>Sản phẩm bạn tìm kiếm hiện tại hết hàng</h2></div>}
                 </div>
             </div>
 

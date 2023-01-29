@@ -4,7 +4,7 @@ import ListUser from "./List/ListUser";
 
 
 
-function UserAdmin() {
+function UserAdmin({ setIsLoading }) {
 
     const [users, setUsers] = useState()
 
@@ -14,9 +14,11 @@ function UserAdmin() {
     //         .then(response => console.log(response))
     // }
     useEffect(() => {
+        setIsLoading(true)
         const fetchApiGetAllUsers = async() => {
             const response = await getUsers()
             setUsers(response.data)
+            setIsLoading(false)
         }
         fetchApiGetAllUsers()
     }, [])

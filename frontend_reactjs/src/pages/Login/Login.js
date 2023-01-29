@@ -16,7 +16,7 @@ import { validEmail, validPassword } from '~/utils/regex';
 const cx = classNames.bind(styles);
 
 
-function Login() {
+function Login({ setIsLoading }) {
 
     const contextAuth = useAuth()
     const navigate = useNavigate()
@@ -67,16 +67,16 @@ function Login() {
         setErrors(newErrors);
         if (Object.keys(newErrors).length === 0) {
             const fetchApi = async () => {
-                const result = await loginService.login(state.email, state.password);
-                
+                setIsLoading(true)
+                try{
+                    const result = await loginService.login(state.email, state.password);
                 const myDecodedToken = decodeToken(result.data.token);
                 const myDecodedRefreshToken = decodeToken(result.data.freshToken);
                 const expiredToken = myDecodedToken.exp - myDecodedToken.iat
                 const expiredRefreshToken = myDecodedRefreshToken.exp - myDecodedRefreshToken.iat
                 const tokenDecoded = JSON.parse(myDecodedToken.sub)
-                
+
                 if (result.success) {
-                    console.log(result);
                     saveCookie('tokenJwt', result.data.token, expiredToken)
                     saveCookie('tokenJwtRefresh', result.data.freshToken, expiredRefreshToken)
                     contextAuth.authProvider.username = tokenDecoded.username
@@ -88,8 +88,13 @@ function Login() {
                         navigate(from, { replace: true })
                     }
                 }
-                return result;
+                }catch(errors){
+                    setIsLoading(false)
+
+                }
+                setIsLoading(false)
             };
+
             fetchApi();
         }
     }
