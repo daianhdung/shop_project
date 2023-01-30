@@ -32,6 +32,8 @@ _Quên mật khẩu
 
 _Sản phẩm với các danh mục
 
+_Tìm kiếm sản phẩm
+
 _Lọc sản phẩm theo danh mục
 
 _Bookmark sản phẩm
