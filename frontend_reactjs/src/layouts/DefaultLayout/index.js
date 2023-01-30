@@ -17,7 +17,6 @@ const cx = classNames.bind(styles)
 function DefaultLayout({ children }) {
     const [isLoading, setIsLoading] = useState(false)
     const location = useLocation()
-    console.log("isLoading:", isLoading);
     return (
         <>
             {isLoading && <LoaderModal isLoading={isLoading} />}

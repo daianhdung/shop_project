@@ -60,35 +60,39 @@ function Login({ setIsLoading }) {
         let newErrors = {};
         if (!state.email) {
             newErrors.email = 'Email bắt buộc';
+        } else if (!validEmail.test(state.email)) {
+            newErrors.email = 'Email không hợp lệ';
         }
         if (!state.password) {
             newErrors.password = 'Mật khẩu bắt buộc';
+        } else if (!validPassword.test(state.password)) {
+            newErrors.password = 'Mật khẩu không hợp lệ';
         }
         setErrors(newErrors);
         if (Object.keys(newErrors).length === 0) {
             const fetchApi = async () => {
                 setIsLoading(true)
-                try{
+                try {
                     const result = await loginService.login(state.email, state.password);
-                const myDecodedToken = decodeToken(result.data.token);
-                const myDecodedRefreshToken = decodeToken(result.data.freshToken);
-                const expiredToken = myDecodedToken.exp - myDecodedToken.iat
-                const expiredRefreshToken = myDecodedRefreshToken.exp - myDecodedRefreshToken.iat
-                const tokenDecoded = JSON.parse(myDecodedToken.sub)
+                    const myDecodedToken = decodeToken(result.data.token);
+                    const myDecodedRefreshToken = decodeToken(result.data.freshToken);
+                    const expiredToken = myDecodedToken.exp - myDecodedToken.iat
+                    const expiredRefreshToken = myDecodedRefreshToken.exp - myDecodedRefreshToken.iat
+                    const tokenDecoded = JSON.parse(myDecodedToken.sub)
 
-                if (result.success) {
-                    saveCookie('tokenJwt', result.data.token, expiredToken)
-                    saveCookie('tokenJwtRefresh', result.data.freshToken, expiredRefreshToken)
-                    contextAuth.authProvider.username = tokenDecoded.username
-                    contextAuth.authProvider.isLogin = true
-                    if (result.data.role === 'ROLE_ADMIN') {
-                        contextAuth.authProvider.isAdmin = true
-                        navigate('/admin-home', { replace: true })
-                    } else {
-                        navigate(from, { replace: true })
+                    if (result.success) {
+                        saveCookie('tokenJwt', result.data.token, expiredToken)
+                        saveCookie('tokenJwtRefresh', result.data.freshToken, expiredRefreshToken)
+                        contextAuth.authProvider.username = tokenDecoded.username
+                        contextAuth.authProvider.isLogin = true
+                        if (result.data.role === 'ROLE_ADMIN') {
+                            contextAuth.authProvider.isAdmin = true
+                            navigate('/admin-home', { replace: true })
+                        } else {
+                            navigate(from, { replace: true })
+                        }
                     }
-                }
-                }catch(errors){
+                } catch (errors) {
                     setIsLoading(false)
 
                 }
