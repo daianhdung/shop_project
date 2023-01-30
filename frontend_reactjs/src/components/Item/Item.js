@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import config from "~/config";
 import { formatNumber } from "~/utils/stringUtils";
 import { getCookie } from "~/utils/utilsCookie";
@@ -13,7 +13,7 @@ const cx = classNames.bind(styles);
 function Item({product}) {
 
     const [bookmark, SetBookmark] = useState(product.bookmark)
-
+    const navigate = useNavigate();
     const handleBookmark = () => {
         const token = getCookie('tokenJwt')
         if (token == null) {
