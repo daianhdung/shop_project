@@ -19,7 +19,7 @@ function Signup({ setIsLoading }) {
 
 
     useEffect(() => {
-        if (state.password == state.rePassword) {
+        if (state.password === state.rePassword) {
             setEqual(true)
         } else {
             setEqual(false)

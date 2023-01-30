@@ -34,7 +34,7 @@ public class SecSecurityConfig {
 
                 .antMatchers(API_LOGIN, API_MAIL, API_IMAGE, API_FILE + "/**", API_PRODUCT + "/**",
                         API_BRAND + "/**", API_CATEGORY + "/**" , API_SIZE + "/**", API_COUNPON + "/**", API_ORDER + "/**",
-                        API_REFRESH_TOKEN).permitAll()
+                        API_REFRESH_TOKEN, "/img/**").permitAll()
                 .antMatchers(HttpMethod.POST, API_USER).permitAll()
                 .antMatchers(API_ADMIN).hasAuthority("ROLE_ADMIN")
 

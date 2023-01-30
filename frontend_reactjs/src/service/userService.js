@@ -1,7 +1,5 @@
 import { successToast, errorToast } from '~/components/Popups'
 
-
-import * as httpRequest from '~/utils/httpRequest';
 import * as privateRequest from '~/utils/privateRequest';
 import { getCookie } from '~/utils/utilsCookie';
 

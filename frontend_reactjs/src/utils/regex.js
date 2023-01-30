@@ -7,4 +7,4 @@ export const validPhone = new RegExp(/^\d{10}$/)
 
 export const validInt = new RegExp('^[0-9]*$')
 
-export const validFloat = new RegExp('^(?=.)([+-]?([0-9]*)(\.([0-9]+))?)$')
+export const validFloat = new RegExp('^(?=.)([+-]?([0-9]*)(([0-9]+))?)$')

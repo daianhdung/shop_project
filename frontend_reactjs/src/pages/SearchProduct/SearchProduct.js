@@ -14,10 +14,7 @@ function SearchProduct() {
 
     const brandId = searchParams.get("brandId")
     const categoryId = searchParams.get("categoryId")
-
-    console.log(searchParams.get("brandId"));
-    console.log(searchParams.get("categoryId"));
-
+    
     const [detailProduct, setDetailProduct] = useState()
 
 
@@ -40,7 +37,7 @@ function SearchProduct() {
                 {detailProduct && detailProduct.length ? detailProduct.map((item) => (
                     <Link key={item.id} className={cx('link-a')} to={config.routes.detail + '/' + item.id}>
                         <div className={cx('wrap_item')}>
-                            <img width={200} height={200} src={process.env.REACT_APP_IMG_URL + item.mainImage} />
+                            <img width={200} height={200} src={process.env.REACT_APP_IMG_URL + item.mainImage} alt="product"/>
                             <div>
                                 <h4>{item.name}</h4>
                                 <span>{formatNumber(item.price)}₫</span>

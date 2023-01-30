@@ -40,7 +40,22 @@ function Sidebar1() {
     return (<div className={cx('wrapper')}>
 
         <div className={cx('first_wrapper')}>
-            <div className={cx('filter_div')}>Bộ lọc</div>
+            <div className={cx('filter_div')}>Thương hiệu</div>
+                <div className='d-flex align-content-start flex-wrap'>
+                    {allBrand && allBrand.map(item => (
+                        <div key={item.id}>
+                            <input type="checkbox" id={`${item.id}-category`}
+                                checked={filterContext.filter.brandId.includes(item.id)}
+                                onChange={() => filterContext.handleCheckBrand(item.id)}
+                                className='btn-check'
+                            />
+                            <label className="btn btn-light fs-4 my-2 mx-2" htmlFor={`${item.id}-category`} >{item.name}</label>
+                        </div>
+                    ))}
+                </div>
+        </div>
+        <div className={cx('first_wrapper')}>
+            <div className={cx('filter_div')}>Size</div>
                 <div className='d-flex align-content-start flex-wrap'>
                     {allSize && allSize.map(item => (
                     <div key={item.id}>
@@ -74,21 +89,6 @@ function Sidebar1() {
            
         </div>
 
-        <div className={cx('first_wrapper')}>
-            <div className={cx('filter_div')}>Thương hiệu</div>
-                <div className='d-flex align-content-start flex-wrap'>
-                    {allBrand && allBrand.map(item => (
-                        <div key={item.id}>
-                            <input type="checkbox" id={`${item.id}-category`}
-                                checked={filterContext.filter.brandId.includes(item.id)}
-                                onChange={() => filterContext.handleCheckBrand(item.id)}
-                                className='btn-check'
-                            />
-                            <label className="btn btn-light fs-4 my-2 mx-2" htmlFor={`${item.id}-category`} >{item.name}</label>
-                        </div>
-                    ))}
-                </div>
-        </div>
     </div>);
 }
 
