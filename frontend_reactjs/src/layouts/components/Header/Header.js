@@ -139,7 +139,7 @@ function Header(props) {
                     <div className={cx('bottom_left_header')}>
                         <nav className="header-nav">
                             {brandSmallSold && brandSmallSold.map((item) => (
-                                <NavLink key={item.id} to={config.routes.search + '?brandId=' + item.id} className={cx('nav_link')}>{item.name}</NavLink>
+                                <NavLink onClick={() => filterContext.handleClickBrand(item.id)} key={item.id} to={config.routes.product} className={cx('nav_link')}>{item.name}</NavLink>
                             ))}
                         </nav>
                     </div>

@@ -16,3 +16,7 @@ function LoaderModal( {isLoading} ) {
 }
 
 export default LoaderModal;
+
+
+
+

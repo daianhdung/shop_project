@@ -23,13 +23,11 @@ function FormUser({ user, handleUpdate, role, handleInsert, errors }) {
                     <div className="form-group col-md-5">
                         <label htmlFor="name">Họ và tên</label>
                         <input style={{ height: '40px' }} type="text" className="form-control form-control-lg" id="name" placeholder={formUser.fullname} onChange={(e) => setFormUser({ ...formUser, fullname: e.target.value })} disabled />
-                        {errors.fullname && <span className="text-danger">{errors.fullname}</span>}
                     </div>
 
                     <div className="form-group col-md-5">
                         <label htmlFor="name">Email</label>
                         <input style={{ height: '40px' }} type="text" className="form-control form-control-lg" id="email" placeholder={formUser.email} onChange={(e) => setFormUser({ ...formUser, email: e.target.value })} disabled />
-                        {errors.email && <span className="text-danger">{errors.email}</span>}
                     </div>
                 </div>
 
