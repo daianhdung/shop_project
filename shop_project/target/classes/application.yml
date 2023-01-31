@@ -26,10 +26,7 @@ spring:
 
 
 
-redis:
-  host: localhost
-  port: 6379
-  expireTokenForgot: 3600000
+
 file:
   upload-dir: /img
 
