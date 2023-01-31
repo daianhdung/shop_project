@@ -14,7 +14,6 @@ CREATE TABLE IF NOT EXISTS user(
     fullname varchar(100),
     phone varchar(100),
     address varchar(100),
-    date datetime default now(),
     role_id INT,
     primary key(id),
     foreign key(role_id) references role(id)
@@ -111,7 +110,8 @@ CREATE TABLE IF NOT EXISTS product_order (
 
 ALTER TABLE p_order ADD column order_token varchar(255) after total;
 ALTER TABLE product_size ADD column amount int DEFAULT 0;
-ALTER TABLE p_order add column date datetime DEFAULT now();
+ALTER TABLE p_order add column date datetime default now() ;
+ALTER TABLE user add column date datetime default now() ;
 
 
 
